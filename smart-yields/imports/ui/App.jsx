@@ -9,8 +9,13 @@ import Post from './Post.jsx';
 
 class App extends React.Component{
   renderPosts(){
+    let that = this;
     return this.props.posts.map((posts) => (
-      <Post key={posts._id} post={posts}/>
+      <Post
+      key={posts._id}
+      post={posts}
+      canEdit={that.props.currentUser ? true: false }
+      />
     ))
   };
 
