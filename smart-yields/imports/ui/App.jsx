@@ -2,6 +2,8 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Posts } from '../api/posts.js';
 import ReactDOM from 'react-dom';
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+
 
 import Post from './Post.jsx';
 
@@ -21,6 +23,8 @@ class App extends React.Component{
     Posts.insert({
       text,
       createdAt: new Date(), // current time
+      owner: Meteor.userId(),           // _id of logged in user
+      username: Meteor.user().username,  // username of logged in user
     });
 
     // Clear form
@@ -30,13 +34,18 @@ class App extends React.Component{
   render(){
     return (
       <div className='post-container'>
-        <form className="new-post" onSubmit={this.handleSubmit.bind(this)} >
-          <input
-            type="text"
-            ref="textInput"
-            placeholder="Type to add new tasks"
-          />
-        </form>
+
+        <AccountsUIWrapper />
+
+        { this.props.currentUser ?
+          <form className="new-post" onSubmit={this.handleSubmit.bind(this)} >
+            <input
+              type="text"
+              ref="textInput"
+              placeholder="Type to add new posts"
+            />
+          </form> : ''
+        }
         {this.renderPosts()}
       </div>
     )
@@ -46,5 +55,6 @@ class App extends React.Component{
 export default createContainer(() => {
   return {
     posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
+    currentUser: Meteor.user(),
   };
 }, App);
