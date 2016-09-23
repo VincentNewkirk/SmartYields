@@ -6,9 +6,9 @@
     "start": "meteor run"
   },
   "eslintConfig": {
-      "env": {
-        "meteor": true
-      }
+    "env": {
+      "meteor": true
+    }
   },
   "dependencies": {
     "eslint-config-airbnb": "^11.1.0",
