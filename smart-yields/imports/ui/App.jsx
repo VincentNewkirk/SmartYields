@@ -10,6 +10,7 @@ import Post from './Post.jsx';
 class App extends React.Component{
   renderPosts(){
     let that = this;
+    console.log(this.props, 'props')
     return this.props.posts.map((posts) => (
       <Post
       key={posts._id}
@@ -41,7 +42,7 @@ class App extends React.Component{
       <div className='post-container'>
 
         <AccountsUIWrapper />
-
+        <h1>Smart Yields Custom CMS</h1>
         { this.props.currentUser ?
           <form className="new-post" onSubmit={this.handleSubmit.bind(this)} >
             <input

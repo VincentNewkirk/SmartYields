@@ -2,11 +2,20 @@
   "name": "smart-yields",
   "private": true,
   "scripts": {
+    "lint": "eslint .",
     "start": "meteor run"
   },
   "dependencies": {
+    "eslint-config-airbnb": "^11.1.0",
     "meteor-node-stubs": "~0.2.0",
     "react-addons-perf": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^2.0.0-rc.1",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0"
   }
 }
