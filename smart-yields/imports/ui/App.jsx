@@ -52,6 +52,7 @@ class App extends React.Component{
           </form> : ''
         }
         {this.renderPosts()}
+        {this.props.yield}
       </div>
     )
   }

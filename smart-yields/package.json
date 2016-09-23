@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "meteor-node-stubs": "~0.2.0",
+    "react-addons-perf": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.2"
   }
 }
