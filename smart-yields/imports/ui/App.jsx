@@ -1,24 +1,13 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Posts } from '../api/posts.js';
 import ReactDOM from 'react-dom';
+import { Posts } from '../api/posts.js';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 
 import Post from './Post.jsx';
 
-class App extends React.Component{
-  renderPosts(){
-    let that = this;
-    console.log(this.props, 'props')
-    return this.props.posts.map((posts) => (
-      <Post
-      key={posts._id}
-      post={posts}
-      canEdit={that.props.currentUser ? true: false }
-      />
-    ))
-  };
+class App extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
@@ -32,12 +21,22 @@ class App extends React.Component{
       owner: Meteor.userId(),           // _id of logged in user
       username: Meteor.user().username,  // username of logged in user
     });
-
     // Clear form
     ReactDOM.findDOMNode(this.refs.textInput).value = '';
   }
 
-  render(){
+  renderPosts() {
+    const that = this;
+    return this.props.posts.map(posts => (
+      <Post
+        key={posts._id}
+        post={posts}
+        canEdit={that.props.currentUser ? true: false}
+      />
+    ));
+  };
+
+  render() {
     return (
       <div className='post-container'>
 
@@ -55,7 +54,7 @@ class App extends React.Component{
         {this.renderPosts()}
         {this.props.yield}
       </div>
-    )
+    );
   }
 }
 
