@@ -1,6 +1,9 @@
+/* eslint-env meteor */
+
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
+import Meteor from 'meteor';
 import { Posts } from '../api/posts.js';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
@@ -31,14 +34,14 @@ class App extends React.Component {
       <Post
         key={posts._id}
         post={posts}
-        canEdit={that.props.currentUser ? true: false}
+        canEdit={that.props.currentUser === true}
       />
     ));
-  };
+  }
 
   render() {
     return (
-      <div className='post-container'>
+      <div className="post-container">
 
         <AccountsUIWrapper />
         <h1>Smart Yields Custom CMS</h1>
