@@ -6,8 +6,6 @@ import Post from '../imports/ui/Post.jsx'
 FlowRouter.route('/', {
   name: 'landing page',
   action: function(params, queryParams){
-    console.log(params, 'params');
-    console.log(queryParams, 'queryParams')
     ReactLayout.render( App, { yield: '' });
   }
 })
