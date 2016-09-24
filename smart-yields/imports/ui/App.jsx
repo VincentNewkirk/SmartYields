@@ -16,10 +16,12 @@ class App extends React.Component {
     // Find the text field via the React ref
     const text = this.refs.textInput.value.trim();
     const title = this.refs.titleInput.value.trim();
+    const path = '/' + this.refs.pathInput.value.trim();
 
     Posts.insert({
       text,
       title,
+      path,
       createdAt: new Date(), // current time
       owner: Meteor.userId(),           // _id of logged in user
       username: Meteor.user().username,  // username of logged in user
@@ -39,6 +41,15 @@ class App extends React.Component {
     ));
   }
 
+  renderTags() {
+    console.log(this.props);
+    return this.props.posts.map(posts => (
+      <div className="a-tags" key={posts._id}>
+        <a href={posts.path}>{posts.title}</a><br />
+      </div>
+    ));
+  }
+
   render() {
     return (
       <div className="post-container">
@@ -55,14 +66,19 @@ class App extends React.Component {
             />
             <input
               type="text"
+              ref="pathInput"
+              placeholder="desired URL path"
+            />
+            <input
+              type="text"
               ref="textInput"
               placeholder="Type to add new posts"
             />
             <button onClick={this.handleSubmit.bind(this)}>Save</button>
           </form> : ''
         }
-        {this.renderPosts()}
         {this.props.yield}
+        {this.renderTags()}
       </div>
     );
   }
