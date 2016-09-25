@@ -12,7 +12,6 @@ class Post extends React.Component {
         // <h3>{this.props.post.title}</h3><br />
         // <strong>{this.props.post.username}</strong>: {this.props.post.text}<br />
   render() {
-    console.log(this.props);
     return (
       <div className="post-text">
         { this.props.canEdit ?
@@ -20,7 +19,14 @@ class Post extends React.Component {
             <button className="delete" onClick={this.deleteThisPost.bind(this)}>Delete</button>
           </div> : ''
         }
-        {this.props.post === undefined ? <p>Loading...</p> : this.props.post.title}
+        {this.props.post === undefined ? <p>Loading...</p> :
+          <div className="post-container">
+            <h3>{this.props.post.title}</h3>
+            <div className="post-content">
+              {this.props.post.text}
+            </div>
+          </div>
+        }
       </div>
     );
   }

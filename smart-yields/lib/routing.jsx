@@ -18,7 +18,7 @@ FlowRouter.route('/test', {
   }
 })
 
-FlowRouter.route('/posts/:id', {
+FlowRouter.route('/:category/:id', {
   name: 'posts',
   subscriptions: function(params) {
     this.register('posts', Meteor.subscribe('posts', params.id));
