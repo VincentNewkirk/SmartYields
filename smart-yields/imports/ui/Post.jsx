@@ -1,5 +1,6 @@
 import React from 'react';
 import { Posts } from '../api/posts.js';
+import { createContainer } from 'meteor/react-meteor-data';
 
 class Post extends React.Component {
 
@@ -7,18 +8,35 @@ class Post extends React.Component {
     Posts.remove(this.props.post._id);
   }
 
+
+        // <h3>{this.props.post.title}</h3><br />
+        // <strong>{this.props.post.username}</strong>: {this.props.post.text}<br />
   render() {
     return (
       <div className="post-text">
-        <strong>{this.props.post.username}</strong>: {this.props.post.text}<br />
         { this.props.canEdit ?
           <div className="owner-controls">
             <button className="delete" onClick={this.deleteThisPost.bind(this)}>Delete</button>
           </div> : ''
+        }
+        {this.props.post === undefined ? <p>Loading...</p> :
+          <div className="post-container">
+            <h3>{this.props.post.title}</h3>
+            <div className="post-content">
+              {this.props.post.text}
+            </div>
+          </div>
         }
       </div>
     );
   }
 }
 
-export default Post;
+export default createContainer((params) => {
+  const { id } = params;
+  const subscription = Meteor.subscribe('posts', id);
+  const loading = !subscription.ready();
+  const post = Posts.findOne(id);
+  return {loading, post};
+}, Post);
+

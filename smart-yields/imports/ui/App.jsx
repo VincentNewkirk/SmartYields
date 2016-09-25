@@ -3,10 +3,8 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
-import Meteor from 'meteor';
 import { Posts } from '../api/posts.js';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
-
 
 import Post from './Post.jsx';
 
@@ -16,16 +14,20 @@ class App extends React.Component {
     event.preventDefault();
 
     // Find the text field via the React ref
-    const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
+    const text = this.refs.textInput.value.trim();
+    const title = this.refs.titleInput.value.trim();
+    const path = '/' + this.refs.pathInput.value.trim();
 
     Posts.insert({
       text,
+      title,
+      path,
       createdAt: new Date(), // current time
       owner: Meteor.userId(),           // _id of logged in user
       username: Meteor.user().username,  // username of logged in user
     });
     // Clear form
-    ReactDOM.findDOMNode(this.refs.textInput).value = '';
+    this.refs.textInput.value = '';
   }
 
   renderPosts() {
@@ -34,8 +36,16 @@ class App extends React.Component {
       <Post
         key={posts._id}
         post={posts}
-        canEdit={that.props.currentUser === true}
+        canEdit={that.props.currentUser ? true : false}
       />
+    ));
+  }
+
+  renderTags() {
+    return this.props.posts.map(posts => (
+      <div className="a-tags" key={posts._id}>
+        <a href={posts.path + '/' + posts._id}>{posts.title}</a><br />
+      </div>
     ));
   }
 
@@ -47,15 +57,27 @@ class App extends React.Component {
         <h1>Smart Yields Custom CMS</h1>
         { this.props.currentUser ?
           <form className="new-post" onSubmit={this.handleSubmit.bind(this)} >
+            <br />
+            <input
+              type="text"
+              ref="titleInput"
+              placeholder="Title of post"
+            />
+            <input
+              type="text"
+              ref="pathInput"
+              placeholder="desired URL path"
+            />
             <input
               type="text"
               ref="textInput"
               placeholder="Type to add new posts"
             />
+            <button onClick={this.handleSubmit.bind(this)}>Save</button>
           </form> : ''
         }
-        {this.renderPosts()}
         {this.props.yield}
+        {this.renderTags()}
       </div>
     );
   }
