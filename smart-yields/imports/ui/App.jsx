@@ -42,7 +42,6 @@ class App extends React.Component {
   }
 
   renderTags() {
-    console.log(this.props);
     return this.props.posts.map(posts => (
       <div className="a-tags" key={posts._id}>
         <a href={posts.path}>{posts.title}</a><br />

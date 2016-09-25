@@ -2,6 +2,7 @@ import React from 'react';
 import App from '../imports/ui/App.jsx';
 import Test from '../imports/ui/TestComponent.jsx';
 import Post from '../imports/ui/Post.jsx'
+import { Posts } from '../imports/api/posts.js';
 
 FlowRouter.route('/', {
   name: 'landing page',
@@ -17,9 +18,12 @@ FlowRouter.route('/test', {
   }
 })
 
-FlowRouter.route('/posts', {
+FlowRouter.route('/posts/:id', {
   name: 'posts',
-  action(){
-    ReactLayout.render( App, {yield: <Post />})
+  subscriptions: function(params) {
+    this.register('posts', Meteor.subscribe('posts', params.id));
+  },
+  action(params){
+    ReactLayout.render( App, {yield: <Post id={params.id} />})
   }
 })
