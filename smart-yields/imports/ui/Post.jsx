@@ -8,9 +8,6 @@ class Post extends React.Component {
     Posts.remove(this.props.post._id);
   }
 
-
-        // <h3>{this.props.post.title}</h3><br />
-        // <strong>{this.props.post.username}</strong>: {this.props.post.text}<br />
   render() {
     return (
       <div className="post-text">
@@ -27,6 +24,7 @@ class Post extends React.Component {
             </div>
           </div>
         }
+        <a href='/'>Home</a>
       </div>
     );
   }

@@ -77,7 +77,6 @@ class App extends React.Component {
           </form> : ''
         }
         {this.props.yield}
-        {this.renderTags()}
       </div>
     );
   }
