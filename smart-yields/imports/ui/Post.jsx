@@ -4,12 +4,22 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 class Post extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      showEditForm: false
+    };
+  }
+
+  onClick () {
+    this.setState({showEditForm: !this.state.showEditForm});
+  }
+
   deleteThisPost() {
     Posts.remove(this.props.post._id);
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="post-text">
         {this.props.post === undefined ? <p>Loading...</p> :
@@ -20,10 +30,15 @@ class Post extends React.Component {
             </div>
           </div>
         }
+        {this.state.showEditForm
+          ? <input placeholder="test" type="text"/>
+          : null
+        }
         {this.props.currentUser ?
           <div className="owner-controls">
+            <button className="edit" onClick={this.onClick.bind(this)}>Edit</button>
             <button className="delete" onClick={this.deleteThisPost.bind(this)}>Delete</button>
-          </div> : ''
+          </div> : null
         }
         <a href='/'>Home</a>
       </div>

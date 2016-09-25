@@ -74,7 +74,7 @@ class App extends React.Component {
               placeholder="Type to add new posts"
             />
             <button onClick={this.handleSubmit.bind(this)}>Save</button>
-          </form> : ''
+          </form> : null
         }
         {this.props.yield}
       </div>
