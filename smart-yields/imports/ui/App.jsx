@@ -9,6 +9,11 @@ import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import Post from './Post.jsx';
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+  }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -28,25 +33,8 @@ class App extends React.Component {
     });
     // Clear form
     this.refs.textInput.value = '';
-  }
-
-  renderPosts() {
-    const that = this;
-    return this.props.posts.map(posts => (
-      <Post
-        key={posts._id}
-        post={posts}
-        canEdit={that.props.currentUser ? true : false}
-      />
-    ));
-  }
-
-  renderTags() {
-    return this.props.posts.map(posts => (
-      <div className="a-tags" key={posts._id}>
-        <a href={posts.path + '/' + posts._id}>{posts.title}</a><br />
-      </div>
-    ));
+    this.refs.titleInput.value = '';
+    this.refs.pathInput.value = '';
   }
 
   render() {
@@ -56,7 +44,7 @@ class App extends React.Component {
         <AccountsUIWrapper />
         <h1>Smart Yields Custom CMS</h1>
         { this.props.currentUser ?
-          <form className="new-post" onSubmit={this.handleSubmit.bind(this)} >
+          <form className="new-post" onSubmit={this.handleSubmit} >
             <br />
             <input
               type="text"
@@ -73,7 +61,7 @@ class App extends React.Component {
               ref="textInput"
               placeholder="Type to add new posts"
             />
-            <button onClick={this.handleSubmit.bind(this)}>Save</button>
+            <button onClick={this.handleSubmit}>Save</button>
           </form> : null
         }
         {this.props.yield}
