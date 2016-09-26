@@ -19,6 +19,15 @@ class Post extends React.Component {
     Posts.remove(this.props.post._id);
   }
 
+  updateCollection() {
+    Posts.update({_id: this.props.post._id}, {$set:
+      {
+        title: this.refs.title.value,
+        text: this.refs.text.value,
+        path: this.refs.path.value
+      }})
+  }
+
   render() {
     return (
       <div className="post-text">
@@ -31,7 +40,12 @@ class Post extends React.Component {
           </div>
         }
         {this.state.showEditForm
-          ? <input placeholder="test" type="text"/>
+          ? <div className="edit-inputs">
+              <input type="text" ref="title" defaultValue={this.props.post.title} /> <br />
+              <input type="text" ref="text" defaultValue={this.props.post.text}/> <br />
+              <input type="text" ref="path" defaultValue={this.props.post.path} />
+              <button className="save-button" onClick={this.updateCollection.bind(this)}>Save</button>
+            </div>
           : null
         }
         {this.props.currentUser ?
