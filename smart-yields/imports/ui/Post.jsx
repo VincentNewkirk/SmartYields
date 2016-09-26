@@ -9,6 +9,9 @@ class Post extends React.Component {
     this.state = {
       showEditForm: false
     };
+    this.onClick = this.onClick.bind(this);
+    this.deleteThisPost = this.deleteThisPost.bind(this);
+    this.updateCollection = this.updateCollection.bind(this);
   }
 
   onClick () {
@@ -44,14 +47,14 @@ class Post extends React.Component {
               <input type="text" ref="title" defaultValue={this.props.post.title} /> <br />
               <input type="text" ref="text" defaultValue={this.props.post.text}/> <br />
               <input type="text" ref="path" defaultValue={this.props.post.path} />
-              <button className="save-button" onClick={this.updateCollection.bind(this)}>Save</button>
+              <button className="save-button" onClick={this.updateCollection}>Save</button>
             </div>
           : null
         }
         {this.props.currentUser ?
           <div className="owner-controls">
-            <button className="edit" onClick={this.onClick.bind(this)}>Edit</button>
-            <button className="delete" onClick={this.deleteThisPost.bind(this)}>Delete</button>
+            <button className="edit" onClick={this.onClick}>Edit</button>
+            <button className="delete" onClick={this.deleteThisPost}>Delete</button>
           </div> : null
         }
         <a href='/'>Home</a>
