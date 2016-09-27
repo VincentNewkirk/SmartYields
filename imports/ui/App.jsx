@@ -13,6 +13,7 @@ class App extends React.Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.inputChange = this.inputChange.bind(this);
+    this.isValidInput = this.isValidInput.bind(this);
     this.state = {
       validPath: true,
     }
@@ -26,12 +27,14 @@ class App extends React.Component {
     const title = this.refs.titleInput.value.trim();
     const path = '/' + this.refs.pathInput.value.trim();
 
-    this.props.posts.forEach((post) => {
-      if(post.path === path){
-        this.setState({ validPath: false });
-        throw new Error('path already exists')
-      }
-    });
+    if(this.isValidInput(this.refs.pathInput.value.trim())){
+      this.props.posts.forEach((post) => {
+        if(post.path === path){
+          this.setState({ validPath: false });
+          throw new Error('path already exists')
+        }
+      });
+    }
 
     if(this.state.validPath){
       Posts.insert({
@@ -49,6 +52,18 @@ class App extends React.Component {
     this.refs.titleInput.value = '';
     this.refs.pathInput.value = '';
   }
+
+  isValidInput(str) {
+    let iChars = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?";
+    for (var i = 0; i < str.length; i++) {
+       if (iChars.indexOf(str.charAt(i)) != -1) {
+           this.setState({ validPath: false });
+           throw new Error('No special characters in input field')
+       }
+    return true;
+    }
+  }
+
 
   inputChange() {
     this.setState({ validPath: true })
@@ -75,7 +90,7 @@ class App extends React.Component {
               onChange={this.inputChange}
             />{this.state.validPath ?
                 null
-                : <span>Specified URL already in use</span>
+                : <span>Invalid URL. Specified URL may already be in use</span>
               }<br />
             <span>Body of your page</span><input
               type="text"
