@@ -64,10 +64,14 @@ class Post extends React.Component {
 }
 
 export default createContainer((params) => {
-  const { id } = params;
-  const subscription = Meteor.subscribe('posts', id);
-  const loading = !subscription.ready();
-  const post = Posts.findOne(id);
-  return {loading, post, currentUser: Meteor.user()};
+  const subscription = Meteor.subscribe('posts');
+  const posts = Posts.find({}).fetch();
+  let post;
+  posts.forEach((found) => {
+    if(found.path === '/' + params.pathLink) {
+      post = found;
+    }
+  })
+  return { post, currentUser: Meteor.user()};
 }, Post);
 

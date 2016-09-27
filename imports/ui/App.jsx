@@ -55,7 +55,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props.posts)
     return (
       <div className="post-container">
 
@@ -76,7 +75,7 @@ class App extends React.Component {
               onChange={this.inputChange}
             />{this.state.validPath ?
                 null
-                : <span>Invalid URL. Desired URL path may already</span>
+                : <span>Specified URL already in use</span>
               }<br />
             <input
               type="text"
