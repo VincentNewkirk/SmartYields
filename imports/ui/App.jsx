@@ -12,7 +12,10 @@ class App extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.inputChange = this.inputChange.bind(this);
+    this.state = {
+      validPath: true,
+    }
   }
 
   handleSubmit(event) {
@@ -23,21 +26,36 @@ class App extends React.Component {
     const title = this.refs.titleInput.value.trim();
     const path = '/' + this.refs.pathInput.value.trim();
 
-    Posts.insert({
-      text,
-      title,
-      path,
-      createdAt: new Date(), // current time
-      owner: Meteor.userId(),           // _id of logged in user
-      username: Meteor.user().username,  // username of logged in user
+    this.props.posts.forEach((post) => {
+      if(post.path === path){
+        this.setState({ validPath: false });
+        throw new Error('path already exists')
+      }
     });
+
+    if(this.state.validPath){
+      Posts.insert({
+        text,
+        title,
+        path,
+        createdAt: new Date(), // current time
+        owner: Meteor.userId(),           // _id of logged in user
+        username: Meteor.user().username,  // username of logged in user
+      });
+    }
+
     // Clear form
     this.refs.textInput.value = '';
     this.refs.titleInput.value = '';
     this.refs.pathInput.value = '';
   }
 
+  inputChange() {
+    this.setState({ validPath: true })
+  }
+
   render() {
+    console.log(this.props.posts)
     return (
       <div className="post-container">
 
@@ -50,16 +68,20 @@ class App extends React.Component {
               type="text"
               ref="titleInput"
               placeholder="Title of post"
-            />
-            <input
+            /><br />
+            <span>smartyields.com/</span><input
               type="text"
               ref="pathInput"
               placeholder="desired URL path"
-            />
+              onChange={this.inputChange}
+            />{this.state.validPath ?
+                null
+                : <span>Invalid URL. Desired URL path may already</span>
+              }<br />
             <input
               type="text"
               ref="textInput"
-              placeholder="Type to add new posts"
+              placeholder="Post content"
             />
             <button onClick={this.handleSubmit}>Save</button>
           </form> : null
