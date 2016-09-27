@@ -63,10 +63,10 @@ class App extends React.Component {
         { this.props.currentUser ?
           <form className="new-post" onSubmit={this.handleSubmit} >
             <br />
-            <input
+            <span>Title of your page</span><input
               type="text"
               ref="titleInput"
-              placeholder="Title of post"
+              placeholder="Awesome Page"
             /><br />
             <span>smartyields.com/</span><input
               type="text"
@@ -77,10 +77,10 @@ class App extends React.Component {
                 null
                 : <span>Specified URL already in use</span>
               }<br />
-            <input
+            <span>Body of your page</span><input
               type="text"
               ref="textInput"
-              placeholder="Post content"
+              placeholder="'Hello! This is my page!'"
             />
             <button onClick={this.handleSubmit}>Save</button>
           </form> : null
