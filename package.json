@@ -11,11 +11,15 @@
     }
   },
   "dependencies": {
-    "eslint-config-airbnb": "^11.1.0",
+    "bcrypt": "^0.8.7",
     "eslint": "^3.4.0",
+    "eslint-config-airbnb": "^11.1.0",
     "meteor-node-stubs": "~0.2.0",
+    "react": "^15.3.2",
     "react-addons-perf": "^15.3.2",
-    "react-addons-pure-render-mixin": "^15.3.2"
+    "react-addons-pure-render-mixin": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-mounter": "^1.2.0"
   },
   "devDependencies": {
     "eslint": "^2.0.0-rc.1",

@@ -1,13 +1,14 @@
 import React from 'react';
+import {mount} from 'react-mounter';
+import { Posts } from '../imports/api/posts.js';
 import App from '../imports/ui/App.jsx';
 import Post from '../imports/ui/Post.jsx'
 import Tags from '../imports/ui/Tags.jsx';
-import { Posts } from '../imports/api/posts.js';
 
 FlowRouter.route('/', {
   name: 'landing page',
   action: function(params, queryParams){
-    ReactLayout.render( App, { yield: <Tags /> });
+    mount( App, { yield: <Tags /> });
   }
 })
 
@@ -18,6 +19,6 @@ FlowRouter.route('/:category/:id', {
     this.register('posts', Meteor.subscribe('posts', params.id));
   },
   action(params){
-    ReactLayout.render( App, {yield: <Post id={params.id} />})
+    mount( App, {yield: <Post id={params.id} />})
   }
 })
