@@ -12,7 +12,11 @@ class App extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.inputChange = this.inputChange.bind(this);
+    this.isValidInput = this.isValidInput.bind(this);
+    this.state = {
+      validPath: true,
+    }
   }
 
   handleSubmit(event) {
@@ -23,18 +27,46 @@ class App extends React.Component {
     const title = this.refs.titleInput.value.trim();
     const path = '/' + this.refs.pathInput.value.trim();
 
-    Posts.insert({
-      text,
-      title,
-      path,
-      createdAt: new Date(), // current time
-      owner: Meteor.userId(),           // _id of logged in user
-      username: Meteor.user().username,  // username of logged in user
-    });
+    if(this.isValidInput(this.refs.pathInput.value.trim())){
+      this.props.posts.forEach((post) => {
+        if(post.path === path){
+          this.setState({ validPath: false });
+          throw new Error('path already exists')
+        }
+      });
+    }
+
+    if(this.state.validPath){
+      Posts.insert({
+        text,
+        title,
+        path,
+        createdAt: new Date(), // current time
+        owner: Meteor.userId(),           // _id of logged in user
+        username: Meteor.user().username,  // username of logged in user
+      });
+    }
+
     // Clear form
     this.refs.textInput.value = '';
     this.refs.titleInput.value = '';
     this.refs.pathInput.value = '';
+  }
+
+  isValidInput(str) {
+    let iChars = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?";
+    for (var i = 0; i < str.length; i++) {
+       if (iChars.indexOf(str.charAt(i)) != -1) {
+           this.setState({ validPath: false });
+           throw new Error('No special characters in input field')
+       }
+    return true;
+    }
+  }
+
+
+  inputChange() {
+    this.setState({ validPath: true })
   }
 
   render() {
@@ -46,20 +78,24 @@ class App extends React.Component {
         { this.props.currentUser ?
           <form className="new-post" onSubmit={this.handleSubmit} >
             <br />
-            <input
+            <span>Title of your page</span><input
               type="text"
               ref="titleInput"
-              placeholder="Title of post"
-            />
-            <input
+              placeholder="Awesome Page"
+            /><br />
+            <span>smartyields.com/</span><input
               type="text"
               ref="pathInput"
               placeholder="desired URL path"
-            />
-            <input
+              onChange={this.inputChange}
+            />{this.state.validPath ?
+                null
+                : <span>Invalid URL. Specified URL may already be in use</span>
+              }<br />
+            <span>Body of your page</span><input
               type="text"
               ref="textInput"
-              placeholder="Type to add new posts"
+              placeholder="'Hello! This is my page!'"
             />
             <button onClick={this.handleSubmit}>Save</button>
           </form> : null
