@@ -20,7 +20,7 @@ FlowRouter.route('/:category/', {
     this.register('posts', Meteor.subscribe('posts'));
   },
   action(params){
-    mount( App, {yield: <Post pathLink={params.category} />})
+    mount( App, {yield: <TestTemplate pathLink={params.category} />})
   }
 })
 
