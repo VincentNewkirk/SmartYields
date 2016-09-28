@@ -4,7 +4,7 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 import { Posts } from '../api/posts.js';
-import { Button, Navbar } from 'react-bootstrap';
+import { Button, Navbar, PageHeader } from 'react-bootstrap';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 import Post from './Post.jsx';
@@ -58,7 +58,7 @@ class App extends React.Component {
 
   isValidInput(str) {
     let iChars = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?";
-    for (var i = 0; i < str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
        if (iChars.indexOf(str.charAt(i)) != -1) {
            this.setState({ validPath: false });
            throw new Error('No special characters in input field')
@@ -76,7 +76,7 @@ class App extends React.Component {
       <div className="post-container container">
 
         <AccountsUIWrapper />
-        <h1>Smart Yields Custom CMS</h1>
+        <PageHeader>Smart Yields Custom CMS</PageHeader>
         { this.props.currentUser ?
           <Navbar>
             <form className="new-post" onSubmit={this.handleSubmit} >
@@ -99,8 +99,8 @@ class App extends React.Component {
                 type="text"
                 ref="textInput"
                 placeholder="'Hello! This is my page!'"
-              />
-              <Button onClick={this.handleSubmit} bsStyle="success">Save</Button>
+              /><br />
+              <Button onClick={this.handleSubmit} bsStyle="primary">Save</Button>
             </form>
           </Navbar>
           : null

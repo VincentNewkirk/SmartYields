@@ -4,6 +4,7 @@ import { Posts } from '../imports/api/posts.js';
 import App from '../imports/ui/App.jsx';
 import Post from '../imports/ui/Post.jsx'
 import Tags from '../imports/ui/Tags.jsx';
+import TestTemplate from '../imports/ui/testTemplate.jsx';
 
 FlowRouter.route('/', {
   name: 'landing page',
@@ -20,5 +21,12 @@ FlowRouter.route('/:category/', {
   },
   action(params){
     mount( App, {yield: <Post pathLink={params.category} />})
+  }
+})
+
+FlowRouter.route('/testT/test', {
+  name:'test',
+  action() {
+    mount( App, {yield: <TestTemplate />})
   }
 })

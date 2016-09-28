@@ -34,8 +34,9 @@ class Post extends React.Component {
   render() {
     return (
       <div className="post-text">
-        {this.props.post === undefined ? <p>Loading...</p> :
-          <div className="post-container">
+        {!this.props.post
+          ? <p>Loading...</p>
+          : <div className="post-container">
             <h3>{this.props.post.title}</h3>
             <div className="post-content">
               {this.props.post.text}
@@ -51,11 +52,12 @@ class Post extends React.Component {
             </div>
           : null
         }
-        {this.props.currentUser ?
-          <div className="owner-controls">
+        {this.props.currentUser
+          ? <div className="owner-controls">
             <button className="edit" onClick={this.onClick}>Edit</button>
             <button className="delete" onClick={this.deleteThisPost}>Delete</button>
-          </div> : null
+          </div>
+          : null
         }
         <a href='/'>Home</a>
       </div>
