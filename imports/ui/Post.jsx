@@ -66,6 +66,7 @@ class Post extends React.Component {
 export default createContainer((params) => {
   const subscription = Meteor.subscribe('posts');
   const posts = Posts.find({}).fetch();
+  //Filter posts to find one with matching path
   let post;
   posts.forEach((found) => {
     if(found.path === '/' + params.pathLink) {

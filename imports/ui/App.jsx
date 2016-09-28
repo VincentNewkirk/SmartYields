@@ -4,6 +4,7 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 import { Posts } from '../api/posts.js';
+import { Button, Navbar } from 'react-bootstrap';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 import Post from './Post.jsx';
@@ -27,6 +28,8 @@ class App extends React.Component {
     const title = this.refs.titleInput.value.trim();
     const path = '/' + this.refs.pathInput.value.trim();
 
+    //validate URL input doesn't contain special characters
+    //or is already a path in use
     if(this.isValidInput(this.refs.pathInput.value.trim())){
       this.props.posts.forEach((post) => {
         if(post.path === path){
@@ -64,41 +67,43 @@ class App extends React.Component {
     }
   }
 
-
   inputChange() {
     this.setState({ validPath: true })
   }
 
   render() {
     return (
-      <div className="post-container">
+      <div className="post-container container">
 
         <AccountsUIWrapper />
         <h1>Smart Yields Custom CMS</h1>
         { this.props.currentUser ?
-          <form className="new-post" onSubmit={this.handleSubmit} >
-            <br />
-            <span>Title of your page</span><input
-              type="text"
-              ref="titleInput"
-              placeholder="Awesome Page"
-            /><br />
-            <span>smartyields.com/</span><input
-              type="text"
-              ref="pathInput"
-              placeholder="desired URL path"
-              onChange={this.inputChange}
-            />{this.state.validPath ?
-                null
-                : <span>Invalid URL. Specified URL may already be in use</span>
-              }<br />
-            <span>Body of your page</span><input
-              type="text"
-              ref="textInput"
-              placeholder="'Hello! This is my page!'"
-            />
-            <button onClick={this.handleSubmit}>Save</button>
-          </form> : null
+          <Navbar>
+            <form className="new-post" onSubmit={this.handleSubmit} >
+              <br />
+              <span>Title of your page</span><input
+                type="text"
+                ref="titleInput"
+                placeholder="Awesome Page"
+              /><br />
+              <span>smartyields.com/</span><input
+                type="text"
+                ref="pathInput"
+                placeholder="desired URL path"
+                onChange={this.inputChange}
+              />{this.state.validPath ?
+                  null
+                  : <span>Invalid URL. Specified URL may already be in use</span>
+                }<br />
+              <span>Body of your page</span><input
+                type="text"
+                ref="textInput"
+                placeholder="'Hello! This is my page!'"
+              />
+              <Button onClick={this.handleSubmit} bsStyle="success">Save</Button>
+            </form>
+          </Navbar>
+          : null
         }
         {this.props.yield}
       </div>
