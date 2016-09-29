@@ -8,7 +8,6 @@ class TemplateSelector extends React.Component {
 
   renderPosts() {
     if(this.props.post.template == 1) {
-    console.log('FIRED')
       return <FirstTemplate text={this.props.post.text} path={this.props.post.path} _id={this.props.post._id} title={this.props.post.title} />
     } else if(this.props.post.template == 2) {
       return <SecondTemplate text={this.props.post.text} path={this.props.post.path} title={this.props.post.title} _id={this.props.post._id} />
@@ -16,7 +15,6 @@ class TemplateSelector extends React.Component {
   }
 
   render(){
-    console.log(this.props)
     return(
       <div className="container">
         {this.props.post
