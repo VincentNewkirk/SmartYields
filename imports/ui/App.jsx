@@ -15,8 +15,10 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.inputChange = this.inputChange.bind(this);
     this.isValidInput = this.isValidInput.bind(this);
+    this.onSelect = this.onSelect.bind(this);
     this.state = {
       validPath: true,
+      selectedTemplate: 1,
     }
   }
 
@@ -27,6 +29,7 @@ class App extends React.Component {
     const text = this.refs.textInput.value.trim();
     const title = this.refs.titleInput.value.trim();
     const path = '/' + this.refs.pathInput.value.trim();
+    const template = this.state.selectedTemplate;
 
     //validate URL input doesn't contain special characters
     //or is already a path in use
@@ -44,6 +47,7 @@ class App extends React.Component {
         text,
         title,
         path,
+        template,
         createdAt: new Date(), // current time
         owner: Meteor.userId(),           // _id of logged in user
         username: Meteor.user().username,  // username of logged in user
@@ -69,6 +73,10 @@ class App extends React.Component {
 
   inputChange() {
     this.setState({ validPath: true })
+  }
+
+  onSelect(event) {
+    this.setState({ selectedTemplate: event })
   }
 
   render() {
@@ -100,12 +108,12 @@ class App extends React.Component {
                 ref="textInput"
                 placeholder="'Hello! This is my page!'"
               /><br />
+              <DropdownButton title={'Template ' + this.state.selectedTemplate} onSelect={this.onSelect} id="1337">
+                <MenuItem eventKey="1" ref="template1">Template 1</MenuItem>
+                <MenuItem eventKey="2" ref="template2">Template 2</MenuItem>
+              </DropdownButton>
               <Button onClick={this.handleSubmit} bsStyle="primary">Save</Button>
             </form>
-            <DropdownButton title="Template" id="1337">
-              <MenuItem eventKey="1">Template 1</MenuItem>
-              <MenuItem eventKey="2">Template 2</MenuItem>
-            </DropdownButton>
           </Navbar>
           : null
         }

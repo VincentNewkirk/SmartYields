@@ -8,19 +8,16 @@ class SecondTemplate extends React.Component {
   render() {
     return(
       <div className="container">
-        {this.props.post
-          ? <div className="container">
-              <Jumbotron>
-                <h1>{this.props.post.title}</h1>
-                <Post title={this.props.post.title}
-                text={this.props.post.text}
-                path={this.props.post.path}
-                _id={this.props.post._id}
-                />
-              </Jumbotron>
-            </div>
-          : null
-        }
+        <div className="container">
+          <Jumbotron>
+            <h1>{this.props.title}</h1>
+            <Post title={this.props.title}
+            text={this.props.text}
+            path={this.props.path}
+            _id={this.props._id}
+            />
+          </Jumbotron>
+        </div>
       </div>
     )
   }

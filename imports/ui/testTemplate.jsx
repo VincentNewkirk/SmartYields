@@ -12,10 +12,7 @@ class TestTemplate extends React.Component{
                 <div className="row">
                     <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                         <div className="site-heading">
-                            {this.props.post
-                              ? <h1>{this.props.post.title}</h1>
-                              : null
-                            }
+                            <h1>{this.props.title}</h1>
                             <span className="subheading"></span>
                         </div>
                     </div>
@@ -24,10 +21,7 @@ class TestTemplate extends React.Component{
         </header>
         <div className="row">
             <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-              {this.props.post
-                ?<Post title={this.props.post.title} text={this.props.post.text} path={this.props.post.path} _id={this.props.post._id}/>
-                : null
-              }
+              <Post title={this.props.title} text={this.props.text} path={this.props.path} _id={this.props._id}/>
             </div>
         </div>
       </div>
