@@ -4,7 +4,7 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 import { Posts } from '../api/posts.js';
-import { Button, Navbar, PageHeader } from 'react-bootstrap';
+import { Button, Navbar, PageHeader, DropdownButton, MenuItem } from 'react-bootstrap';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 import Post from './Post.jsx';
@@ -102,6 +102,10 @@ class App extends React.Component {
               /><br />
               <Button onClick={this.handleSubmit} bsStyle="primary">Save</Button>
             </form>
+            <DropdownButton title="Template" id="1337">
+              <MenuItem eventKey="1">Template 1</MenuItem>
+              <MenuItem eventKey="2">Template 2</MenuItem>
+            </DropdownButton>
           </Navbar>
           : null
         }
