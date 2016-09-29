@@ -24,12 +24,10 @@ class Post extends React.Component {
   }
 
   updateCollection() {
-    Posts.update({_id: this.props._id}, {$set:
-      {
-        title: this.refs.title.value,
-        text: this.refs.text.value,
-        path: this.refs.path.value
-      }})
+    const text = this.refs.text.value.trim();
+    const title = this.refs.title.value.trim();
+    const path = this.refs.path.value.trim();
+    Meteor.call('posts.update', this.props._id, title, text, path)
   }
 
   render() {

@@ -29,11 +29,19 @@ Meteor.methods({
 
     Posts.remove(taskId);
   },
-  'posts.setChecked'(taskId, setChecked) {
+  'posts.update'(taskId, title, text, path) {
     check(taskId, String);
-    check(setChecked, Boolean);
+    check(title, String);
+    check(text, String);
+    check(path, String);
 
-    Posts.update(taskId, { $set: { checked: setChecked } });
+    Posts.update(taskId, {
+      $set: {
+        text: text,
+        title: title,
+        path: path,
+      },
+    });
   },
 });
 
