@@ -69,6 +69,7 @@ class App extends React.Component {
   }
 
   onSelect(event) {
+    console.log(typeof event);
     this.setState({ selectedTemplate: event })
   }
 
@@ -102,8 +103,8 @@ class App extends React.Component {
                 placeholder="'Hello! This is my page!'"
               /><br />
               <DropdownButton title={'Template ' + this.state.selectedTemplate} onSelect={this.onSelect} id="1337">
-                <MenuItem eventKey="1" ref="template1">Template 1</MenuItem>
-                <MenuItem eventKey="2" ref="template2">Template 2</MenuItem>
+                <MenuItem eventKey={1} ref="template1">Template 1</MenuItem>
+                <MenuItem eventKey={2} ref="template2">Template 2</MenuItem>
               </DropdownButton>
               <Button onClick={this.handleSubmit} bsStyle="primary">Save</Button>
             </form>
