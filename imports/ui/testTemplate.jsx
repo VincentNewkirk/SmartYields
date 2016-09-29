@@ -5,8 +5,6 @@ import Post from './Post.jsx';
 
 class TestTemplate extends React.Component{
   render() {
-  console.log(this.props)
-
     return(
       <div className="container">
         <header className="intro-header">
