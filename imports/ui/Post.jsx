@@ -19,11 +19,11 @@ class Post extends React.Component {
   }
 
   deleteThisPost() {
-    Posts.remove(this.props.id);
+    Posts.remove(this.props._id);
   }
 
   updateCollection() {
-    Posts.update({_id: this.props.id}, {$set:
+    Posts.update({_id: this.props._id}, {$set:
       {
         title: this.refs.title.value,
         text: this.refs.text.value,
@@ -32,6 +32,7 @@ class Post extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="post-text">
         {!this.props.title
