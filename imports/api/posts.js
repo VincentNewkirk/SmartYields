@@ -2,6 +2,15 @@ import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
+export const Posts = new Mongo.Collection('posts');
+
+if (Meteor.isServer) {
+  // This code only runs on the server
+  Meteor.publish('posts', function postsPublication() {
+    return Posts.find();
+  });
+}
+
 Meteor.methods({
   'posts.insert'(text, title, path, template) {
     check(text, String);
@@ -44,5 +53,3 @@ Meteor.methods({
     });
   },
 });
-
-export const Posts = new Mongo.Collection('posts');

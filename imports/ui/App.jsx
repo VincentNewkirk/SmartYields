@@ -117,6 +117,8 @@ class App extends React.Component {
 }
 
 export default createContainer(() => {
+  Meteor.subscribe('posts');
+
   return {
     posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
     currentUser: Meteor.user(),
