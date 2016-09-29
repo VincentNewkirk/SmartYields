@@ -1,6 +1,7 @@
 import React from 'react';
 import { Posts } from '../api/posts.js';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 
 class Post extends React.Component {
 
@@ -19,7 +20,7 @@ class Post extends React.Component {
   }
 
   deleteThisPost() {
-    Posts.remove(this.props._id);
+    Meteor.call('posts.remove', this.props._id);
   }
 
   updateCollection() {

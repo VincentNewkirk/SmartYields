@@ -4,6 +4,7 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 import { Posts } from '../api/posts.js';
+import { Meteor } from 'meteor/meteor';
 import { Button, Navbar, PageHeader, DropdownButton, MenuItem } from 'react-bootstrap';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
@@ -43,15 +44,7 @@ class App extends React.Component {
     }
 
     if(this.state.validPath){
-      Posts.insert({
-        text,
-        title,
-        path,
-        template,
-        createdAt: new Date(), // current time
-        owner: Meteor.userId(),           // _id of logged in user
-        username: Meteor.user().username,  // username of logged in user
-      });
+      Meteor.call('posts.insert', text, title, path, template);
     }
 
     // Clear form
