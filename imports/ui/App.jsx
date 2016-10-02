@@ -4,6 +4,7 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 import { Posts } from '../api/posts.js';
+import { Pages } from '../api/pages.js';
 import { Meteor } from 'meteor/meteor';
 import { Button, Navbar, PageHeader, DropdownButton, MenuItem } from 'react-bootstrap';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
@@ -18,10 +19,13 @@ class App extends React.Component {
     this.isValidInput = this.isValidInput.bind(this);
     this.onSelectTemplate = this.onSelectTemplate.bind(this);
     this.onSelectType =  this.onSelectType.bind(this);
+    this.onSelectMenu = this.onSelectMenu.bind(this);
     this.state = {
       validPath: true,
       selectedTemplate: 1,
       selectedType: 'Select Type',
+      menuSelected: false,
+      menuLocation: 'Menu Location',
     }
   }
 
@@ -75,7 +79,16 @@ class App extends React.Component {
   }
 
   onSelectType(event) {
-    this.setState({ selectedType: event })
+    this.setState({ selectedType: event });
+    if(event === 'Page'){
+      this.setState({ menuSelected: true });
+    } else {
+      this.setState({ menuSelected: false });
+    }
+  }
+
+  onSelectMenu(event){
+    this.setState({ menuLocation: event })
   }
 
   render() {
@@ -111,12 +124,20 @@ class App extends React.Component {
                 <MenuItem eventKey={1} ref="template1">Template 1</MenuItem>
                 <MenuItem eventKey={2} ref="template2">Template 2</MenuItem>
               </DropdownButton>
-              <Button onClick={this.handleSubmit} bsStyle="primary">Save</Button>
             </form>
             <DropdownButton title={this.state.selectedType} onSelect={this.onSelectType} id="137">
               <MenuItem eventKey={'Post'} ref="template1">Post</MenuItem>
               <MenuItem eventKey={'Page'} ref="template2">Page</MenuItem>
             </DropdownButton>
+            {this.state.menuSelected
+             ?<DropdownButton title={this.state.menuLocation} onSelect={this.onSelectMenu} id="17">
+                <MenuItem eventKey={'Main'}>Main</MenuItem>
+                <MenuItem eventKey={'Sidebar'}>Sidebar</MenuItem>
+                <MenuItem eventKey={'Footer'}>Footer</MenuItem>
+              </DropdownButton>
+              : null
+            }
+            <Button onClick={this.handleSubmit} bsStyle="primary">Save</Button>
           </Navbar>
           : null
         }
