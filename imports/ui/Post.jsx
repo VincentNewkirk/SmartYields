@@ -1,6 +1,7 @@
 import React from 'react';
 import { Posts } from '../api/posts.js';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 
 class Post extends React.Component {
 
@@ -19,43 +20,43 @@ class Post extends React.Component {
   }
 
   deleteThisPost() {
-    Posts.remove(this.props.post._id);
+    Meteor.call('posts.remove', this.props._id);
+    FlowRouter.go(FlowRouter.path('/'));
   }
 
   updateCollection() {
-    Posts.update({_id: this.props.post._id}, {$set:
-      {
-        title: this.refs.title.value,
-        text: this.refs.text.value,
-        path: this.refs.path.value
-      }})
+    const text = this.refs.text.value.trim();
+    const title = this.refs.title.value.trim();
+    const path = this.refs.path.value.trim();
+    Meteor.call('posts.update', this.props._id, title, text, path)
   }
 
   render() {
     return (
       <div className="post-text">
-        {this.props.post === undefined ? <p>Loading...</p> :
-          <div className="post-container">
-            <h3>{this.props.post.title}</h3>
+        {!this.props.title
+          ? <p>Loading...</p>
+          : <div className="post-container">
             <div className="post-content">
-              {this.props.post.text}
+              {this.props.text}
             </div>
           </div>
         }
         {this.state.showEditForm
           ? <div className="edit-inputs">
-              <input type="text" ref="title" defaultValue={this.props.post.title} /> <br />
-              <input type="text" ref="text" defaultValue={this.props.post.text}/> <br />
-              <input type="text" ref="path" defaultValue={this.props.post.path} />
+              <input type="text" ref="title" defaultValue={this.props.title} /> <br />
+              <input type="text" ref="text" defaultValue={this.props.text}/> <br />
+              <input type="text" ref="path" defaultValue={this.props.path} />
               <button className="save-button" onClick={this.updateCollection}>Save</button>
             </div>
           : null
         }
-        {this.props.currentUser ?
-          <div className="owner-controls">
+        {this.props.currentUser
+          ? <div className="owner-controls">
             <button className="edit" onClick={this.onClick}>Edit</button>
             <button className="delete" onClick={this.deleteThisPost}>Delete</button>
-          </div> : null
+          </div>
+          : null
         }
         <a href='/'>Home</a>
       </div>
@@ -66,6 +67,7 @@ class Post extends React.Component {
 export default createContainer((params) => {
   const subscription = Meteor.subscribe('posts');
   const posts = Posts.find({}).fetch();
+  //Filter posts to find one with matching path
   let post;
   posts.forEach((found) => {
     if(found.path === '/' + params.pathLink) {
