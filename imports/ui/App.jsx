@@ -16,10 +16,12 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.inputChange = this.inputChange.bind(this);
     this.isValidInput = this.isValidInput.bind(this);
-    this.onSelect = this.onSelect.bind(this);
+    this.onSelectTemplate = this.onSelectTemplate.bind(this);
+    this.onSelectType =  this.onSelectType.bind(this);
     this.state = {
       validPath: true,
       selectedTemplate: 1,
+      selectedType: 'Select Type',
     }
   }
 
@@ -68,9 +70,12 @@ class App extends React.Component {
     this.setState({ validPath: true })
   }
 
-  onSelect(event) {
-    console.log(typeof event);
+  onSelectTemplate(event) {
     this.setState({ selectedTemplate: event })
+  }
+
+  onSelectType(event) {
+    this.setState({ selectedType: event })
   }
 
   render() {
@@ -102,12 +107,16 @@ class App extends React.Component {
                 ref="textInput"
                 placeholder="'Hello! This is my page!'"
               /><br />
-              <DropdownButton title={'Template ' + this.state.selectedTemplate} onSelect={this.onSelect} id="1337">
+              <DropdownButton title={'Template ' + this.state.selectedTemplate} onSelect={this.onSelectTemplate} id="1337">
                 <MenuItem eventKey={1} ref="template1">Template 1</MenuItem>
                 <MenuItem eventKey={2} ref="template2">Template 2</MenuItem>
               </DropdownButton>
               <Button onClick={this.handleSubmit} bsStyle="primary">Save</Button>
             </form>
+            <DropdownButton title={this.state.selectedType} onSelect={this.onSelectType} id="137">
+              <MenuItem eventKey={'Post'} ref="template1">Post</MenuItem>
+              <MenuItem eventKey={'Page'} ref="template2">Page</MenuItem>
+            </DropdownButton>
           </Navbar>
           : null
         }
