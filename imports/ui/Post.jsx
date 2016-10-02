@@ -21,6 +21,7 @@ class Post extends React.Component {
 
   deleteThisPost() {
     Meteor.call('posts.remove', this.props._id);
+    FlowRouter.go(FlowRouter.path('/'));
   }
 
   updateCollection() {
