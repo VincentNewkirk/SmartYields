@@ -12,12 +12,12 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'pages.insert'(text, title, path, template, location, order) {
+  'pages.insert'(text, title, path, template, menu, order) {
     check(text, String);
     check(title, String);
     check(path, String);
     check(template, Number);
-    check(location, String);
+    check(menu, String);
     check(order, String);
 
     // Make sure the user is logged in before inserting a task
@@ -30,7 +30,7 @@ Meteor.methods({
       title,
       path,
       template,
-      location,
+      menu,
       order,
       createdAt: new Date(),
       owner: this.userId,
