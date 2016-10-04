@@ -63,7 +63,8 @@ class NewContentForm extends React.Component {
       const location = this.state.menuLocation;
       const order = this.refs.order.value;
       if(!isNaN(order)){
-        this.props.submitPage(title, path, text, template, location, order);
+        const intOrder = parseInt(order);
+        this.props.submitPage(title, path, text, template, location, intOrder);
         this.refs.order = '';
       } else {
         throw new Error('Please enter a number in Order field');

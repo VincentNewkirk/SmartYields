@@ -18,7 +18,7 @@ Meteor.methods({
     check(path, String);
     check(template, Number);
     check(menu, String);
-    check(order, String);
+    check(order, Number);
 
     // Make sure the user is logged in before inserting a task
     if (! this.userId) {
