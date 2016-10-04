@@ -12,7 +12,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'pages.insert'(text, title, path, template, menu, order, parent) {
+  'pages.insert'(title, path, text, template, menu, order, parent) {
     check(text, String);
     check(title, String);
     check(path, String);

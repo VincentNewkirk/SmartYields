@@ -24,6 +24,9 @@ class NewContentForm extends React.Component {
     this.renderPagesDropdown = this.renderPagesDropdown.bind(this);
     this.onPageSelect = this.onPageSelect.bind(this);
     this.handleAlertShow = this.handleAlertShow.bind(this);
+    this.isValidPath = this.isValidPath.bind(this);
+    this.locationValidation = this.locationValidation.bind(this);
+    this.orderValidation = this.orderValidation.bind(this);
 
     this.state = {
       validPath: true,
@@ -71,8 +74,8 @@ class NewContentForm extends React.Component {
     // Find the text field via the React ref
     const text = this.refs.textInput.value.trim();
     const title = this.refs.titleInput.value.trim();
-    const path = this.refs.pathInput.value.trim();
     const template = this.state.selectedTemplate;
+    let path = this.refs.pathInput.value.trim();
     let parent = null;
 
     this.props.pages.map((page) => {
@@ -81,38 +84,26 @@ class NewContentForm extends React.Component {
       }
     })
 
+    this.isValidPath(path);
+
     if(this.state.selectedType === 'Page'){
       const location = this.state.menuLocation;
-      //location validation
-      if(location === 'Menu Location'){
-        this.setState({ errorMessage: 'Please select Menu Location'});
-        this.setState({ alertVisible: true });
-        throw new Error('Please select Menu Location')
-      }
+      this.locationValidation(location);
+
       const order = this.refs.order.value;
-      //order validation
-      if(order === ''){
-        this.setState({ errorMessage: 'Order Field cannot be left blank' });
-        this.setState({ alertVisible: true });
-        throw new Error('Order Field cannot be left blank')
-      }
-      //check if value in "order" is a number
-      if(!isNaN(order)){
-        //conver value from string to number
-        const intOrder = parseInt(order);
-        this.props.submitPage(title, path, text, template, location, intOrder, parent);
-        this.refs.order.value = '';
-        this.setState({ alertVisible: false });
-        this.setState({ errorMessage: '' });
-      } else {
-        this.setState({ errorMessage: 'Please enter a number in Order field' });
-        this.setState({ alertVisible: true });
-        throw new Error('Please enter a number in Order field');
-      }
+
+      this.orderValidation(order);
+      let intOrder = parseInt(order);
+
+
+      path = '/' + path;
+
+      this.props.submitPage(title, path, text, template, location, intOrder, parent);
     } else if(this.state.selectedType === 'Post'){
       this.props.handleSubmit(title, path, text, template)
     }
     // Clear form
+    this.refs.order.value = '';
     this.refs.textInput.value = '';
     this.refs.titleInput.value = '';
     this.refs.pathInput.value = '';
@@ -121,6 +112,47 @@ class NewContentForm extends React.Component {
   renderPagesDropdown() {
     return this.props.pages.map((page) => {
       return <MenuItem eventKey={page.title} key={page._id}>{page.title}</MenuItem>
+    })
+  }
+
+  locationValidation(location) {
+    //location validation
+    if(location === 'Menu Location'){
+      this.setState({ errorMessage: 'Please select Menu Location'});
+      this.setState({ alertVisible: true });
+      throw new Error('Please select Menu Location')
+    }
+  }
+
+  orderValidation(order) {
+    if(order === ''){
+      this.setState({ errorMessage: 'Order Field cannot be left blank' });
+      this.setState({ alertVisible: true });
+      throw new Error('Order Field cannot be left blank')
+    }
+    //check if value in "order" is a number
+    if(isNaN(order)){
+      this.setState({ errorMessage: 'Please enter a number in Order field' });
+      this.setState({ alertVisible: true });
+      throw new Error('Please enter a number in Order field');
+    }
+  }
+
+  isValidPath(str) {
+    let iChars = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?";
+    for (let i = 0; i < str.length; i++) {
+      if (iChars.indexOf(str.charAt(i)) != -1) {
+        this.setState({ errorMessage: 'No special characters in input field'});
+        this.setState({ alertVisible: true });
+        throw new Error('No special characters in input field');
+      }
+    }
+    this.props.posts.forEach((post) => {
+      if(post.path === str){
+        this.setState({ errorMessage: 'path already exists' });
+        this.setState({ alertVisible: true });
+        throw new Error('path already exists')
+      }
     })
   }
 
