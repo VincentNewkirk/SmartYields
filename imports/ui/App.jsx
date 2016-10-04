@@ -83,6 +83,7 @@ class App extends React.Component {
             validPath={this.state.validPath}
             submitPage={this.submitPage}
             pages={this.props.pages}
+            posts={this.props.posts}
             />
           : null
         }

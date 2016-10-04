@@ -6,7 +6,8 @@ import {
   MenuItem,
   FormGroup,
   FormControl,
-  ControlLabel
+  ControlLabel,
+  Alert
 } from 'react-bootstrap';
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
@@ -22,6 +23,7 @@ class NewContentForm extends React.Component {
     this.submitRequest = this.submitRequest.bind(this);
     this.renderPagesDropdown = this.renderPagesDropdown.bind(this);
     this.onPageSelect = this.onPageSelect.bind(this);
+    this.handleAlertShow = this.handleAlertShow.bind(this);
 
     this.state = {
       validPath: true,
@@ -30,7 +32,13 @@ class NewContentForm extends React.Component {
       menuSelected: false,
       menuLocation: 'Menu Location',
       pageDropdown: 'None',
+      alertVisible: false,
+      errorMessage: '',
     }
+  }
+
+  handleAlertShow() {
+    this.setState({ alertVisible: true})
   }
 
   inputChange() {
@@ -77,13 +85,15 @@ class NewContentForm extends React.Component {
       const location = this.state.menuLocation;
       //location validation
       if(location === 'Menu Location'){
-        alert('Please select Menu Location');
+        this.setState({ errorMessage: 'Please select Menu Location'});
+        this.setState({ alertVisible: true });
         throw new Error('Please select Menu Location')
       }
       const order = this.refs.order.value;
       //order validation
       if(order === ''){
-        alert('Order Field cannot be left blank');
+        this.setState({ errorMessage: 'Order Field cannot be left blank' });
+        this.setState({ alertVisible: true });
         throw new Error('Order Field cannot be left blank')
       }
       //check if value in "order" is a number
@@ -91,8 +101,12 @@ class NewContentForm extends React.Component {
         //conver value from string to number
         const intOrder = parseInt(order);
         this.props.submitPage(title, path, text, template, location, intOrder, parent);
-        this.refs.order = '';
+        this.refs.order.value = '';
+        this.setState({ alertVisible: false });
+        this.setState({ errorMessage: '' });
       } else {
+        this.setState({ errorMessage: 'Please enter a number in Order field' });
+        this.setState({ alertVisible: true });
         throw new Error('Please enter a number in Order field');
       }
     } else if(this.state.selectedType === 'Post'){
@@ -113,6 +127,14 @@ class NewContentForm extends React.Component {
   render() {
     return (
       <Navbar>
+        {
+          this.state.alertVisible
+          ? <Alert bsStyle="danger">
+              <h4>Error with form</h4>
+              <p>{this.state.errorMessage}</p>
+            </Alert>
+          : null
+        }
         <form className="new-post" onSubmit={this.submitRequest} >
           <br />
           <span>Title of your <span id="title-span">{this.state.selectedType}</span></span><input
