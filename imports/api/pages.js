@@ -12,7 +12,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'pages.insert'(text, title, path, template, menu, order) {
+  'pages.insert'(text, title, path, template, menu, order, parent) {
     check(text, String);
     check(title, String);
     check(path, String);
@@ -32,6 +32,7 @@ Meteor.methods({
       template,
       menu,
       order,
+      parent,
       createdAt: new Date(),
       owner: this.userId,
       username: Meteor.users.findOne(this.userId).username,

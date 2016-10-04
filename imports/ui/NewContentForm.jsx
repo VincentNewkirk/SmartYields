@@ -20,6 +20,8 @@ class NewContentForm extends React.Component {
     this.onSelectMenu = this.onSelectMenu.bind(this);
     this.inputChange = this.inputChange.bind(this);
     this.submitRequest = this.submitRequest.bind(this);
+    this.renderPagesDropdown = this.renderPagesDropdown.bind(this);
+    this.onPageSelect = this.onPageSelect.bind(this);
 
     this.state = {
       validPath: true,
@@ -27,6 +29,7 @@ class NewContentForm extends React.Component {
       selectedType: 'Select Type',
       menuSelected: false,
       menuLocation: 'Menu Location',
+      pageDropdown: 'None',
     }
   }
 
@@ -51,6 +54,10 @@ class NewContentForm extends React.Component {
     this.setState({ menuLocation: event })
   }
 
+  onPageSelect(event) {
+    this.setState({ pageDropdown: event })
+  }
+
   submitRequest(event) {
     event.preventDefault();
     // Find the text field via the React ref
@@ -58,13 +65,22 @@ class NewContentForm extends React.Component {
     const title = this.refs.titleInput.value.trim();
     const path = this.refs.pathInput.value.trim();
     const template = this.state.selectedTemplate;
+    let parent = null;
+
+    this.props.pages.map((page) => {
+      if(page.title === this.state.pageDropdown){
+        parent = page._id;
+      }
+    })
 
     if(this.state.selectedType === 'Page'){
       const location = this.state.menuLocation;
       const order = this.refs.order.value;
+      //check if value in "order" is a number
       if(!isNaN(order)){
+        //conver value from string to number
         const intOrder = parseInt(order);
-        this.props.submitPage(title, path, text, template, location, intOrder);
+        this.props.submitPage(title, path, text, template, location, intOrder, parent);
         this.refs.order = '';
       } else {
         throw new Error('Please enter a number in Order field');
@@ -76,6 +92,12 @@ class NewContentForm extends React.Component {
     this.refs.textInput.value = '';
     this.refs.titleInput.value = '';
     this.refs.pathInput.value = '';
+  }
+
+  renderPagesDropdown() {
+    return this.props.pages.map((page) => {
+      return <MenuItem eventKey={page.title} key={page._id}>{page.title}</MenuItem>
+    })
   }
 
   render() {
@@ -117,6 +139,11 @@ class NewContentForm extends React.Component {
               <MenuItem eventKey={'Main'}>Main</MenuItem>
               <MenuItem eventKey={'Sidebar'}>Sidebar</MenuItem>
               <MenuItem eventKey={'Footer'}>Footer</MenuItem>
+            </DropdownButton>
+            <span>Parent Page:</span>
+            <DropdownButton title={this.state.pageDropdown} onSelect={this.onPageSelect} id="7">
+              <MenuItem eventKey={'None'}>None</MenuItem>
+              {this.renderPagesDropdown()}
             </DropdownButton>
             <input
               type="text"

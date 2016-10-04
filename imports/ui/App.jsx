@@ -53,7 +53,7 @@ class App extends React.Component {
     }
   }
 
-  submitPage(title, path, text, template, location, order) {
+  submitPage(title, path, text, template, location, order, parent) {
     if(this.isValidInput(path)){
       this.props.posts.forEach((post) => {
         if(post.path === path){
@@ -65,7 +65,7 @@ class App extends React.Component {
     }
 
     if(this.state.validPath){
-      Meteor.call('pages.insert', text, title, validPath, template, location, order);
+      Meteor.call('pages.insert', text, title, validPath, template, location, order, parent);
     }
   }
 
@@ -82,6 +82,7 @@ class App extends React.Component {
             isValidInput={this.isValidInput}
             validPath={this.state.validPath}
             submitPage={this.submitPage}
+            pages={this.props.pages}
             />
           : null
         }
@@ -93,8 +94,10 @@ class App extends React.Component {
 
 export default createContainer(() => {
   Meteor.subscribe('posts');
+  Meteor.subscribe('pages');
 
   return {
+    pages: Pages.find({}).fetch(),
     posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
     currentUser: Meteor.user(),
   };
