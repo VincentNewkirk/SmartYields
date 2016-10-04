@@ -1,5 +1,13 @@
 import React from 'react';
-import { Button, Navbar, PageHeader, DropdownButton, MenuItem } from 'react-bootstrap';
+import {
+  Button,
+  Navbar,
+  DropdownButton,
+  MenuItem,
+  FormGroup,
+  FormControl,
+  ControlLabel
+} from 'react-bootstrap';
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -51,7 +59,18 @@ class NewContentForm extends React.Component {
     const path = this.refs.pathInput.value.trim();
     const template = this.state.selectedTemplate;
 
-    this.props.handleSubmit(title, path, text, template)
+    if(this.state.selectedType === 'Page'){
+      const location = this.state.menuLocation;
+      const order = this.refs.order.value;
+      if(!isNaN(order)){
+        this.props.submitPage(title, path, text, template, location, order);
+        this.refs.order = '';
+      } else {
+        throw new Error('Please enter a number in Order field');
+      }
+    } else if(this.state.selectedType === 'Post'){
+      this.props.handleSubmit(title, path, text, template)
+    }
     // Clear form
     this.refs.textInput.value = '';
     this.refs.titleInput.value = '';
@@ -92,11 +111,18 @@ class NewContentForm extends React.Component {
           <MenuItem eventKey={'Page'} ref="template2">Page</MenuItem>
         </DropdownButton>
         {this.state.menuSelected
-         ?<DropdownButton title={this.state.menuLocation} onSelect={this.onSelectMenu} id="17">
-            <MenuItem eventKey={'Main'}>Main</MenuItem>
-            <MenuItem eventKey={'Sidebar'}>Sidebar</MenuItem>
-            <MenuItem eventKey={'Footer'}>Footer</MenuItem>
-          </DropdownButton>
+         ?<div>
+           <DropdownButton title={this.state.menuLocation} onSelect={this.onSelectMenu} id="17">
+              <MenuItem eventKey={'Main'}>Main</MenuItem>
+              <MenuItem eventKey={'Sidebar'}>Sidebar</MenuItem>
+              <MenuItem eventKey={'Footer'}>Footer</MenuItem>
+            </DropdownButton>
+            <input
+              type="text"
+              placeholder="Order"
+              ref="order"
+            />
+          </div>
           : null
         }
         <Button onClick={this.submitRequest} bsStyle="primary">Save</Button>

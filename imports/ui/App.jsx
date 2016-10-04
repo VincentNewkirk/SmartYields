@@ -17,6 +17,7 @@ class App extends React.Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isValidInput = this.isValidInput.bind(this);
+    this.submitPage = this.submitPage.bind(this);
     this.state = {
       validPath: true,
     }
@@ -52,6 +53,22 @@ class App extends React.Component {
     }
   }
 
+  submitPage(title, path, text, template, location, order) {
+    if(this.isValidInput(path)){
+      this.props.posts.forEach((post) => {
+        if(post.path === path){
+          this.setState({ validPath: false });
+          throw new Error('path already exists')
+        }
+      });
+      validPath = '/' + path
+    }
+
+    if(this.state.validPath){
+      Meteor.call('pages.insert', text, title, validPath, template, location, order);
+    }
+  }
+
   render() {
     return (
       <div className="post-container container">
@@ -64,6 +81,7 @@ class App extends React.Component {
             handleSubmit={this.handleSubmit}
             isValidInput={this.isValidInput}
             validPath={this.state.validPath}
+            submitPage={this.submitPage}
             />
           : null
         }
