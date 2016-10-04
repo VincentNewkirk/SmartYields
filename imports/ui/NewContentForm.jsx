@@ -75,7 +75,17 @@ class NewContentForm extends React.Component {
 
     if(this.state.selectedType === 'Page'){
       const location = this.state.menuLocation;
+      //location validation
+      if(location === 'Menu Location'){
+        alert('Please select Menu Location');
+        throw new Error('Please select Menu Location')
+      }
       const order = this.refs.order.value;
+      //order validation
+      if(order === ''){
+        alert('Order Field cannot be left blank');
+        throw new Error('Order Field cannot be left blank')
+      }
       //check if value in "order" is a number
       if(!isNaN(order)){
         //conver value from string to number
