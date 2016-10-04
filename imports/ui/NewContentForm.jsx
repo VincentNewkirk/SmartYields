@@ -26,7 +26,7 @@ class NewContentForm extends React.Component {
     this.state = {
       validPath: true,
       selectedTemplate: 1,
-      selectedType: 'Select Type',
+      selectedType: 'Post',
       menuSelected: false,
       menuLocation: 'Menu Location',
       pageDropdown: 'None',
@@ -115,7 +115,7 @@ class NewContentForm extends React.Component {
       <Navbar>
         <form className="new-post" onSubmit={this.submitRequest} >
           <br />
-          <span>Title of your page</span><input
+          <span>Title of your <span id="title-span">{this.state.selectedType}</span></span><input
             type="text"
             ref="titleInput"
             placeholder="Awesome Page"
