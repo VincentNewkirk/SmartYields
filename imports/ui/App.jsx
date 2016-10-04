@@ -17,17 +17,12 @@ class App extends React.Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isValidInput = this.isValidInput.bind(this);
+    this.state = {
+      validPath: true,
+    }
   }
 
-  handleSubmit(event, title, path, text) {
-    console.log(event);
-    event.preventDefault();
-
-    // Find the text field via the React ref
-    // const text = this.refs.textInput.value.trim();
-    // const title = this.refs.titleInput.value.trim();
-    // const path = '/' + this.refs.pathInput.value.trim();
-    // const template = this.state.selectedTemplate;
+  handleSubmit(title, path, text, template) {
 
     //validate URL input doesn't contain special characters
     //or is already a path in use
@@ -38,16 +33,12 @@ class App extends React.Component {
           throw new Error('path already exists')
         }
       });
+      validPath = '/' + path
     }
 
     if(this.state.validPath){
-      Meteor.call('posts.insert', text, title, path, template);
+      Meteor.call('posts.insert', text, title, validPath, template);
     }
-
-    // Clear form
-    // this.refs.textInput.value = '';
-    // this.refs.titleInput.value = '';
-    // this.refs.pathInput.value = '';
   }
 
   isValidInput(str) {
@@ -62,7 +53,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props, 'App props')
     return (
       <div className="post-container container">
 
@@ -73,6 +63,7 @@ class App extends React.Component {
           ? <NewContentForm
             handleSubmit={this.handleSubmit}
             isValidInput={this.isValidInput}
+            validPath={this.state.validPath}
             />
           : null
         }

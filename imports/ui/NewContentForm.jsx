@@ -11,6 +11,7 @@ class NewContentForm extends React.Component {
     this.onSelectType =  this.onSelectType.bind(this);
     this.onSelectMenu = this.onSelectMenu.bind(this);
     this.inputChange = this.inputChange.bind(this);
+    this.submitRequest = this.submitRequest.bind(this);
 
     this.state = {
       validPath: true,
@@ -42,11 +43,25 @@ class NewContentForm extends React.Component {
     this.setState({ menuLocation: event })
   }
 
+  submitRequest(event) {
+    event.preventDefault();
+    // Find the text field via the React ref
+    const text = this.refs.textInput.value.trim();
+    const title = this.refs.titleInput.value.trim();
+    const path = this.refs.pathInput.value.trim();
+    const template = this.state.selectedTemplate;
+
+    this.props.handleSubmit(title, path, text, template)
+    // Clear form
+    this.refs.textInput.value = '';
+    this.refs.titleInput.value = '';
+    this.refs.pathInput.value = '';
+  }
+
   render() {
-    console.log(this.props);
     return (
       <Navbar>
-        <form className="new-post" onSubmit={this.props.handleSubmit} >
+        <form className="new-post" onSubmit={this.submitRequest} >
           <br />
           <span>Title of your page</span><input
             type="text"
@@ -58,7 +73,7 @@ class NewContentForm extends React.Component {
             ref="pathInput"
             placeholder="desired URL path"
             onChange={this.inputChange}
-          />{this.state.validPath ?
+          />{this.props.validPath ?
               null
               : <span>Invalid URL. Specified URL may already be in use</span>
             }<br />
@@ -84,7 +99,7 @@ class NewContentForm extends React.Component {
           </DropdownButton>
           : null
         }
-        <Button onClick={this.props.handleSubmit} bsStyle="primary">Save</Button>
+        <Button onClick={this.submitRequest} bsStyle="primary">Save</Button>
       </Navbar>
     )
   }
