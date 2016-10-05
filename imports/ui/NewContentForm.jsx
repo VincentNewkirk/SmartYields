@@ -29,6 +29,7 @@ class NewContentForm extends React.Component {
     this.locationValidation = this.locationValidation.bind(this);
     this.orderValidation = this.orderValidation.bind(this);
     this.autoFillPath = this.autoFillPath.bind(this);
+    this.toggleContents = this.toggleContents.bind(this);
 
     this.state = {
       validPath: true,
@@ -39,6 +40,7 @@ class NewContentForm extends React.Component {
       pageDropdown: 'None',
       alertVisible: false,
       errorMessage: '',
+      showContents: false,
     }
   }
 
@@ -182,6 +184,10 @@ class NewContentForm extends React.Component {
     })
   }
 
+  toggleContents() {
+    this.setState({ showContents: !this.state.showContents });
+  }
+
   render() {
     return (
       <Navbar>
@@ -242,7 +248,13 @@ class NewContentForm extends React.Component {
           : null
         }
         <Button onClick={this.submitRequest} bsStyle="primary">Save</Button>
-        <Tags />
+        <br />
+        <Button onClick={this.toggleContents} bsStyle="info">Show DB Contents</Button>
+        {
+          this.state.showContents
+          ?<Tags />
+          : null
+        }
       </Navbar>
     )
   }

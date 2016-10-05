@@ -12,12 +12,23 @@ FlowRouter.route('/', {
 })
 
 
-FlowRouter.route('/:category/', {
-  name: 'posts',
-  subscriptions: function(params) {
-    this.register('posts', Meteor.subscribe('posts'));
-  },
-  action(params){
-    mount( App, {yield: <TemplateSelector pathLink={params.category} />})
-  }
-})
+// FlowRouter.route('/:category/', {
+//   name: 'posts',
+//   subscriptions: function(params) {
+//     this.register('posts', Meteor.subscribe('posts'));
+//   },
+//   action(params){
+//     mount( App, {yield: <TemplateSelector pathLink={params.category} />})
+//   }
+// })
+
+// FlowRouter.route('/posts/') {
+//   name:'posts',
+//   subscriptions: function(params) {
+//       this.register('posts', Meteor.subscribe('posts'));
+//     },
+//     action(params){
+//       mount( App )
+//     }
+//   })
+// }
