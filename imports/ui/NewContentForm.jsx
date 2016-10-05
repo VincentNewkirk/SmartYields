@@ -71,7 +71,16 @@ class NewContentForm extends React.Component {
   }
 
   autoFillPath() {
-    this.refs.pathInput.value = this.refs.titleInput.value.trim().toLowerCase();
+    let tempArray = this.refs.titleInput.value.split('');
+    let replaceWhiteSpace = tempArray.map((element) => {
+      if(element === ' '){
+        return '-'
+      } else {
+        return element
+      }
+    })
+    const parsedString = replaceWhiteSpace.join('').toLowerCase();
+    this.refs.pathInput.value = parsedString;
   }
 
   submitRequest(event) {
@@ -144,7 +153,7 @@ class NewContentForm extends React.Component {
   }
 
   isValidPath(str) {
-    let iChars = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?";
+    let iChars = "~`!#$%^&*+=[]\\\';,/{}|\":<>?";
     for (let i = 0; i < str.length; i++) {
       if (iChars.indexOf(str.charAt(i)) != -1) {
         this.setState({ errorMessage: 'No special characters in input field'});
