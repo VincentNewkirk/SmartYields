@@ -154,6 +154,13 @@ class NewContentForm extends React.Component {
         throw new Error('path already exists')
       }
     })
+    this.props.pages.forEach((page) => {
+      if(page.path === str){
+        this.setState({ errorMessage: 'path already exists' });
+        this.setState({ alertVisible: true });
+        throw new Error('path already exists')
+      }
+    })
   }
 
   render() {
@@ -169,7 +176,7 @@ class NewContentForm extends React.Component {
         }
         <form className="new-post" onSubmit={this.submitRequest} >
           <br />
-          <span>Title of your <span id="title-span">{this.state.selectedType}</span></span><input
+          <span>Title of your <span className="type-span">{this.state.selectedType}</span></span><input
             type="text"
             ref="titleInput"
             placeholder="Awesome Page"
@@ -179,11 +186,8 @@ class NewContentForm extends React.Component {
             ref="pathInput"
             placeholder="desired URL path"
             onChange={this.inputChange}
-          />{this.props.validPath ?
-              null
-              : <span>Invalid URL. Specified URL may already be in use</span>
-            }<br />
-          <span>Body of your page</span><input
+          /><br />
+          <span>Body of your <span className="type-span">{this.state.selectedType}</span></span><input
             type="text"
             ref="textInput"
             placeholder="'Hello! This is my page!'"
