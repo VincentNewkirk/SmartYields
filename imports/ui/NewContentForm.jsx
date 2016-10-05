@@ -12,7 +12,7 @@ import {
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
-import Tags from './Tags.jsx';
+import DBContents from './DBContents.jsx';
 
 class NewContentForm extends React.Component {
   constructor(){
@@ -252,7 +252,7 @@ class NewContentForm extends React.Component {
         <Button onClick={this.toggleContents} bsStyle="info">Show DB Contents</Button>
         {
           this.state.showContents
-          ?<Tags />
+          ?<DBContents />
           : null
         }
       </Navbar>

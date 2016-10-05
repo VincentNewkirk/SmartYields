@@ -3,7 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
 
-class Tags extends React.Component {
+class DBContents extends React.Component {
   constructor() {
     super();
     this.renderTags = this.renderTags.bind(this);
@@ -20,7 +20,6 @@ class Tags extends React.Component {
   }
 
   renderPosts() {
-    console.log(this.props);
     return this.props.posts.map(post => (
       <ul key={post._id}>
         <li><h4>{post.title}</h4></li>
@@ -66,4 +65,4 @@ export default createContainer(() => {
     posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
     currentUser: Meteor.user(),
   };
-}, Tags);
+}, DBContents);
