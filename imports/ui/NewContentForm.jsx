@@ -114,7 +114,11 @@ class NewContentForm extends React.Component {
       path = '/' + path;
 
       this.props.submitPage(title, path, text, template, location, intOrder, parent);
+      this.setState({ errorMessage: '' });
+      this.setState({ alertVisible: false });
     } else if(this.state.selectedType === 'Post'){
+      this.setState({ errorMessage: '' });
+      this.setState({ alertVisible: false });
       this.props.handleSubmit(title, path, text, template)
     }
     // Clear form
