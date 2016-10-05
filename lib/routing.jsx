@@ -7,7 +7,7 @@ import TemplateSelector from '../imports/ui/templateSelector.jsx';
 FlowRouter.route('/', {
   name: 'landing page',
   action: function(params, queryParams){
-    mount( App, { yield: <Tags /> });
+    mount( App );
   }
 })
 

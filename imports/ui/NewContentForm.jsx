@@ -12,6 +12,7 @@ import {
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
+import Tags from './Tags.jsx';
 
 class NewContentForm extends React.Component {
   constructor(){
@@ -237,6 +238,7 @@ class NewContentForm extends React.Component {
           : null
         }
         <Button onClick={this.submitRequest} bsStyle="primary">Save</Button>
+        <Tags />
       </Navbar>
     )
   }
