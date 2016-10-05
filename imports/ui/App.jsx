@@ -17,9 +17,6 @@ class App extends React.Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.submitPage = this.submitPage.bind(this);
-    this.state = {
-      validPath: true,
-    }
   }
 
   handleSubmit(title, path, text, template) {
@@ -42,7 +39,6 @@ class App extends React.Component {
           ? <NewContentForm
             handleSubmit={this.handleSubmit}
             isValidInput={this.isValidInput}
-            validPath={this.state.validPath}
             submitPage={this.submitPage}
             pages={this.props.pages}
             posts={this.props.posts}

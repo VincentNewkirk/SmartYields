@@ -27,6 +27,7 @@ class NewContentForm extends React.Component {
     this.isValidPath = this.isValidPath.bind(this);
     this.locationValidation = this.locationValidation.bind(this);
     this.orderValidation = this.orderValidation.bind(this);
+    this.autoFillPath = this.autoFillPath.bind(this);
 
     this.state = {
       validPath: true,
@@ -67,6 +68,10 @@ class NewContentForm extends React.Component {
 
   onPageSelect(event) {
     this.setState({ pageDropdown: event })
+  }
+
+  autoFillPath() {
+    this.refs.pathInput.value = this.refs.titleInput.value.trim().toLowerCase();
   }
 
   submitRequest(event) {
@@ -180,6 +185,7 @@ class NewContentForm extends React.Component {
             type="text"
             ref="titleInput"
             placeholder="Awesome Page"
+            onBlur={this.autoFillPath}
           /><br />
           <span>smartyields.com/</span><input
             type="text"
