@@ -116,15 +116,16 @@ class NewContentForm extends React.Component {
       path = '/' + path;
 
       this.props.submitPage(title, path, text, template, location, intOrder, parent);
+      this.refs.order.value = '';
       this.setState({ errorMessage: '' });
       this.setState({ alertVisible: false });
     } else if(this.state.selectedType === 'Post'){
       this.setState({ errorMessage: '' });
       this.setState({ alertVisible: false });
+      path = '/posts/' + path;
       this.props.handleSubmit(title, path, text, template)
     }
     // Clear form
-    this.refs.order.value = '';
     this.refs.textInput.value = '';
     this.refs.titleInput.value = '';
     this.refs.pathInput.value = '';
@@ -207,7 +208,7 @@ class NewContentForm extends React.Component {
             placeholder="Awesome Page"
             onBlur={this.autoFillPath}
           /><br />
-          <span>smartyields.com/</span><input
+          <span>smartyields.com/{this.state.selectedType === 'Post' ? 'posts/' : null}</span><input
             type="text"
             ref="pathInput"
             placeholder="desired URL path"

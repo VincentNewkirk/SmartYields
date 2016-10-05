@@ -28,12 +28,14 @@ class TemplateSelector extends React.Component {
 }
 
 export default createContainer((params) => {
-  const subscription = Meteor.subscribe('posts');
+  Meteor.subscribe('posts');
   const posts = Posts.find({}).fetch();
   //Filter posts to find one with matching path
   let post;
+  console.log(params, 'PARAMS')
   posts.forEach((found) => {
-    if(found.path === '/' + params.pathLink) {
+    console.log(found.path)
+    if(found.path === '/posts/' + params.pathLink) {
       post = found;
     }
   })
