@@ -34,6 +34,7 @@ class App extends React.Component {
 
         <AccountsUIWrapper />
         <PageHeader>Smart Yields Custom CMS</PageHeader>
+        <a href="/posts">Posts</a>
         {
           this.props.currentUser
           ? <NewContentForm

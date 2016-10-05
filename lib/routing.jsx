@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount} from 'react-mounter';
 import App from '../imports/ui/App.jsx';
-// import Tags from '../imports/ui/Tags.jsx';
+import PostTags from '../imports/ui/PostTags.jsx';
 import TemplateSelector from '../imports/ui/templateSelector.jsx';
 
 FlowRouter.route('/', {
@@ -28,6 +28,6 @@ FlowRouter.route('/posts/', {
     this.register('posts', Meteor.subscribe('posts'));
   },
   action(params){
-    mount( App, {yield: <TemplateSelector pathLink={params.category} />})
+    mount( App, {yield: <PostTags />})
   }
 })
