@@ -167,14 +167,14 @@ class NewContentForm extends React.Component {
       }
     }
     this.props.posts.forEach((post) => {
-      if(post.path === str){
+      if(post.path === '/' + str){
         this.setState({ errorMessage: 'path already exists' });
         this.setState({ alertVisible: true });
         throw new Error('path already exists')
       }
     })
     this.props.pages.forEach((page) => {
-      if(page.path === str){
+      if(page.path === '/' + str){
         this.setState({ errorMessage: 'path already exists' });
         this.setState({ alertVisible: true });
         throw new Error('path already exists')
