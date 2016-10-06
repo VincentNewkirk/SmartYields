@@ -1,8 +1,20 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Pagination } from 'react-bootstrap';
 import { Posts } from '../api/posts.js';
 
 class PostTags extends React.Component {
+  constructor() {
+    super();
+    this.handleSelect = this.handleSelect.bind(this);
+    this.state = {
+      activePage : 1,
+    }
+  }
+
+  handleSelect(eventKey) {
+    this.setState({ activePage: eventKey })
+  }
 
   renderTags() {
     return this.props.posts.map(posts => (
@@ -19,6 +31,11 @@ class PostTags extends React.Component {
           ? this.renderTags()
           : null
         }
+        <Pagination
+          bsSize="medium"
+          items={10}
+          activePage={this.state.activePage}
+          onSelect={this.handleSelect} />
       </div>
     )
   }
