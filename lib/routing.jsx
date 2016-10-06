@@ -3,6 +3,7 @@ import {mount} from 'react-mounter';
 import App from '../imports/ui/App.jsx';
 import PostTags from '../imports/ui/PostTags.jsx';
 import TemplateSelector from '../imports/ui/templateSelector.jsx';
+import PostTagRenderer from '../imports/ui/PostTagRenderer.jsx';
 
 FlowRouter.route('/', {
   name: 'landing page',
@@ -18,7 +19,7 @@ FlowRouter.route('/posts/', {
     this.register('posts', Meteor.subscribe('posts'));
   },
   action(params){
-    mount( App, {yield: <PostTags />})
+    mount( App, {yield: <PostTagRenderer />})
   }
 })
 

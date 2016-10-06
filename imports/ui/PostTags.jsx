@@ -25,50 +25,20 @@ class PostTags extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return(
       <div className="all-posts">
-        {this.props.posts
-          ? this.renderTags()
-          : null
-        }
+        {this.renderTags()}
         <div>
-          {this.props.sortedPosts
-            ?
           <Pagination
             bsSize="medium"
-            items={5}
+            items={this.props.pLength}
             activePage={this.state.activePage}
             onSelect={this.handleSelect} />
-            : null
-          }
         </div>
       </div>
     )
   }
 }
 
-export default createContainer(() => {
-  Meteor.subscribe('posts');
-  const initalPosts = Posts.find({}, { sort: { createdAt: -1 } }).fetch();
-  let array = [];
-  let arrToPush = [];
-  let counter = 0;
-    for(let i = 0; i < initalPosts.length; i++){
-      if(counter === 5){
-        array.push(arrToPush)
-        arrToPush = [];
-        counter = 0;
-        }
-      arrToPush.push(initalPosts[i]);
-      counter += 1;
-    }
-  if(arrToPush.length){
-    array.push(arrToPush)
-  }
-
-  return {
-    sortedPosts: array,
-    posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
-    currentUser: Meteor.user(),
-  };
-}, PostTags);
+export default PostTags;
