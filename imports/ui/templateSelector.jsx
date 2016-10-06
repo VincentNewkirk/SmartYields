@@ -32,9 +32,7 @@ export default createContainer((params) => {
   const posts = Posts.find({}).fetch();
   //Filter posts to find one with matching path
   let post;
-  console.log(params, 'PARAMS')
   posts.forEach((found) => {
-    console.log(found.path)
     if(found.path === '/posts/' + params.pathLink) {
       post = found;
     }

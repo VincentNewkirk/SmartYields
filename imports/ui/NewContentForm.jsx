@@ -253,7 +253,7 @@ class NewContentForm extends React.Component {
         <Button onClick={this.toggleContents} bsStyle="info">Show DB Contents</Button>
         {
           this.state.showContents
-          ?<DBContents />
+          ?<DBContents pages={this.props.pages} posts={this.props.posts}/>
           : null
         }
       </Navbar>

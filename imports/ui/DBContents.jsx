@@ -39,21 +39,20 @@ class DBContents extends React.Component {
     return (
       <div id="page-post-content">
           <h3>Posts</h3>
-          {this.renderPosts()}
+          {
+            this.props.posts
+            ? this.renderPosts()
+            : 'No posts'
+          }
           <h3>Pages</h3>
-          {this.renderPages()}
+          {
+            this.props.pages
+            ? this.renderPages()
+            : 'No Pages'
+          }
       </div>
     )
   }
 }
 
-export default createContainer(() => {
-  Meteor.subscribe('posts');
-  Meteor.subscribe('pages');
-
-  return {
-    pages: Pages.find({}).fetch(),
-    posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
-    currentUser: Meteor.user(),
-  };
-}, DBContents);
+export default DBContents;
