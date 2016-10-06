@@ -25,6 +25,8 @@ export default createContainer(() => {
   let arrToPush = [];
   let counter = 0;
     for(let i = 0; i < initalPosts.length; i++){
+      //Change the number in 'if' statement to determine how many
+      //links get rendered per page
       if(counter === 5){
         array.push(arrToPush)
         arrToPush = [];

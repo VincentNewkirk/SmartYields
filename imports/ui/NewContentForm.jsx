@@ -30,6 +30,7 @@ class NewContentForm extends React.Component {
     this.orderValidation = this.orderValidation.bind(this);
     this.autoFillPath = this.autoFillPath.bind(this);
     this.toggleContents = this.toggleContents.bind(this);
+    this.initialInputValidation = this.initialInputValidation.bind(this);
 
     this.state = {
       validPath: true,
@@ -101,6 +102,8 @@ class NewContentForm extends React.Component {
       }
     })
 
+    this.initialInputValidation();
+
     this.isValidPath(path);
 
     if(this.state.selectedType === 'Page'){
@@ -135,6 +138,17 @@ class NewContentForm extends React.Component {
     return this.props.pages.map((page) => {
       return <MenuItem eventKey={page.title} key={page._id}>{page.title}</MenuItem>
     })
+  }
+
+  initialInputValidation() {
+    const text = this.refs.textInput.value;
+    const title = this.refs.titleInput.value;
+    const path = this.refs.pathInput.value;
+    if( text === '' || title === '' || path === ''){
+      this.setState({ errorMessage: 'Please fill in all input fields'});
+      this.setState({ alertVisible: true });
+      throw new Error('Input field blank')
+    }
   }
 
   locationValidation(location) {
