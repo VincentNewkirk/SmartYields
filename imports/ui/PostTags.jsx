@@ -26,7 +26,7 @@ class PostTags extends React.Component {
 
   renderTags() {
     if(this.props.sortedPosts.length){
-    return this.props.sortedPosts[this.state.activePage].map(posts =>(
+    return this.props.sortedPosts[this.state.activePage - 1].map(posts =>(
       <div className="a-tags" key={posts._id}>
         <a href={posts.path}>{posts.title}</a><br />
       </div>
