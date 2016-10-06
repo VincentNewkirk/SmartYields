@@ -16,13 +16,24 @@ class PostTags extends React.Component {
     this.setState({ activePage: eventKey })
   }
 
+  // renderTags() {
+  //   return this.props.posts.map(posts => (
+  //     <div className="a-tags" key={posts._id}>
+  //       <a href={posts.path}>{posts.title}</a><br />
+  //     </div>
+  //   ));
+  // }
+
   renderTags() {
-    return this.props.posts.map(posts => (
+    if(this.props.sortedPosts.length){
+    return this.props.sortedPosts[this.state.activePage].map(posts =>(
       <div className="a-tags" key={posts._id}>
         <a href={posts.path}>{posts.title}</a><br />
       </div>
     ));
+    }
   }
+
 
   render() {
     console.log(this.props)

@@ -10,7 +10,7 @@ class PostTagRenderer extends React.Component {
       <div>
         {
           this.props.posts
-          ? <PostTags posts={this.props.posts} sortedPosts={this.props.sortedPosts} pLength={this.props.sortedPosts.length}/>
+          ? <PostTags posts={this.props.posts} sortedPosts={this.props.sortedPosts} pLength={this.props.sortedPosts.length - 1}/>
           : 'No posts yet! You should make one :)'
         }
       </div>
