@@ -9,22 +9,21 @@ class TemplateSelector extends React.Component {
 
   renderPosts() {
     if(this.props.post.template == 1) {
-      return <FirstTemplate text={this.props.post.text} path={this.props.post.path} _id={this.props.post._id} title={this.props.post.title} />
+      return <FirstTemplate text={this.props.post.text} path={this.props.post.path} _id={this.props.post._id} title={this.props.post.title} type={this.props.type}/>
     } else if(this.props.post.template == 2) {
-      return <SecondTemplate text={this.props.post.text} path={this.props.post.path} title={this.props.post.title} _id={this.props.post._id} />
+      return <SecondTemplate text={this.props.post.text} path={this.props.post.path} title={this.props.post.title} _id={this.props.post._id} type={this.props.type} />
     }
   }
 
   renderPage() {
     if(this.props.page.template == 1) {
-      return <FirstTemplate text={this.props.page.text} path={this.props.page.path} _id={this.props.page._id} title={this.props.page.title} />
+      return <FirstTemplate text={this.props.page.text} path={this.props.page.path} _id={this.props.page._id} title={this.props.page.title} type={this.props.type} />
     } else if(this.props.page.template == 2) {
-      return <SecondTemplate text={this.props.page.text} path={this.props.page.path} title={this.props.page.title} _id={this.props.page._id} />
+      return <SecondTemplate text={this.props.page.text} path={this.props.page.path} title={this.props.page.title} _id={this.props.page._id} type={this.props.type} />
     }
   }
 
   render(){
-    console.log(this.props)
     return(
       <div className="container">
         <div className="post-container">

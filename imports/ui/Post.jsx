@@ -1,5 +1,6 @@
 import React from 'react';
 import { Posts } from '../api/posts.js';
+import { Pages } from '../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
@@ -20,7 +21,11 @@ class Post extends React.Component {
   }
 
   deleteThisPost() {
-    Meteor.call('posts.remove', this.props._id);
+    if(this.props.type === 'post'){
+      Meteor.call('posts.remove', this.props._id);
+    } else if(this.props.type === 'page'){
+      Meteor.call('pages.remove', this.props._id);
+    }
     FlowRouter.go(FlowRouter.path('/'));
   }
 
@@ -28,10 +33,15 @@ class Post extends React.Component {
     const text = this.refs.text.value.trim();
     const title = this.refs.title.value.trim();
     const path = this.refs.path.value.trim();
-    Meteor.call('posts.update', this.props._id, title, text, path)
+    if(this.props.type === 'post'){
+      Meteor.call('posts.update', this.props._id, title, text, path)
+    } else if(this.props.type === 'page'){
+      Meteor.call('pages.update', this.props._id, title, text, path)
+    }
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className="post-text">
         {!this.props.title
@@ -51,29 +61,16 @@ class Post extends React.Component {
             </div>
           : null
         }
-        {this.props.currentUser
-          ? <div className="owner-controls">
-            <button className="edit" onClick={this.onClick}>Edit</button>
-            <button className="delete" onClick={this.deleteThisPost}>Delete</button>
-          </div>
-          : null
-        }
+         <div className="owner-controls">
+          <button className="edit" onClick={this.onClick}>Edit</button>
+          <button className="delete" onClick={this.deleteThisPost}>Delete</button>
+        </div>
+
         <a href='/'>Home</a>
       </div>
     );
   }
 }
 
-export default createContainer((params) => {
-  const subscription = Meteor.subscribe('posts');
-  const posts = Posts.find({}).fetch();
-  //Filter posts to find one with matching path
-  let post;
-  posts.forEach((found) => {
-    if(found.path === '/' + params.pathLink) {
-      post = found;
-    }
-  })
-  return { post, currentUser: Meteor.user()};
-}, Post);
+export default Post;
 

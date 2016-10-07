@@ -19,7 +19,7 @@ class FirstTemplate extends React.Component{
         </header>
         <div className="row">
             <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-              <Post title={this.props.title} text={this.props.text} path={this.props.path} _id={this.props._id}/>
+              <Post title={this.props.title} text={this.props.text} path={this.props.path} type={this.props.type} _id={this.props._id}/>
             </div>
         </div>
       </div>

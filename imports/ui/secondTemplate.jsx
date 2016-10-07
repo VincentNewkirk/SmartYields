@@ -12,6 +12,7 @@ class SecondTemplate extends React.Component {
             <Post title={this.props.title}
             text={this.props.text}
             path={this.props.path}
+            type={this.props.type}
             _id={this.props._id}
             />
           </Jumbotron>
