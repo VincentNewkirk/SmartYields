@@ -103,11 +103,8 @@ class NewContentForm extends React.Component {
       }
     })
 
-    this.initialInputValidation();
 
-    if(!this.state.alertVisible){
-      this.isValidPath(path);
-    }
+
 
     if(this.state.selectedType === 'Page'){
       const location = this.state.menuLocation;
@@ -123,21 +120,25 @@ class NewContentForm extends React.Component {
       if(!this.state.alertVisible){
       this.props.submitPage(title, path, text, template, location, intOrder, parent);
       this.refs.order.value = '';
-      this.setState({ errorMessage: '' });
+      this.setState({ errorMessage: 'This was the error' });
       // Clear form
       this.refs.textInput.value = '';
       this.refs.titleInput.value = '';
       this.refs.pathInput.value = '';
       }
-    } else if(this.state.selectedType === 'Post' && !this.state.alertVisible){
-      this.setState({ errorMessage: '' });
-      this.setState({ alertVisible: false });
-      path = '/posts/' + path;
-      this.props.handleSubmit(title, path, text, template)
-      // Clear form
-      this.refs.textInput.value = '';
-      this.refs.titleInput.value = '';
-      this.refs.pathInput.value = '';
+    } else if(this.state.selectedType === 'Post'){
+        if(this.initialInputValidation() && this.isValidPath(path)){
+          this.setState({ errorMessage: '' });
+          this.setState({ alertVisible: false });
+          path = '/posts/' + path;
+          this.props.handleSubmit(title, path, text, template)
+          // Clear form
+          this.refs.textInput.value = '';
+          this.refs.titleInput.value = '';
+          this.refs.pathInput.value = '';
+        } else {
+          this.setState({ alertVisible: true })
+        }
     }
   }
 
@@ -152,13 +153,10 @@ class NewContentForm extends React.Component {
     const title = this.refs.titleInput.value;
     const path = this.refs.pathInput.value;
     if( text === '' || title === '' || path === ''){
-      console.log('text, title, path')
-      this.setState({ errorMessage: 'Please fill in all input fields'});
-      this.setState({ alertVisible: true });
+      this.setState({ errorMessage: 'Please fill out all input fields' })
+      return false;
     } else {
-      if(this.state.alertVisible){
-        this.setState({ alertVisible: false })
-      }
+      return true;
     }
   }
 
@@ -197,34 +195,26 @@ class NewContentForm extends React.Component {
   isValidPath(str) {
     console.log('isValidPath fired')
     let iChars = "~`!#$%^&*+=[]\\\';,/{}|\":<>?";
-    let error = false;
     for (let i = 0; i < str.length; i++) {
       if (iChars.indexOf(str.charAt(i)) != -1) {
         this.setState({ errorMessage: 'No special characters in input field'});
-        this.setState({ alertVisible: true });
-        error = true
+        return false
       }
     }
 
     this.props.posts.forEach((post) => {
-      if(post.path === '/' + str){
+      if(post.path === '/posts/' + str){
         this.setState({ errorMessage: 'path already exists' });
-        this.setState({ alertVisible: true });
-        error = true;
+        return false;
       }
     })
     this.props.pages.forEach((page) => {
       if(page.path === '/' + str){
         this.setState({ errorMessage: 'path already exists' });
-        this.setState({ alertVisible: true });
-        error = true;
+        return false;
       }
     })
-    if(!error){
-      if(this.state.alertVisible){
-        this.setState({ alertVisible: false })
-      }
-    }
+    return true;
   }
 
   toggleContents() {
