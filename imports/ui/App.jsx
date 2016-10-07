@@ -59,7 +59,7 @@ export default createContainer(() => {
   Meteor.subscribe('pages');
 
   return {
-    pages: Pages.find({}).fetch(),
+    pages: Pages.find({}, { sort: { createdAt: -1 } }).fetch(),
     posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
     currentUser: Meteor.user(),
   };
