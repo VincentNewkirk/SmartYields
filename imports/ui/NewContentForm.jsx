@@ -245,6 +245,7 @@ class NewContentForm extends React.Component {
         {this.state.menuSelected
          ?<div>
            <DropdownButton title={this.state.menuLocation} onSelect={this.onSelectMenu} id="17">
+              <MenuItem eventKey={'None'}>None</MenuItem>
               <MenuItem eventKey={'Main'}>Main</MenuItem>
               <MenuItem eventKey={'Sidebar'}>Sidebar</MenuItem>
               <MenuItem eventKey={'Footer'}>Footer</MenuItem>
