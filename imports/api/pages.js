@@ -43,17 +43,21 @@ Meteor.methods({
 
     Pages.remove(taskId);
   },
-  'pages.update'(taskId, title, text, path) {
+  'pages.update'(taskId, title, text, path, location, parent, order) {
     check(taskId, String);
     check(title, String);
     check(text, String);
     check(path, String);
+    check(order, Number);
 
     Pages.update(taskId, {
       $set: {
         text: text,
         title: title,
         path: path,
+        menu: location,
+        order: order,
+        parent: parent,
       },
     });
   },

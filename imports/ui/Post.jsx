@@ -58,7 +58,19 @@ class Post extends React.Component {
     if(this.props.type === 'post'){
       Meteor.call('posts.update', this.props._id, title, text, path)
     } else if(this.props.type === 'page'){
-      Meteor.call('pages.update', this.props._id, title, text, path)
+
+      const location = this.state.menuLocation;
+      const order = this.refs.order.value;
+      const intOrder = parseInt(order);
+      let parent = null;
+
+      this.props.pages.map((page) => {
+        if(page.title === this.state.pageDropdown){
+          parent = page._id;
+        }
+      })
+
+      Meteor.call('pages.update', this.props._id, title, text, path, location, parent, intOrder)
     }
   }
 
