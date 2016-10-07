@@ -28,7 +28,7 @@ Meteor.methods({
       title,
       path,
       template,
-      createdAt: new Date(),
+      createdAt: new Date().getTime(),
       owner: this.userId,
       username: Meteor.users.findOne(this.userId).username,
     });

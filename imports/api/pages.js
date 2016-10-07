@@ -12,7 +12,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'pages.insert'(text, title, path, template, menu, order, parent) {
+  'pages.insert'(title, path, text, template, menu, order, parent) {
     check(text, String);
     check(title, String);
     check(path, String);
@@ -33,7 +33,7 @@ Meteor.methods({
       menu,
       order,
       parent,
-      createdAt: new Date(),
+      createdAt: new Date().getTime(),
       owner: this.userId,
       username: Meteor.users.findOne(this.userId).username,
     });
@@ -43,17 +43,21 @@ Meteor.methods({
 
     Pages.remove(taskId);
   },
-  'pages.update'(taskId, title, text, path) {
+  'pages.update'(taskId, title, text, path, location, parent, order) {
     check(taskId, String);
     check(title, String);
     check(text, String);
     check(path, String);
+    check(order, Number);
 
     Pages.update(taskId, {
       $set: {
         text: text,
         title: title,
         path: path,
+        menu: location,
+        order: order,
+        parent: parent,
       },
     });
   },

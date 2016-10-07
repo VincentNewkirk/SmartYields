@@ -16,57 +16,16 @@ class App extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.isValidInput = this.isValidInput.bind(this);
     this.submitPage = this.submitPage.bind(this);
-    this.state = {
-      validPath: true,
-    }
   }
 
   handleSubmit(title, path, text, template) {
-
-    //validate URL input doesn't contain special characters
-    //or is already a path in use
-    if(this.isValidInput(path)){
-      this.props.posts.forEach((post) => {
-        if(post.path === path){
-          this.setState({ validPath: false });
-          throw new Error('path already exists')
-        }
-      });
-      validPath = '/' + path
-    }
-
-    if(this.state.validPath){
-      Meteor.call('posts.insert', text, title, validPath, template);
-    }
+      Meteor.call('posts.insert', text, title, path, template);
   }
 
-  isValidInput(str) {
-    let iChars = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?";
-    for (let i = 0; i < str.length; i++) {
-       if (iChars.indexOf(str.charAt(i)) != -1) {
-           this.setState({ validPath: false });
-           throw new Error('No special characters in input field')
-       }
-    return true;
-    }
-  }
 
-  submitPage(title, path, text, template, location, order, parent) {
-    if(this.isValidInput(path)){
-      this.props.posts.forEach((post) => {
-        if(post.path === path){
-          this.setState({ validPath: false });
-          throw new Error('path already exists')
-        }
-      });
-      validPath = '/' + path
-    }
-
-    if(this.state.validPath){
-      Meteor.call('pages.insert', text, title, validPath, template, location, order, parent);
-    }
+  submitPage(title, path, text, template, location, intOrder, parent) {
+    Meteor.call('pages.insert', title, path, text, template, location, intOrder, parent);
   }
 
   render() {
@@ -75,14 +34,17 @@ class App extends React.Component {
 
         <AccountsUIWrapper />
         <PageHeader>Smart Yields Custom CMS</PageHeader>
+        <a href="/posts">Posts</a>
+        <br />
+        <a href='/'>Home</a>
         {
           this.props.currentUser
           ? <NewContentForm
             handleSubmit={this.handleSubmit}
             isValidInput={this.isValidInput}
-            validPath={this.state.validPath}
             submitPage={this.submitPage}
             pages={this.props.pages}
+            posts={this.props.posts}
             />
           : null
         }
@@ -97,7 +59,7 @@ export default createContainer(() => {
   Meteor.subscribe('pages');
 
   return {
-    pages: Pages.find({}).fetch(),
+    pages: Pages.find({}, { sort: { createdAt: -1 } }).fetch(),
     posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
     currentUser: Meteor.user(),
   };
