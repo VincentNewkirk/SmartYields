@@ -1,5 +1,5 @@
 import React from 'react';
-import {   DropdownButton, MenuItem } from 'react-bootstrap';
+import { Button, DropdownButton, MenuItem } from 'react-bootstrap';
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -94,9 +94,9 @@ class Post extends React.Component {
         {this.state.showEditForm
           ? <div className="edit-inputs">
               <input type="text" ref="title" defaultValue={this.props.title} /> <br />
-              <input type="text" ref="text" defaultValue={this.props.text}/> <br />
+              <textarea ref="textInput" placeholder="'Hello! This is my page!'" rows={4} cols="50" />
+              <br />
               <input type="text" ref="path" defaultValue={this.props.path} />
-              <button className="save-button" onClick={this.updateCollection}>Save</button>
             </div>
           : null
         }
@@ -126,8 +126,15 @@ class Post extends React.Component {
           : null
         }
          <div className="owner-controls">
-          <button className="edit" onClick={this.onClick}>Edit</button>
-          <button className="delete" onClick={this.deleteThisPost}>Delete</button>
+          <Button bsStyle="primary" className="edit" onClick={this.onClick}>Edit</Button>
+          {this.state.showEditForm
+            ?
+              <div className="edit-buttons">
+                <Button bsStyle="success"className="save-button" onClick={this.updateCollection}>Save</Button>
+                <Button bsStyle="danger" className="delete" onClick={this.deleteThisPost}>Delete</Button>
+              </div>
+            : null
+          }
         </div>
 
         <a href='/'>Home</a>
