@@ -13,6 +13,7 @@ class Post extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.deleteThisPost = this.deleteThisPost.bind(this);
     this.updateCollection = this.updateCollection.bind(this);
+    this.onPageSelect = this.onPageSelect.bind(this);
     this.renderPagesDropdown = this.renderPagesDropdown.bind(this);
     this.state = {
       showEditForm: false,
@@ -52,7 +53,7 @@ class Post extends React.Component {
   }
 
   updateCollection() {
-    const text = this.refs.text.value.trim();
+    const text = this.refs.textInput.value.trim();
     const title = this.refs.title.value.trim();
     const path = this.refs.path.value.trim();
     if(this.props.type === 'post'){
@@ -72,6 +73,7 @@ class Post extends React.Component {
 
       Meteor.call('pages.update', this.props._id, title, text, path, location, parent, intOrder)
     }
+    this.setState({ showEditForm: false })
   }
 
   renderPagesDropdown() {
@@ -94,7 +96,7 @@ class Post extends React.Component {
         {this.state.showEditForm
           ? <div className="edit-inputs">
               <input type="text" ref="title" defaultValue={this.props.title} /> <br />
-              <textarea ref="textInput" placeholder="'Hello! This is my page!'" rows={4} cols="50" />
+              <textarea ref="textInput" defaultValue={this.props.text} placeholder="'Hello! This is my page!'" rows={4} cols="50" />
               <br />
               <input type="text" ref="path" defaultValue={this.props.path} />
             </div>
