@@ -33,7 +33,7 @@ Meteor.methods({
       menu,
       order,
       parent,
-      createdAt: new Date(),
+      createdAt: new Date().getTime(),
       owner: this.userId,
       username: Meteor.users.findOne(this.userId).username,
     });
