@@ -105,7 +105,9 @@ class NewContentForm extends React.Component {
 
     this.initialInputValidation();
 
-    this.isValidPath(path);
+    if(!this.state.alertVisible){
+      this.isValidPath(path);
+    }
 
     if(this.state.selectedType === 'Page'){
       const location = this.state.menuLocation;
@@ -118,21 +120,25 @@ class NewContentForm extends React.Component {
 
 
       path = '/' + path;
-
+      if(!this.state.alertVisible){
       this.props.submitPage(title, path, text, template, location, intOrder, parent);
       this.refs.order.value = '';
       this.setState({ errorMessage: '' });
-      this.setState({ alertVisible: false });
-    } else if(this.state.selectedType === 'Post'){
+      // Clear form
+      this.refs.textInput.value = '';
+      this.refs.titleInput.value = '';
+      this.refs.pathInput.value = '';
+      }
+    } else if(this.state.selectedType === 'Post' && !this.state.alertVisible){
       this.setState({ errorMessage: '' });
       this.setState({ alertVisible: false });
       path = '/posts/' + path;
       this.props.handleSubmit(title, path, text, template)
+      // Clear form
+      this.refs.textInput.value = '';
+      this.refs.titleInput.value = '';
+      this.refs.pathInput.value = '';
     }
-    // Clear form
-    this.refs.textInput.value = '';
-    this.refs.titleInput.value = '';
-    this.refs.pathInput.value = '';
   }
 
   renderPagesDropdown() {
@@ -146,9 +152,13 @@ class NewContentForm extends React.Component {
     const title = this.refs.titleInput.value;
     const path = this.refs.pathInput.value;
     if( text === '' || title === '' || path === ''){
+      console.log('text, title, path')
       this.setState({ errorMessage: 'Please fill in all input fields'});
       this.setState({ alertVisible: true });
-      throw new Error('Input field blank')
+    } else {
+      if(this.state.alertVisible){
+        this.setState({ alertVisible: false })
+      }
     }
   }
 
@@ -157,7 +167,10 @@ class NewContentForm extends React.Component {
     if(location === 'Menu Location'){
       this.setState({ errorMessage: 'Please select Menu Location'});
       this.setState({ alertVisible: true });
-      throw new Error('Please select Menu Location')
+    } else {
+      if(this.state.alertVisible){
+        this.setState({ alertVisible: false })
+      }
     }
   }
 
@@ -165,39 +178,53 @@ class NewContentForm extends React.Component {
     if(order === ''){
       this.setState({ errorMessage: 'Order Field cannot be left blank' });
       this.setState({ alertVisible: true });
-      throw new Error('Order Field cannot be left blank')
+    } else {
+      if(this.state.alertVisible){
+        this.setState({ alertVisible: false })
+      }
     }
     //check if value in "order" is a number
     if(isNaN(order)){
       this.setState({ errorMessage: 'Please enter a number in Order field' });
       this.setState({ alertVisible: true });
-      throw new Error('Please enter a number in Order field');
+    } else {
+      if(this.state.alertVisible){
+        this.setState({ alertVisible: false })
+      }
     }
   }
 
   isValidPath(str) {
+    console.log('isValidPath fired')
     let iChars = "~`!#$%^&*+=[]\\\';,/{}|\":<>?";
+    let error = false;
     for (let i = 0; i < str.length; i++) {
       if (iChars.indexOf(str.charAt(i)) != -1) {
         this.setState({ errorMessage: 'No special characters in input field'});
         this.setState({ alertVisible: true });
-        throw new Error('No special characters in input field');
+        error = true
       }
     }
+
     this.props.posts.forEach((post) => {
       if(post.path === '/' + str){
         this.setState({ errorMessage: 'path already exists' });
         this.setState({ alertVisible: true });
-        throw new Error('path already exists')
+        error = true;
       }
     })
     this.props.pages.forEach((page) => {
       if(page.path === '/' + str){
         this.setState({ errorMessage: 'path already exists' });
         this.setState({ alertVisible: true });
-        throw new Error('path already exists')
+        error = true;
       }
     })
+    if(!error){
+      if(this.state.alertVisible){
+        this.setState({ alertVisible: false })
+      }
+    }
   }
 
   toggleContents() {
@@ -205,6 +232,7 @@ class NewContentForm extends React.Component {
   }
 
   render() {
+    console.log(this.state.alertVisible)
     return (
       <Navbar>
         {
