@@ -228,11 +228,9 @@ class NewContentForm extends React.Component {
             placeholder="desired URL path"
             onChange={this.inputChange}
           /><br />
-          <span>Body of your <span className="type-span">{this.state.selectedType}</span></span><input
-            type="text"
-            ref="textInput"
-            placeholder="'Hello! This is my page!'"
-          /><br />
+          <p>Body of your <span className="type-span">{this.state.selectedType}:</span></p>
+          <textarea ref="textInput" placeholder="'Hello! This is my page!'" rows={4} cols="50" />
+          <br />
           <DropdownButton title={'Template ' + this.state.selectedTemplate} onSelect={this.onSelectTemplate} id="1337">
             <MenuItem eventKey={1} ref="template1">Template 1</MenuItem>
             <MenuItem eventKey={2} ref="template2">Template 2</MenuItem>
