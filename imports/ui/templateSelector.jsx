@@ -17,9 +17,27 @@ class TemplateSelector extends React.Component {
 
   renderPage() {
     if(this.props.page.template == 1) {
-      return <FirstTemplate text={this.props.page.text} path={this.props.page.path} _id={this.props.page._id} title={this.props.page.title} type={this.props.type} />
+      return <FirstTemplate
+      text={this.props.page.text}
+      path={this.props.page.path}
+      _id={this.props.page._id}
+      title={this.props.page.title}
+      type={this.props.type}
+      menu={this.props.page.menu}
+      parent={this.props.page.parent}
+      pages={this.props.pages}
+      order={this.props.page.order} />
     } else if(this.props.page.template == 2) {
-      return <SecondTemplate text={this.props.page.text} path={this.props.page.path} title={this.props.page.title} _id={this.props.page._id} type={this.props.type} />
+      return <SecondTemplate
+      text={this.props.page.text}
+      path={this.props.page.path}
+      title={this.props.page.title}
+      _id={this.props.page._id}
+      type={this.props.type}
+      menu={this.props.page.menu}
+      parent={this.props.page.parent}
+      pages={this.props.pages}
+      order={this.props.page.order} />
     }
   }
 
@@ -57,7 +75,7 @@ export default createContainer((params) => {
       post = found;
     }
   })
-  const pages = Pages.find({}).fetch();
+  const pages = Pages.find({}, { sort: { createdAt: -1 } }).fetch();
   //Filter pages to find one with matching path
   let page;
   pages.forEach((found) => {
@@ -65,5 +83,5 @@ export default createContainer((params) => {
       page = found;
     }
   })
-  return { post, page, currentUser: Meteor.user()};
+  return { post, page, pages, currentUser: Meteor.user()};
 }, TemplateSelector);

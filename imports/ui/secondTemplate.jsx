@@ -9,11 +9,17 @@ class SecondTemplate extends React.Component {
         <div className="container">
           <Jumbotron>
             <h1>{this.props.title}</h1>
-            <Post title={this.props.title}
+            <Post
+            title={this.props.title}
             text={this.props.text}
             path={this.props.path}
             type={this.props.type}
             _id={this.props._id}
+            type={this.props.type}
+            menu={this.props.menu}
+            parent={this.props.parent}
+            order={this.props.order}
+            pages={this.props.pages}
             />
           </Jumbotron>
         </div>

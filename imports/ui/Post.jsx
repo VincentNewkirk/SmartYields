@@ -1,4 +1,5 @@
 import React from 'react';
+import {   DropdownButton, MenuItem } from 'react-bootstrap';
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -8,16 +9,37 @@ class Post extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-      showEditForm: false
-    };
+    this.handleSelect = this.handleSelect.bind(this);
     this.onClick = this.onClick.bind(this);
     this.deleteThisPost = this.deleteThisPost.bind(this);
     this.updateCollection = this.updateCollection.bind(this);
+    this.renderPagesDropdown = this.renderPagesDropdown.bind(this);
+    this.state = {
+      showEditForm: false,
+      menuLocation: '',
+      pageDropdown: '',
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ menuLocation: this.props.menu })
+    if(!this.props.parent){
+      this.setState({ pageDropdown: 'None' })
+    } else {
+      this.setState({ pageDropdown: this.props.parent })
+    }
   }
 
   onClick () {
     this.setState({showEditForm: !this.state.showEditForm});
+  }
+
+  handleSelect(event) {
+    this.setState({ menuLocation: event})
+  }
+
+  onPageSelect(event) {
+    this.setState({ pageDropdown: event })
   }
 
   deleteThisPost() {
@@ -40,8 +62,13 @@ class Post extends React.Component {
     }
   }
 
+  renderPagesDropdown() {
+    return this.props.pages.map((page) => {
+      return <MenuItem eventKey={page.title} key={page._id}>{page.title}</MenuItem>
+    })
+  }
+
   render() {
-    console.log(this.props)
     return (
       <div className="post-text">
         {!this.props.title
@@ -58,6 +85,31 @@ class Post extends React.Component {
               <input type="text" ref="text" defaultValue={this.props.text}/> <br />
               <input type="text" ref="path" defaultValue={this.props.path} />
               <button className="save-button" onClick={this.updateCollection}>Save</button>
+            </div>
+          : null
+        }
+        { this.props.menu && this.state.showEditForm
+          ?
+            <div className="page-edit-options">
+              <span>Menu Location:</span>
+              <DropdownButton title={this.state.menuLocation} onSelect={this.handleSelect} id="21">
+                  <MenuItem eventKey={'None'}>None</MenuItem>
+                  <MenuItem eventKey={'Main'}>Main</MenuItem>
+                  <MenuItem eventKey={'Sidebar'}>Sidebar</MenuItem>
+                  <MenuItem eventKey={'Footer'}>Footer</MenuItem>
+                </DropdownButton>
+                <span>Parent:</span>
+                <DropdownButton title={this.state.pageDropdown} onSelect={this.onPageSelect} id="8">
+                  <MenuItem eventKey={'None'}>None</MenuItem>
+                  {this.renderPagesDropdown()}
+                </DropdownButton>
+                <span>Order:</span>
+                <input
+                  type="text"
+                  placeholder="Order"
+                  defaultValue={this.props.order}
+                  ref="order"
+                />
             </div>
           : null
         }
