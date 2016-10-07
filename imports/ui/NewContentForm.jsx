@@ -108,23 +108,22 @@ class NewContentForm extends React.Component {
 
     if(this.state.selectedType === 'Page'){
       const location = this.state.menuLocation;
-      this.locationValidation(location);
-
       const order = this.refs.order.value;
-
-      this.orderValidation(order);
-      let intOrder = parseInt(order);
-
-
-      path = '/' + path;
-      if(!this.state.alertVisible){
-      this.props.submitPage(title, path, text, template, location, intOrder, parent);
-      this.refs.order.value = '';
-      this.setState({ errorMessage: 'This was the error' });
-      // Clear form
-      this.refs.textInput.value = '';
-      this.refs.titleInput.value = '';
-      this.refs.pathInput.value = '';
+      if(this.locationValidation(location) && this.orderValidation(order) && this.initialInputValidation() && this.isValidPath(path)){
+        let intOrder = parseInt(order);
+        path = '/' + path;
+        this.props.submitPage(title, path, text, template, location, intOrder, parent);
+        // Clear form
+        this.refs.order.value = '';
+        this.refs.textInput.value = '';
+        this.refs.titleInput.value = '';
+        this.refs.pathInput.value = '';
+        if(this.state.alertVisible){
+          this.setState({ errorMessage: '' });
+          this.setState({ alertVisible: false });
+        }
+      } else {
+        this.setState({ alertVisible: true })
       }
     } else if(this.state.selectedType === 'Post'){
         if(this.initialInputValidation() && this.isValidPath(path)){
@@ -161,39 +160,28 @@ class NewContentForm extends React.Component {
   }
 
   locationValidation(location) {
-    //location validation
     if(location === 'Menu Location'){
       this.setState({ errorMessage: 'Please select Menu Location'});
-      this.setState({ alertVisible: true });
+      return false;
     } else {
-      if(this.state.alertVisible){
-        this.setState({ alertVisible: false })
-      }
+      return true;
     }
   }
 
   orderValidation(order) {
     if(order === ''){
       this.setState({ errorMessage: 'Order Field cannot be left blank' });
-      this.setState({ alertVisible: true });
-    } else {
-      if(this.state.alertVisible){
-        this.setState({ alertVisible: false })
-      }
+      return false;
     }
     //check if value in "order" is a number
     if(isNaN(order)){
       this.setState({ errorMessage: 'Please enter a number in Order field' });
-      this.setState({ alertVisible: true });
-    } else {
-      if(this.state.alertVisible){
-        this.setState({ alertVisible: false })
-      }
+      return false;
     }
+    return true;
   }
 
   isValidPath(str) {
-    console.log('isValidPath fired')
     let iChars = "~`!#$%^&*+=[]\\\';,/{}|\":<>?";
     for (let i = 0; i < str.length; i++) {
       if (iChars.indexOf(str.charAt(i)) != -1) {
@@ -222,7 +210,6 @@ class NewContentForm extends React.Component {
   }
 
   render() {
-    console.log(this.state.alertVisible)
     return (
       <Navbar>
         {
