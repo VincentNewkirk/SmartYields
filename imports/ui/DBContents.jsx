@@ -14,6 +14,7 @@ class DBContents extends React.Component {
     return this.props.posts.map(post => (
       <ul key={post._id}>
         <li><h4>{post.title}</h4></li>
+        <li><a href={post.path}>Edit</a></li>
         <li><h5>{post.text}</h5></li>
         <li>Template: {post.template}</li>
         <li>Path: {post.path}</li>
