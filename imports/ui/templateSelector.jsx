@@ -1,6 +1,7 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Posts } from '../api/posts.js';
+import { Pages } from '../api/pages.js';
 import FirstTemplate from './firstTemplate.jsx';
 import SecondTemplate from './secondTemplate.jsx';
 
@@ -14,14 +15,33 @@ class TemplateSelector extends React.Component {
     }
   }
 
+  renderPage() {
+    if(this.props.page.template == 1) {
+      return <FirstTemplate text={this.props.page.text} path={this.props.page.path} _id={this.props.page._id} title={this.props.page.title} />
+    } else if(this.props.page.template == 2) {
+      return <SecondTemplate text={this.props.page.text} path={this.props.page.path} title={this.props.page.title} _id={this.props.page._id} />
+    }
+  }
+
   render(){
+    console.log(this.props)
     return(
       <div className="container">
+        <div className="post-container">
         {this.props.post
           ?
             this.renderPosts()
           : null
         }
+        </div>
+        <div className="page-container">
+        {
+          this.props.page
+          ?
+            this.renderPage()
+          : null
+        }
+        </div>
       </div>
     )
   }
@@ -29,6 +49,7 @@ class TemplateSelector extends React.Component {
 
 export default createContainer((params) => {
   Meteor.subscribe('posts');
+  Meteor.subscribe('pages');
   const posts = Posts.find({}).fetch();
   //Filter posts to find one with matching path
   let post;
@@ -37,5 +58,13 @@ export default createContainer((params) => {
       post = found;
     }
   })
-  return { post, currentUser: Meteor.user()};
+  const pages = Pages.find({}).fetch();
+  //Filter pages to find one with matching path
+  let page;
+  pages.forEach((found) => {
+    if(found.path === '/' + params.pathLink) {
+      page = found;
+    }
+  })
+  return { post, page, currentUser: Meteor.user()};
 }, TemplateSelector);
