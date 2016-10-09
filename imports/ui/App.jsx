@@ -19,6 +19,8 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.submitPage = this.submitPage.bind(this);
     this.handleTab = this.handleTab.bind(this);
+    //may or may not use this
+    this.showNewContent = this.showNewContent.bind(this);
     this.state = {
       activeTab: "1",
     }
@@ -35,6 +37,11 @@ class App extends React.Component {
 
   handleTab(event) {
     this.setState({ activeTab: event })
+  }
+
+  //may or may not use this
+  showNewContent() {
+
   }
 
   render() {
