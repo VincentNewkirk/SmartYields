@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
 import { Meteor } from 'meteor/meteor';
-import { Button, Navbar, PageHeader, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Button, Navbar, PageHeader, DropdownButton, MenuItem, Clearfix, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import MenuTemplate from './menuTemplate.jsx';
 
@@ -18,6 +18,10 @@ class App extends React.Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.submitPage = this.submitPage.bind(this);
+    this.handleTab = this.handleTab.bind(this);
+    this.state = {
+      activeTab: "1",
+    }
   }
 
   handleSubmit(title, path, text, template) {
@@ -29,15 +33,22 @@ class App extends React.Component {
     Meteor.call('pages.insert', title, path, text, template, location, intOrder, parent);
   }
 
+  handleTab(event) {
+    this.setState({ activeTab: event })
+  }
+
   render() {
     return (
       <div className="post-container container">
 
         <AccountsUIWrapper />
         <PageHeader>Smart Yields Custom CMS</PageHeader>
-        <a href="/posts">Posts</a>
+        <Nav bsStyle="tabs" activeKey={this.state.activeTab} onSelect={this.handleTab}>
+          <NavItem eventKey="1" href="/">Home</NavItem>
+          <NavItem eventKey="2" href="/posts">Posts</NavItem>
+          <NavItem eventKey="3">Pages</NavItem>
+        </Nav>
         <br />
-        <a href='/'>Home</a>
         {
           this.props.currentUser
           ? <NewContentForm
