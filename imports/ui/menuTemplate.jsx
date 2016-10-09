@@ -11,3 +11,5 @@ class MenuTemplate extends React.Component {
     )
   }
 }
+
+export default MenuTemplate;

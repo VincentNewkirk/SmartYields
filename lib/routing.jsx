@@ -4,6 +4,7 @@ import App from '../imports/ui/App.jsx';
 import PostTags from '../imports/ui/PostTags.jsx';
 import TemplateSelector from '../imports/ui/templateSelector.jsx';
 import PostTagRenderer from '../imports/ui/PostTagRenderer.jsx';
+import MenuTemplate from '../imports/ui/MenuTemplate.jsx';
 
 FlowRouter.route('/', {
   name: 'landing page',
@@ -40,5 +41,15 @@ FlowRouter.route('/page-edit/:id', {
   },
   action(params){
     mount( App, {yield: <TemplateSelector pathLink={params.id} type="page"/>})
+  }
+})
+
+FlowRouter.route('/pages-primary/', {
+  name: 'pages-primary',
+  subscriptions: function(params) {
+    this.register('pages', Meteor.subscribe('pages'));
+  },
+  action(params){
+    mount( App, {yield: <MenuTemplate />})
   }
 })

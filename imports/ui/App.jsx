@@ -8,6 +8,7 @@ import { Pages } from '../api/pages.js';
 import { Meteor } from 'meteor/meteor';
 import { Button, Navbar, PageHeader, DropdownButton, MenuItem } from 'react-bootstrap';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import MenuTemplate from './menuTemplate.jsx';
 
 import NewContentForm from './NewContentForm.jsx';
 import Post from './Post.jsx';
