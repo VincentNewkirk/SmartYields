@@ -9,6 +9,7 @@ import { Meteor } from 'meteor/meteor';
 import { Button, Navbar, PageHeader, DropdownButton, MenuItem, Clearfix, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import MenuTemplate from './menuTemplate.jsx';
+import MyEditor from './TestEditor.jsx';
 
 import NewContentForm from './NewContentForm.jsx';
 import Post from './Post.jsx';
