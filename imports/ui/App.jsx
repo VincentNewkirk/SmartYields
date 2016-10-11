@@ -54,7 +54,9 @@ class App extends React.Component {
         <Nav bsStyle="tabs" activeKey={this.state.activeTab} onSelect={this.handleTab}>
           <NavItem eventKey="1" href="/">Home</NavItem>
           <NavItem eventKey="2" href="/posts">Posts</NavItem>
-          <NavItem eventKey="3">Pages</NavItem>
+          <NavDropdown eventKey="3" title="Pages" id="nav-dropdown">
+            <MenuItem href="primary">Primary</MenuItem>
+          </NavDropdown>
         </Nav>
         <br />
         {
