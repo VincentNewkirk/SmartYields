@@ -26,7 +26,7 @@ class DBContents extends React.Component {
     return this.props.pages.map(page => (
       <ul key={page._id}>
         <li><h4>{page.title}</h4></li>
-        <li><a href={page.path} onClick={this.props.toggle}>Edit</a></li>
+        <li><a href={'/page' + page.path} onClick={this.props.toggle}>Edit</a></li>
         <li><h5>{page.text}</h5></li>
         <li>Template: {page.template}</li>
         <li>Path: {page.path}</li>
