@@ -55,7 +55,9 @@ class App extends React.Component {
           <NavItem eventKey="1" href="/">Home</NavItem>
           <NavItem eventKey="2" href="/posts">Posts</NavItem>
           <NavDropdown eventKey="3" title="Pages" id="nav-dropdown">
-            <MenuItem href="primary">Primary</MenuItem>
+            <MenuItem href="pages-primary/">Primary</MenuItem>
+            <MenuItem href="sidebar">Sidebar</MenuItem>
+            <MenuItem href="footer">Footer</MenuItem>
           </NavDropdown>
         </Nav>
         <br />
