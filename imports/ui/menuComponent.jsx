@@ -8,7 +8,7 @@ class MenuComponent extends React.Component {
     if(this.props.location === 'primary'){
       return this.props.primary.map((page, index) => {
         return(
-          <ul className='primary' key={index}>{page.title}</ul>
+          <ul className='primary' key={index}><a href={'/page' + page.path}>{page.title}</a></ul>
         )
       })
     }
@@ -31,9 +31,21 @@ class MenuComponent extends React.Component {
 export default createContainer(() => {
   const pageList = Pages.find({}, { sort: { createdAt: -1 } }).fetch();
   const primary = [];
+  const sidebar = [];
+  const footer = [];
   pageList.forEach((ele) => {
     if(ele.menu === "Main"){
       primary.push(ele)
+    }
+  })
+  pageList.forEach((ele) => {
+    if(ele.menu === "Sidebar"){
+      sidebar.push(ele)
+    }
+  })
+  pageList.forEach((ele) => {
+    if(ele.menu === "Footer"){
+      footer.push(ele)
     }
   })
   Meteor.subscribe('pages');
@@ -41,6 +53,8 @@ export default createContainer(() => {
   return {
     pages: Pages.find({}, { sort: { createdAt: -1 } }).fetch(),
     primary,
+    sidebar,
+    footer,
     currentUser: Meteor.user(),
   };
 }, MenuComponent);
