@@ -11,11 +11,22 @@ class MenuComponent extends React.Component {
           <ul className='primary' key={index}><a href={'/page' + page.path}>{page.title}</a></ul>
         )
       })
+    } else if(this.props.location === 'sidebar'){
+      return this.props.sidebar.map((page, index) => {
+        return(
+          <ul className='sidebar' key={index}><a href={'/page' + page.path}>{page.title}</a></ul>
+        )
+      })
+    } else if(this.props.location === 'footer'){
+      return this.props.footer.map((page, index) => {
+        return(
+          <ul className='footer' key={index}><a href={'/page' + page.path}>{page.title}</a></ul>
+        )
+      })
     }
   }
 
   render() {
-  console.log(this.props)
     return(
       <div>
         {

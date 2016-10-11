@@ -55,3 +55,24 @@ FlowRouter.route('/pages-primary/', {
     mount( App, {yield: <MenuComponent location="primary" />})
   }
 })
+
+FlowRouter.route('/pages-sidebar/', {
+  name: 'pages-sidebar',
+  subscriptions: function(params) {
+    this.register('pages', Meteor.subscribe('pages'));
+  },
+  action(params){
+    mount( App, {yield: <MenuComponent location="sidebar" />})
+  }
+})
+
+FlowRouter.route('/pages-footer/', {
+  name: 'pages-footer',
+  subscriptions: function(params) {
+    this.register('pages', Meteor.subscribe('pages'));
+  },
+  action(params){
+    mount( App, {yield: <MenuComponent location="footer" />})
+  }
+})
+
