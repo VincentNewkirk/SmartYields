@@ -21,6 +21,7 @@
     "react-addons-pure-render-mixin": "^15.3.2",
     "react-bootstrap": "^0.30.3",
     "react-dom": "^15.3.2",
+    "react-dropzone": "^3.6.0",
     "react-mounter": "^1.2.0"
   },
   "devDependencies": {
