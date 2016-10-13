@@ -11,7 +11,7 @@ import MenuComponent from '../imports/ui/menuComponent.jsx';
 FlowRouter.route('/', {
   name: 'landing page',
   action: function(params, queryParams){
-    mount( App, {yield: <MyEditor />} );
+    mount( App );
   }
 })
 

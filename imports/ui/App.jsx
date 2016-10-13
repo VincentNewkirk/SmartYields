@@ -11,7 +11,7 @@ import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import MenuTemplate from './menuTemplate.jsx';
 import MyEditor from './TestEditor.jsx';
 
-import AlloyEditorComponent from './AlloyEditor.jsx';
+// import AlloyEditorComponent from './AlloyEditor.jsx';
 import DropzoneDemo from './dropzone.jsx';
 import NewContentForm from './NewContentForm.jsx';
 import Post from './Post.jsx';
@@ -75,7 +75,6 @@ class App extends React.Component {
           : null
         }
         {this.props.yield}
-        <AlloyEditorComponent container="editable" />
       </div>
     );
   }
