@@ -9,8 +9,8 @@ import {
   ControlLabel,
   Alert
 } from 'react-bootstrap';
-import { Posts } from '../api/posts.js';
-import { Pages } from '../api/pages.js';
+import { Posts } from '../../api/posts.js';
+import { Pages } from '../../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
 import DBContents from './DBContents.jsx';
 
