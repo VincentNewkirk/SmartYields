@@ -220,6 +220,8 @@ class NewContentForm extends React.Component {
             </Alert>
           : null
         }
+
+        {/* Admin Form */}
         <form className="new-post" onSubmit={this.submitRequest} >
           <span>Title of your <span className="type-span">{this.state.selectedType}</span></span><input
             type="text"
@@ -268,6 +270,8 @@ class NewContentForm extends React.Component {
         }
         <Button onClick={this.submitRequest} bsStyle="primary">Save</Button>
         <br />
+
+        {/* DB Contents */}
         <Button onClick={this.toggleContents} bsStyle="info">Show DB Contents</Button>
         {
           this.state.showContents
