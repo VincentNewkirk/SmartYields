@@ -4,9 +4,9 @@ import App from '../imports/ui/App.jsx';
 import PostTags from '../imports/ui/PostTags.jsx';
 import TemplateSelector from '../imports/ui/templateSelector.jsx';
 import PostTagRenderer from '../imports/ui/PostTagRenderer.jsx';
-import MenuTemplate from '../imports/ui/menuTemplate.jsx';
+import MenuTemplate from '/imports/ui/components/menu/menuTemplate.jsx';
+import MenuComponent from '/imports/ui/components/menu/menuComponent.jsx';
 import MyEditor from '../imports/ui/TestEditor.jsx';
-import MenuComponent from '../imports/ui/menuComponent.jsx';
 
 FlowRouter.route('/', {
   name: 'landing page',
@@ -14,7 +14,6 @@ FlowRouter.route('/', {
     mount( App );
   }
 })
-
 
 FlowRouter.route('/posts/', {
   name: 'posts',
@@ -75,4 +74,3 @@ FlowRouter.route('/pages-footer/', {
     mount( App, {yield: <MenuComponent location="footer" />})
   }
 })
-

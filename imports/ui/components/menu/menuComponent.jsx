@@ -1,6 +1,6 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Pages } from '../api/pages.js';
+import { Pages } from '/imports/api/pages.js';
 
 class MenuComponent extends React.Component {
 
