@@ -18,7 +18,7 @@ import Footer from './layout/Footer.jsx';
 // Components
 // import AlloyEditorComponent from './AlloyEditor.jsx';
 import DropzoneDemo from './components/dropzone.jsx';
-import NewContentForm from './NewContentForm.jsx';
+import NewContentForm from './components/NewContentForm.jsx';
 import Post from './Post.jsx';
 
 class App extends React.Component {
@@ -60,7 +60,7 @@ class App extends React.Component {
             <div className="post-container container">
             {/* <AccountsUIWrapper /> */}
             {/* <PageHeader>Smart Yields Custom CMS</PageHeader> */}
-            <Nav bsStyle="tabs" activeKey={this.state.activeTab} onSelect={this.handleTab}>
+            {/* <Nav bsStyle="tabs" activeKey={this.state.activeTab} onSelect={this.handleTab}>
               <NavItem eventKey="1" href="/">Home</NavItem>
               <NavItem eventKey="2" href="/posts">Posts</NavItem>
               <NavDropdown eventKey="3" title="Pages" id="nav-dropdown">
@@ -68,7 +68,7 @@ class App extends React.Component {
                 <MenuItem href="/pages-sidebar/">Sidebar</MenuItem>
                 <MenuItem href="/pages-footer/">Footer</MenuItem>
               </NavDropdown>
-            </Nav>
+            </Nav> */}
             <br />
             {
               this.props.currentUser
