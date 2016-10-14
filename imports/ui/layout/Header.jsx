@@ -10,13 +10,14 @@ class Header extends React.Component {
             <Navbar inverse>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="#">React-Bootstrap</a>
+                        <a href="#">Smart Yields</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        <NavItem eventKey={1} href="#">Link</NavItem>
+
+                        <NavItem eventKey={1} href="#">LInk</NavItem>
                         <NavItem eventKey={2} href="#">Link</NavItem>
                         <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
                             <MenuItem eventKey={3.1}>Action</MenuItem>
@@ -27,8 +28,8 @@ class Header extends React.Component {
                         </NavDropdown>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem eventKey={1} href="#">Link Right</NavItem>
-                        <NavItem eventKey={2} href="#">Link Right</NavItem>
+                        <NavItem eventKey={1} href="#"><AccountsUIWrapper /></NavItem>
+                        {/* <NavItem eventKey={2} href="#">Link Right</NavItem> */}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
