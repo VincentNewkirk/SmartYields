@@ -13,9 +13,11 @@ import MyEditor from './TestEditor.jsx';
 
 // Templates
 import Header from './layout/Header.jsx';
+import Footer from './layout/Footer.jsx';
 
+// Components
 // import AlloyEditorComponent from './AlloyEditor.jsx';
-import DropzoneDemo from './dropzone.jsx';
+import DropzoneDemo from './components/dropzone.jsx';
 import NewContentForm from './NewContentForm.jsx';
 import Post from './Post.jsx';
 
@@ -57,7 +59,7 @@ class App extends React.Component {
 
             <div className="post-container container">
             {/* <AccountsUIWrapper /> */}
-            <PageHeader>Smart Yields Custom CMS</PageHeader>
+            {/* <PageHeader>Smart Yields Custom CMS</PageHeader> */}
             <Nav bsStyle="tabs" activeKey={this.state.activeTab} onSelect={this.handleTab}>
               <NavItem eventKey="1" href="/">Home</NavItem>
               <NavItem eventKey="2" href="/posts">Posts</NavItem>
@@ -82,6 +84,7 @@ class App extends React.Component {
             {this.props.yield}
             </div>
 
+            <Footer />
         </div>
     );
   }
