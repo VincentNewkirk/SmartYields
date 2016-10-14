@@ -211,7 +211,7 @@ class NewContentForm extends React.Component {
 
   render() {
     return (
-      <Navbar>
+      <div className="well">
         {
           this.state.alertVisible
           ? <Alert bsStyle="danger">
@@ -221,7 +221,6 @@ class NewContentForm extends React.Component {
           : null
         }
         <form className="new-post" onSubmit={this.submitRequest} >
-          <br />
           <span>Title of your <span className="type-span">{this.state.selectedType}</span></span><input
             type="text"
             ref="titleInput"
@@ -275,7 +274,7 @@ class NewContentForm extends React.Component {
           ?<DBContents pages={this.props.pages} posts={this.props.posts} toggle={this.toggleContents}/>
           : null
         }
-      </Navbar>
+      </div>
     )
   }
 }
