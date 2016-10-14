@@ -7,7 +7,7 @@ import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
 import { Meteor } from 'meteor/meteor';
 import { Button, Navbar, PageHeader, DropdownButton, MenuItem, Clearfix, Nav, NavItem, NavDropdown } from 'react-bootstrap';
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import AccountsUIWrapper from './components/AccountsUIWrapper.jsx';
 import MenuTemplate from './menuTemplate.jsx';
 import MyEditor from './TestEditor.jsx';
 
@@ -56,7 +56,7 @@ class App extends React.Component {
             <Header />
 
             <div className="post-container container">
-            <AccountsUIWrapper />
+            {/* <AccountsUIWrapper /> */}
             <PageHeader>Smart Yields Custom CMS</PageHeader>
             <Nav bsStyle="tabs" activeKey={this.state.activeTab} onSelect={this.handleTab}>
               <NavItem eventKey="1" href="/">Home</NavItem>
@@ -81,7 +81,7 @@ class App extends React.Component {
             }
             {this.props.yield}
             </div>
-            
+
         </div>
     );
   }
