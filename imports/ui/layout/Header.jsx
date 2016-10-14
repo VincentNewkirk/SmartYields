@@ -1,8 +1,9 @@
 import React from 'react';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-
 import AccountsUIWrapper from '../components/AccountsUIWrapper.jsx';
 
+// Components
+import Menu from '/imports/ui/components/menu';
 
 class Header extends React.Component {
     render() {
@@ -16,7 +17,7 @@ class Header extends React.Component {
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-
+                        <Menu position="primary" />
                         <NavItem eventKey={1} href="/posts">Posts</NavItem>
                         {/* <NavItem eventKey={2} href="#">Link</NavItem> */}
                         {/* <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
