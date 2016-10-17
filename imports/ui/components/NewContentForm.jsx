@@ -33,13 +33,14 @@ class NewContentForm extends React.Component {
     this.initialInputValidation = this.initialInputValidation.bind(this);
 
     this.state = {
-      validPath: true,
-      selectedTemplate: 1, // Default and DB entry
-      selectedType: 'Post',
+      // General
       isPageType: false,
+      selectedTemplate: 1, // Default and DB entry value for page type
+      selectedType: 'Post',
       menuLocation: 'Menu Location',
       pageDropdown: 'None',
-      // Alert states and messages
+      // Validation
+      validPath: true,
       alertVisible: false,
       errorMessage: '',
       // Visibility State for DB Contents container
