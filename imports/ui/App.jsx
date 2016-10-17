@@ -35,9 +35,8 @@ class App extends React.Component {
   }
 
   handleSubmit(title, path, text, template) {
-      Meteor.call('posts.insert', text, title, path, template);
+    Meteor.call('posts.insert', text, title, path, template);
   }
-
 
   submitPage(title, path, text, template, location, intOrder, parent) {
     Meteor.call('pages.insert', title, path, text, template, location, intOrder, parent);
