@@ -56,34 +56,20 @@ class App extends React.Component {
     return (
         <div className="wrapper">
             <Header />
-
             <div className="post-container container">
-            {/* <AccountsUIWrapper /> */}
-            {/* <PageHeader>Smart Yields Custom CMS</PageHeader> */}
-            {/* <Nav bsStyle="tabs" activeKey={this.state.activeTab} onSelect={this.handleTab}>
-              <NavItem eventKey="1" href="/">Home</NavItem>
-              <NavItem eventKey="2" href="/posts">Posts</NavItem>
-              <NavDropdown eventKey="3" title="Pages" id="nav-dropdown">
-                <MenuItem href="/pages-primary/">Primary</MenuItem>
-                <MenuItem href="/pages-sidebar/">Sidebar</MenuItem>
-                <MenuItem href="/pages-footer/">Footer</MenuItem>
-              </NavDropdown>
-            </Nav> */}
-            <br />
-            {
-              this.props.currentUser
-              ? <NewContentForm
-                handleSubmit={this.handleSubmit}
-                isValidInput={this.isValidInput}
-                submitPage={this.submitPage}
-                pages={this.props.pages}
-                posts={this.props.posts}
-                />
-              : null
-            }
-            {this.props.yield}
+              {
+                this.props.currentUser
+                ? <NewContentForm
+                  handleSubmit={this.handleSubmit}
+                  isValidInput={this.isValidInput}
+                  submitPage={this.submitPage}
+                  pages={this.props.pages}
+                  posts={this.props.posts}
+                  />
+                : null
+              }
+              {this.props.yield}
             </div>
-
             <Footer />
         </div>
     );
