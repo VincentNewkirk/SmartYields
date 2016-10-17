@@ -241,9 +241,9 @@ class NewContentForm extends React.Component {
           <textarea ref="textInput" placeholder="'Hello! This is my page!'" rows={4} cols="50" />
           <br />
           <DropdownButton title={'Template ' + this.state.selectedTemplate} onSelect={this.onSelectTemplate} id="1337">
-            <MenuItem eventKey={1} ref="template1">Template 1</MenuItem>
-            <MenuItem eventKey={2} ref="template2">Template 2</MenuItem>
-            <MenuItem eventKey={3} ref="template_post">Post Template</MenuItem>
+            {this.state.isPageType ? <MenuItem eventKey={1} ref="template1">Template 1</MenuItem> : null }
+            {this.state.isPageType ? <MenuItem eventKey={2} ref="template2">Template 2</MenuItem> : null }
+            {!this.state.isPageType ? <MenuItem eventKey={3} ref="template_post">Post Template</MenuItem> : null }
           </DropdownButton>
         </form>
         <DropdownButton title={this.state.selectedType} onSelect={this.onSelectType} id="137">
