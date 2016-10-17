@@ -34,7 +34,7 @@ class NewContentForm extends React.Component {
 
     this.state = {
       validPath: true,
-      selectedTemplate: 1,
+      selectedTemplate: 1, // Default and DB entry
       selectedType: 'Post',
       isPageType: false,
       menuLocation: 'Menu Location',
