@@ -36,11 +36,13 @@ class NewContentForm extends React.Component {
       validPath: true,
       selectedTemplate: 1,
       selectedType: 'Post',
-      menuSelected: false,
+      isPageType: false,
       menuLocation: 'Menu Location',
       pageDropdown: 'None',
+      // Alert states and messages
       alertVisible: false,
       errorMessage: '',
+      // Visibility State for DB Contents container
       showContents: false,
     }
   }
@@ -60,9 +62,9 @@ class NewContentForm extends React.Component {
   onSelectType(event) {
     this.setState({ selectedType: event });
     if(event === 'Page'){
-      this.setState({ menuSelected: true });
+      this.setState({ isPageType: true });
     } else {
-      this.setState({ menuSelected: false });
+      this.setState({ isPageType: false });
     }
   }
 
@@ -248,7 +250,7 @@ class NewContentForm extends React.Component {
           <MenuItem eventKey={'Post'} ref="template1">Post</MenuItem>
           <MenuItem eventKey={'Page'} ref="template2">Page</MenuItem>
         </DropdownButton>
-        {this.state.menuSelected
+        {this.state.isPageType
          ?<div>
            <DropdownButton title={this.state.menuLocation} onSelect={this.onSelectMenu} id="17">
               <MenuItem eventKey={'None'}>None</MenuItem>
