@@ -1,12 +1,12 @@
 import React from 'react';
 import {mount} from 'react-mounter';
-import App from '../imports/ui/App.jsx';
-import PostTags from '../imports/ui/PostTags.jsx';
-import TemplateSelector from '../imports/ui/templateSelector.jsx';
-import PostTagRenderer from '../imports/ui/PostTagRenderer.jsx';
+import App from '/imports/ui/App.jsx';
+import PostTags from '/imports/ui/components/post/PostTags.jsx';
+import TemplateSelector from '/imports/ui/templateSelector.jsx';
+import PostTagRenderer from '/imports/ui/components/post/PostTagRenderer.jsx';
 import MenuTemplate from '/imports/ui/components/menu.old/menuTemplate.jsx';
 import MenuComponent from '/imports/ui/components/menu.old/menuComponent.jsx';
-import MyEditor from '../imports/ui/TestEditor.jsx';
+import MyEditor from '/imports/ui/TestEditor.jsx';
 
 FlowRouter.route('/', {
   name: 'landing page',

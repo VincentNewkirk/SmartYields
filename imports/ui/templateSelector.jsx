@@ -2,8 +2,8 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
-import FirstTemplate from './firstTemplate.jsx';
-import SecondTemplate from './secondTemplate.jsx';
+import FirstTemplate from '/imports/ui/templates/firstTemplate.jsx';
+import SecondTemplate from '/imports/ui/templates/secondTemplate.jsx';
 
 class TemplateSelector extends React.Component {
 

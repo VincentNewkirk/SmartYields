@@ -35,7 +35,7 @@ class NewContentForm extends React.Component {
     this.state = {
       // General
       isPageType: false,
-      selectedTemplate: 1, // Default and DB entry value for page type
+      selectedTemplate: 'template_post', // Default and DB entry value for page type
       selectedType: 'Post',
       menuLocation: 'Menu Location',
       pageDropdown: 'None',
@@ -92,7 +92,9 @@ class NewContentForm extends React.Component {
   }
 
   submitRequest(event) {
+
     event.preventDefault();
+
     // Find the text field via the React ref
     const text = this.refs.textInput.value.trim();
     const title = this.refs.titleInput.value.trim();
@@ -105,9 +107,6 @@ class NewContentForm extends React.Component {
         parent = page._id;
       }
     })
-
-
-
 
     if(this.state.selectedType === 'Page'){
       const location = this.state.menuLocation;
@@ -142,6 +141,7 @@ class NewContentForm extends React.Component {
           this.setState({ alertVisible: true })
         }
     }
+
   }
 
   renderPagesDropdown() {
@@ -215,6 +215,8 @@ class NewContentForm extends React.Component {
   render() {
     return (
       <div className="well">
+
+        {/* Validation Messages */}
         {
           this.state.alertVisible
           ? <Alert bsStyle="danger">
@@ -245,9 +247,9 @@ class NewContentForm extends React.Component {
           <FormGroup controlId="templateSelect">
             <ControlLabel>Template Select</ControlLabel>
             <FormControl componentClass="select" placeholder="select" onChange={this.onSelectTemplate}>
-              {this.state.isPageType ? <option value="1">Template 1</option> : null }
-              {this.state.isPageType ? <option value="2">Template 2</option> : null }
-              {!this.state.isPageType ? <option value="3">Post Template</option> : null }
+              {this.state.isPageType ? <option value="template_a">Template A</option> : null }
+              {this.state.isPageType ? <option value="template_b">Template B</option> : null }
+              {!this.state.isPageType ? <option value="template_post">Post Template</option> : null }
             </FormControl>
           </FormGroup>
 
@@ -288,17 +290,16 @@ class NewContentForm extends React.Component {
             </div>
             : null
           }
-          <Button onClick={this.submitRequest} bsStyle="primary">Save</Button>
-          <br />
-
-          {/* DB Contents */}
-          <Button onClick={this.toggleContents} bsStyle="info">Show DB Contents</Button>
-          {
-            this.state.showContents
-            ?<DBContents pages={this.props.pages} posts={this.props.posts} toggle={this.toggleContents}/>
-            : null
-          }
+          <Button type="submit" bsStyle="primary">Save</Button>
         </form>
+
+        {/* DB Contents */}
+        <Button onClick={this.toggleContents} bsStyle="info">Show DB Contents</Button>
+        {
+          this.state.showContents
+          ?<DBContents pages={this.props.pages} posts={this.props.posts} toggle={this.toggleContents}/>
+          : null
+        }
       </div>
 
     );

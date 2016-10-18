@@ -19,7 +19,7 @@ import Footer from './layout/Footer.jsx';
 // import AlloyEditorComponent from './AlloyEditor.jsx';
 import DropzoneDemo from './components/dropzone.jsx';
 import NewContentForm from './components/NewContentForm.jsx';
-import Post from './Post.jsx';
+import Post from '/imports/ui/components/post/Post.jsx';
 
 class App extends React.Component {
   constructor() {

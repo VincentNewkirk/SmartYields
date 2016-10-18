@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from './Post.jsx';
+import Post from '/imports/ui/components/post/Post.jsx';
 
 class FirstTemplate extends React.Component{
   render() {
