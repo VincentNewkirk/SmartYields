@@ -35,7 +35,7 @@ FlowRouter.route('/posts/:id', {
   }
 })
 
-FlowRouter.route('/page/:id', {
+FlowRouter.route('/:id', {
   name: 'page-edit',
   subscriptions: function(params) {
     this.register('pages', Meteor.subscribe('pages'));
