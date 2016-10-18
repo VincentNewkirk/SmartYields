@@ -13,8 +13,6 @@ import { Posts } from '../../api/posts.js';
 import { Pages } from '../../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
 import DBContents from './DBContents.jsx';
-
-// Markdown
 import Down, { DownControls } from '/imports/ui/components/down';
 
 class NewContentForm extends React.Component {
@@ -107,7 +105,7 @@ class NewContentForm extends React.Component {
     event.preventDefault();
 
     // Find the text field via the React ref
-    const text = this.refs.textInput.value.trim();
+    const text = this.WYSIWYGeditor.value.trim();
     const title = this.refs.titleInput.value.trim();
     const template = this.state.selectedTemplate;
     let path = this.refs.pathInput.value.trim();
@@ -128,7 +126,7 @@ class NewContentForm extends React.Component {
         this.props.submitPage(title, path, text, template, location, intOrder, parent);
         // Clear form
         this.refs.order.value = '';
-        this.refs.textInput.value = '';
+        this.WYSIWYGeditor.value = '';
         this.refs.titleInput.value = '';
         this.refs.pathInput.value = '';
         if(this.state.alertVisible){
@@ -145,7 +143,7 @@ class NewContentForm extends React.Component {
           path = '/posts/' + path;
           this.props.handleSubmit(title, path, text, template)
           // Clear form
-          this.refs.textInput.value = '';
+          this.WYSIWYGeditor.value = '';
           this.refs.titleInput.value = '';
           this.refs.pathInput.value = '';
         } else {
@@ -162,7 +160,7 @@ class NewContentForm extends React.Component {
   }
 
   initialInputValidation() {
-    const text = this.refs.textInput.value;
+    const text = this.WYSIWYGeditor.value;
     const title = this.refs.titleInput.value;
     const path = this.refs.pathInput.value;
     if( text === '' || title === '' || path === ''){
