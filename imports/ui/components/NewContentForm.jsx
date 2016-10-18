@@ -63,9 +63,15 @@ class NewContentForm extends React.Component {
   onSelectType(event) {
     this.setState({ selectedType: event.target.value });
     if ( event.target.value === 'Page' ) {
-      this.setState({ isPageType: true });
+      this.setState({
+        isPageType: true,
+        selectedTemplate: 'template_a'
+      });
     } else {
-      this.setState({ isPageType: false });
+      this.setState({
+        isPageType: false,
+        selectedTemplate: 'template_post'
+      });
     }
   }
 
@@ -271,7 +277,7 @@ class NewContentForm extends React.Component {
 
           {this.state.isPageType
            ?<div>
-             <DropdownButton title={this.state.menuLocation} onSelect={this.onSelectMenu} id="17">
+              <DropdownButton title={this.state.menuLocation} onSelect={this.onSelectMenu} id="17">
                 <MenuItem eventKey={'None'}>None</MenuItem>
                 <MenuItem eventKey={'Main'}>Main</MenuItem>
                 <MenuItem eventKey={'Sidebar'}>Sidebar</MenuItem>
@@ -286,7 +292,7 @@ class NewContentForm extends React.Component {
                 type="text"
                 placeholder="Order"
                 ref="order"
-              />
+                />
             </div>
             : null
           }

@@ -4,19 +4,18 @@ import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
 import FirstTemplate from '/imports/ui/templates/firstTemplate.jsx';
 import SecondTemplate from '/imports/ui/templates/secondTemplate.jsx';
+import PostTemplate from '/imports/ui/templates/postTemplate.jsx';
 
 class TemplateSelector extends React.Component {
 
   renderPosts() {
-    if(this.props.post.template == 1) {
-      return <FirstTemplate text={this.props.post.text} path={this.props.post.path} _id={this.props.post._id} title={this.props.post.title} type={this.props.type}/>
-    } else if(this.props.post.template == 2) {
-      return <SecondTemplate text={this.props.post.text} path={this.props.post.path} title={this.props.post.title} _id={this.props.post._id} type={this.props.type} />
+    if(this.props.post.template == "template_post") {
+      return <PostTemplate text={this.props.post.text} path={this.props.post.path} _id={this.props.post._id} title={this.props.post.title} type={this.props.type}/>
     }
   }
 
   renderPage() {
-    if(this.props.page.template == 1) {
+    if(this.props.page.template == "template_a") {
       return <FirstTemplate
       text={this.props.page.text}
       path={this.props.page.path}
@@ -27,7 +26,7 @@ class TemplateSelector extends React.Component {
       parent={this.props.page.parent}
       pages={this.props.pages}
       order={this.props.page.order} />
-    } else if(this.props.page.template == 2) {
+    } else if(this.props.page.template == "template_b") {
       return <SecondTemplate
       text={this.props.page.text}
       path={this.props.page.path}

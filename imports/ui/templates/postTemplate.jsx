@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from './Post.jsx';
+import Post from '/imports/ui/components/post/Post.jsx';
 
 class PostTemplate extends React.Component{
   render() {
@@ -10,7 +10,7 @@ class PostTemplate extends React.Component{
                 <div className="row">
                     <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                         <div className="site-heading">
-                            <h1>{this.props.title}</h1>
+                            <h1>{this.props.title} (This is a post)</h1>
                             <span className="subheading"></span>
                         </div>
                     </div>
