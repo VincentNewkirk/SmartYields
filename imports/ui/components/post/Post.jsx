@@ -4,6 +4,7 @@ import { Posts } from '/imports/api/posts.js';
 import { Pages } from '/imports/api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
+import Down from '/imports/ui/components/down';
 
 class Post extends React.Component {
 
@@ -89,7 +90,7 @@ class Post extends React.Component {
           ? <p>Loading...</p>
           : <div className="post-container">
             <div className="post-content">
-              {this.props.text}
+              <Down content={this.props.text}/>
             </div>
           </div>
         }
