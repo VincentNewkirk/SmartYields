@@ -12,30 +12,11 @@ export default class DownControls extends Component {
     this.makeBold = this.makeBold.bind(this);
   }
 
-  // http://stackoverflow.com/questions/3997659/replace-selected-text-in-contenteditable-div
-  replaceSelectedText(replacementText) {
-    var sel, range;
-    if (window.getSelection) {
-        sel = window.getSelection();
-        if (sel.rangeCount) {
-            range = sel.getRangeAt(0);
-            range.deleteContents();
-            range.insertNode(document.createTextNode(replacementText));
-        }
-    } else if (document.selection && document.selection.createRange) {
-        range = document.selection.createRange();
-        range.text = replacementText;
-    }
-  }
-
-  // Hybrid approach
-  //http://stackoverflow.com/questions/10596606/window-getselection-get-the-right-selection-in-textarea/10596963#10596963
-  // http://stackoverflow.com/questions/5379120/get-the-highlighted-selected-text
-  getSelectionText() {
+  getSelectionText(editorID) {
     var text = "";
     if (window.getSelection) {
         try {
-            var ta = this.props.editorID;
+            var ta = editorID;
             text = ta.value.substring(ta.selectionStart, ta.selectionEnd);
         } catch (e) {
             console.log('Cant get selection text')
@@ -46,16 +27,22 @@ export default class DownControls extends Component {
     return text;
   }
 
+  replaceSelectedText(editorID, replacementText) {
+    let val = editorID.value;
+    // Grab contents around selected text and replace with new text
+    editorID.value = val.slice(0, editorID.selectionStart) + replacementText + val.slice(editorID.selectionEnd);
+  }
+
   makeBold() {
     // Retrieve selected text
-    let selectedText = this.getSelectionText();
+    let selectedText = this.getSelectionText(this.props.editorID);
     // Modify text to output as markdown
     let modifiedText = "**"+selectedText+"**";
-    console.log(modifiedText);
     // Replace the text
-    this.replaceSelectedText(modifiedText);
+    this.replaceSelectedText(this.props.editorID, modifiedText);
     // console.log(this.props.editorID);
   }
+
   render() {
     return (
       <ul className="WYSIWYGcontrols">

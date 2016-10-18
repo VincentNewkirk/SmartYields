@@ -229,13 +229,7 @@ class NewContentForm extends React.Component {
     });
   }
 
-  renderPreview() {
-    return <Down content={this.state.contentPreview}/>;
-  }
-
-
   render() {
-
     return (
       <div className="well">
 
@@ -267,15 +261,19 @@ class NewContentForm extends React.Component {
 
           {/* Main Content Editor */}
           <div className="WYSIWYGcontainer">
-            <DownControls editorID="WYSIWYGeditor" />
+            {/* <DownControls editorID="WYSIWYGeditor" /> */}
+            <DownControls editorID={this.WYSIWYGeditor} />
             <textarea id="WYSIWYGeditor"
-              ref="textInput"
-              placeholder="'Hello! This is my page!'"
+              // ref="WYSIWYGeditor"
+              ref={(ref) => this.WYSIWYGeditor = ref}
+              placeholder="Hello, world!"
               rows={4}
               cols="50"
               onChange={this.handlePreview}
             />
-            <div id="WYSIWYGpreview">{this.renderPreview()}</div>
+            <div id="WYSIWYGpreview">
+              <Down content={this.state.contentPreview}/>
+            </div>
           </div>
 
           <FormGroup controlId="templateSelect">
