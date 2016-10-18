@@ -1,7 +1,10 @@
+/**
+ * Component: Down
+ * A simple component library to turn a textarea into a simple Markdown editor
+ * @prop content {string} The string of content we want parsed from markdown into markup
+ */
 import React, { Component} from 'react';
 import showdown from 'showdown';
-
-// Init
 const converter = new showdown.Converter();
 
 export default class Down extends Component {
