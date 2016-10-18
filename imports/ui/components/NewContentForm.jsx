@@ -15,7 +15,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import DBContents from './DBContents.jsx';
 
 // Markdown
-import MarkdownParser, { MarkdownControls } from '/imports/ui/components/markdown';
+import Down, { DownControls } from '/imports/ui/components/down';
 
 class NewContentForm extends React.Component {
   constructor(){
@@ -230,7 +230,7 @@ class NewContentForm extends React.Component {
   }
 
   renderPreview() {
-    return <MarkdownParser content={this.state.contentPreview}/>;
+    return <Down content={this.state.contentPreview}/>;
   }
 
 
@@ -267,7 +267,7 @@ class NewContentForm extends React.Component {
 
           {/* Main Content Editor */}
           <div className="WYSIWYGcontainer">
-            <MarkdownControls />
+            <DownControls editorID="WYSIWYGeditor" />
             <textarea id="WYSIWYGeditor"
               ref="textInput"
               placeholder="'Hello! This is my page!'"
