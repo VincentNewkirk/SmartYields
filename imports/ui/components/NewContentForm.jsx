@@ -99,7 +99,7 @@ class NewContentForm extends React.Component {
     })
     const parsedString = replaceWhiteSpace.join('').toLowerCase();
     this.refs.pathInput.value = parsedString;
-    this.refs.textInput.focus()
+    this.WYSIWYGeditor.focus()
   }
 
   submitRequest(event) {
