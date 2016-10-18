@@ -16,7 +16,7 @@ Meteor.methods({
     check(text, String);
     check(title, String);
     check(path, String);
-    check(template, Number);
+    check(template, String);
     check(menu, String);
     check(order, Number);
 

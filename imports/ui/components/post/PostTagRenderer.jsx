@@ -1,7 +1,7 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Pagination } from 'react-bootstrap';
-import { Posts } from '../api/posts.js';
+import { Posts } from '/imports/api/posts.js';
 import PostTags from './PostTags.jsx';
 
 class PostTagRenderer extends React.Component {

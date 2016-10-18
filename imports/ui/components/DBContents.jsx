@@ -1,7 +1,7 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Posts } from '../api/posts.js';
-import { Pages } from '../api/pages.js';
+import { Posts } from '/imports/api/posts.js';
+import { Pages } from '/imports/api/pages.js';
 
 class DBContents extends React.Component {
   constructor() {

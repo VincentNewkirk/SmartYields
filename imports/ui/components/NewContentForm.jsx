@@ -9,8 +9,8 @@ import {
   ControlLabel,
   Alert
 } from 'react-bootstrap';
-import { Posts } from '../api/posts.js';
-import { Pages } from '../api/pages.js';
+import { Posts } from '../../api/posts.js';
+import { Pages } from '../../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
 import DBContents from './DBContents.jsx';
 
@@ -33,14 +33,17 @@ class NewContentForm extends React.Component {
     this.initialInputValidation = this.initialInputValidation.bind(this);
 
     this.state = {
-      validPath: true,
-      selectedTemplate: 1,
+      // General
+      isPageType: false,
+      selectedTemplate: 'template_post', // Default and DB entry value for page type
       selectedType: 'Post',
-      menuSelected: false,
       menuLocation: 'Menu Location',
       pageDropdown: 'None',
+      // Validation
+      validPath: true,
       alertVisible: false,
       errorMessage: '',
+      // Visibility State for DB Contents container
       showContents: false,
     }
   }
@@ -54,15 +57,21 @@ class NewContentForm extends React.Component {
   }
 
   onSelectTemplate(event) {
-    this.setState({ selectedTemplate: event })
+    this.setState({ selectedTemplate: event.target.value })
   }
 
   onSelectType(event) {
-    this.setState({ selectedType: event });
-    if(event === 'Page'){
-      this.setState({ menuSelected: true });
+    this.setState({ selectedType: event.target.value });
+    if ( event.target.value === 'Page' ) {
+      this.setState({
+        isPageType: true,
+        selectedTemplate: 'template_a'
+      });
     } else {
-      this.setState({ menuSelected: false });
+      this.setState({
+        isPageType: false,
+        selectedTemplate: 'template_post'
+      });
     }
   }
 
@@ -89,7 +98,9 @@ class NewContentForm extends React.Component {
   }
 
   submitRequest(event) {
+
     event.preventDefault();
+
     // Find the text field via the React ref
     const text = this.refs.textInput.value.trim();
     const title = this.refs.titleInput.value.trim();
@@ -102,9 +113,6 @@ class NewContentForm extends React.Component {
         parent = page._id;
       }
     })
-
-
-
 
     if(this.state.selectedType === 'Page'){
       const location = this.state.menuLocation;
@@ -139,6 +147,7 @@ class NewContentForm extends React.Component {
           this.setState({ alertVisible: true })
         }
     }
+
   }
 
   renderPagesDropdown() {
@@ -211,7 +220,9 @@ class NewContentForm extends React.Component {
 
   render() {
     return (
-      <Navbar>
+      <div className="well">
+
+        {/* Validation Messages */}
         {
           this.state.alertVisible
           ? <Alert bsStyle="danger">
@@ -220,8 +231,9 @@ class NewContentForm extends React.Component {
             </Alert>
           : null
         }
+
+        {/* Admin Form */}
         <form className="new-post" onSubmit={this.submitRequest} >
-          <br />
           <span>Title of your <span className="type-span">{this.state.selectedType}</span></span><input
             type="text"
             ref="titleInput"
@@ -237,46 +249,66 @@ class NewContentForm extends React.Component {
           <p>Body of your <span className="type-span">{this.state.selectedType}:</span></p>
           <textarea ref="textInput" placeholder="'Hello! This is my page!'" rows={4} cols="50" />
           <br />
-          <DropdownButton title={'Template ' + this.state.selectedTemplate} onSelect={this.onSelectTemplate} id="1337">
-            <MenuItem eventKey={1} ref="template1">Template 1</MenuItem>
-            <MenuItem eventKey={2} ref="template2">Template 2</MenuItem>
-          </DropdownButton>
+
+          <FormGroup controlId="templateSelect">
+            <ControlLabel>Template Select</ControlLabel>
+            <FormControl componentClass="select" placeholder="select" onChange={this.onSelectTemplate}>
+              {this.state.isPageType ? <option value="template_a">Template A</option> : null }
+              {this.state.isPageType ? <option value="template_b">Template B</option> : null }
+              {!this.state.isPageType ? <option value="template_post">Post Template</option> : null }
+            </FormControl>
+          </FormGroup>
+
+          {/*
+            NOTE: This was the old dropdown for your comparison. Delete after review
+            <DropdownButton title={'Template ' + this.state.selectedTemplate} onSelect={this.onSelectTemplate} id="1337">
+            {this.state.isPageType ? <MenuItem eventKey={1} ref="template1">Template 1</MenuItem> : null }
+            {this.state.isPageType ? <MenuItem eventKey={2} ref="template2">Template 2</MenuItem> : null }
+            {!this.state.isPageType ? <MenuItem eventKey={3} ref="template_post">Post Template</MenuItem> : null }
+          </DropdownButton> */}
+
+          <FormGroup controlId="contentTypeSelect">
+            <ControlLabel>Content Type</ControlLabel>
+            <FormControl componentClass="select" placeholder="select" onChange={this.onSelectType}>
+              <option value="Post">Post</option>
+              <option value="Page">Page</option>
+            </FormControl>
+          </FormGroup>
+
+          {this.state.isPageType
+           ?<div>
+              <DropdownButton title={this.state.menuLocation} onSelect={this.onSelectMenu} id="17">
+                <MenuItem eventKey={'None'}>None</MenuItem>
+                <MenuItem eventKey={'Main'}>Main</MenuItem>
+                <MenuItem eventKey={'Sidebar'}>Sidebar</MenuItem>
+                <MenuItem eventKey={'Footer'}>Footer</MenuItem>
+              </DropdownButton>
+              <span>Parent Page:</span>
+              <DropdownButton title={this.state.pageDropdown} onSelect={this.onPageSelect} id="7">
+                <MenuItem eventKey={'None'}>None</MenuItem>
+                {this.renderPagesDropdown()}
+              </DropdownButton>
+              <input
+                type="text"
+                placeholder="Order"
+                ref="order"
+                />
+            </div>
+            : null
+          }
+          <Button type="submit" bsStyle="primary">Save</Button>
         </form>
-        <DropdownButton title={this.state.selectedType} onSelect={this.onSelectType} id="137">
-          <MenuItem eventKey={'Post'} ref="template1">Post</MenuItem>
-          <MenuItem eventKey={'Page'} ref="template2">Page</MenuItem>
-        </DropdownButton>
-        {this.state.menuSelected
-         ?<div>
-           <DropdownButton title={this.state.menuLocation} onSelect={this.onSelectMenu} id="17">
-              <MenuItem eventKey={'None'}>None</MenuItem>
-              <MenuItem eventKey={'Main'}>Main</MenuItem>
-              <MenuItem eventKey={'Sidebar'}>Sidebar</MenuItem>
-              <MenuItem eventKey={'Footer'}>Footer</MenuItem>
-            </DropdownButton>
-            <span>Parent Page:</span>
-            <DropdownButton title={this.state.pageDropdown} onSelect={this.onPageSelect} id="7">
-              <MenuItem eventKey={'None'}>None</MenuItem>
-              {this.renderPagesDropdown()}
-            </DropdownButton>
-            <input
-              type="text"
-              placeholder="Order"
-              ref="order"
-            />
-          </div>
-          : null
-        }
-        <Button onClick={this.submitRequest} bsStyle="primary">Save</Button>
-        <br />
+
+        {/* DB Contents */}
         <Button onClick={this.toggleContents} bsStyle="info">Show DB Contents</Button>
         {
           this.state.showContents
           ?<DBContents pages={this.props.pages} posts={this.props.posts} toggle={this.toggleContents}/>
           : null
         }
-      </Navbar>
-    )
+      </div>
+
+    );
   }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Jumbotron }from 'react-bootstrap';
-import Post from './Post.jsx';
+import Post from '/imports/ui/components/post/Post.jsx';
 
 class SecondTemplate extends React.Component {
   render() {
