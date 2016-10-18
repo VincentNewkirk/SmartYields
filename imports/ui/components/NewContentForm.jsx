@@ -13,7 +13,9 @@ import { Posts } from '../../api/posts.js';
 import { Pages } from '../../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
 import DBContents from './DBContents.jsx';
-import MarkdownParser from '/imports/ui/components/markdown/MarkdownParser.js';
+
+// Markdown
+import MarkdownParser, { MarkdownControls } from '/imports/ui/components/markdown';
 
 class NewContentForm extends React.Component {
   constructor(){
@@ -265,6 +267,7 @@ class NewContentForm extends React.Component {
 
           {/* Main Content Editor */}
           <div className="WYSIWYGcontainer">
+            <MarkdownControls />
             <textarea id="WYSIWYGeditor"
               ref="textInput"
               placeholder="'Hello! This is my page!'"
