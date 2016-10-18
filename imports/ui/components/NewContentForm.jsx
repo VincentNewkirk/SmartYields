@@ -13,6 +13,7 @@ import { Posts } from '../../api/posts.js';
 import { Pages } from '../../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
 import DBContents from './DBContents.jsx';
+import Down, { DownControls } from '/imports/ui/components/down';
 
 class NewContentForm extends React.Component {
   constructor(){
@@ -31,6 +32,7 @@ class NewContentForm extends React.Component {
     this.autoFillPath = this.autoFillPath.bind(this);
     this.toggleContents = this.toggleContents.bind(this);
     this.initialInputValidation = this.initialInputValidation.bind(this);
+    this.handlePreview = this.handlePreview.bind(this);
 
     this.state = {
       // General
@@ -39,6 +41,7 @@ class NewContentForm extends React.Component {
       selectedType: 'Post',
       menuLocation: 'Menu Location',
       pageDropdown: 'None',
+      contentPreview: '',
       // Validation
       validPath: true,
       alertVisible: false,
@@ -94,7 +97,7 @@ class NewContentForm extends React.Component {
     })
     const parsedString = replaceWhiteSpace.join('').toLowerCase();
     this.refs.pathInput.value = parsedString;
-    this.refs.textInput.focus()
+    this.WYSIWYGeditor.focus()
   }
 
   submitRequest(event) {
@@ -102,7 +105,7 @@ class NewContentForm extends React.Component {
     event.preventDefault();
 
     // Find the text field via the React ref
-    const text = this.refs.textInput.value.trim();
+    const text = this.WYSIWYGeditor.value.trim();
     const title = this.refs.titleInput.value.trim();
     const template = this.state.selectedTemplate;
     let path = this.refs.pathInput.value.trim();
@@ -123,7 +126,7 @@ class NewContentForm extends React.Component {
         this.props.submitPage(title, path, text, template, location, intOrder, parent);
         // Clear form
         this.refs.order.value = '';
-        this.refs.textInput.value = '';
+        this.WYSIWYGeditor.value = '';
         this.refs.titleInput.value = '';
         this.refs.pathInput.value = '';
         if(this.state.alertVisible){
@@ -140,7 +143,7 @@ class NewContentForm extends React.Component {
           path = '/posts/' + path;
           this.props.handleSubmit(title, path, text, template)
           // Clear form
-          this.refs.textInput.value = '';
+          this.WYSIWYGeditor.value = '';
           this.refs.titleInput.value = '';
           this.refs.pathInput.value = '';
         } else {
@@ -157,7 +160,7 @@ class NewContentForm extends React.Component {
   }
 
   initialInputValidation() {
-    const text = this.refs.textInput.value;
+    const text = this.WYSIWYGeditor.value;
     const title = this.refs.titleInput.value;
     const path = this.refs.pathInput.value;
     if( text === '' || title === '' || path === ''){
@@ -218,6 +221,12 @@ class NewContentForm extends React.Component {
     this.setState({ showContents: !this.state.showContents });
   }
 
+  handlePreview(event) {
+    this.setState({
+      contentPreview: event.target.value
+    });
+  }
+
   render() {
     return (
       <div className="well">
@@ -247,8 +256,23 @@ class NewContentForm extends React.Component {
             onChange={this.inputChange}
           /><br />
           <p>Body of your <span className="type-span">{this.state.selectedType}:</span></p>
-          <textarea ref="textInput" placeholder="'Hello! This is my page!'" rows={4} cols="50" />
-          <br />
+
+          {/* Main Content Editor */}
+          <div className="WYSIWYGcontainer">
+            {/* <DownControls editorID="WYSIWYGeditor" /> */}
+            <DownControls editorID={this.WYSIWYGeditor} />
+            <textarea id="WYSIWYGeditor"
+              // ref="WYSIWYGeditor"
+              ref={(ref) => this.WYSIWYGeditor = ref}
+              placeholder="Hello, world!"
+              rows={4}
+              cols="50"
+              onChange={this.handlePreview}
+            />
+            <div id="WYSIWYGpreview">
+              <Down content={this.state.contentPreview}/>
+            </div>
+          </div>
 
           <FormGroup controlId="templateSelect">
             <ControlLabel>Template Select</ControlLabel>
