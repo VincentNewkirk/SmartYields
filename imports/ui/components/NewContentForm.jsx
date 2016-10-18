@@ -13,6 +13,7 @@ import { Posts } from '../../api/posts.js';
 import { Pages } from '../../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
 import DBContents from './DBContents.jsx';
+import MarkdownParser from '/imports/ui/components/markdown/MarkdownParser.js';
 
 class NewContentForm extends React.Component {
   constructor(){
@@ -31,6 +32,7 @@ class NewContentForm extends React.Component {
     this.autoFillPath = this.autoFillPath.bind(this);
     this.toggleContents = this.toggleContents.bind(this);
     this.initialInputValidation = this.initialInputValidation.bind(this);
+    this.handlePreview = this.handlePreview.bind(this);
 
     this.state = {
       // General
@@ -39,6 +41,7 @@ class NewContentForm extends React.Component {
       selectedType: 'Post',
       menuLocation: 'Menu Location',
       pageDropdown: 'None',
+      contentPreview: '',
       // Validation
       validPath: true,
       alertVisible: false,
@@ -218,7 +221,19 @@ class NewContentForm extends React.Component {
     this.setState({ showContents: !this.state.showContents });
   }
 
+  handlePreview(event) {
+    this.setState({
+      contentPreview: event.target.value
+    });
+  }
+
+  renderPreview() {
+    return <MarkdownParser content={this.state.contentPreview}/>;
+  }
+
+
   render() {
+
     return (
       <div className="well">
 
@@ -247,8 +262,18 @@ class NewContentForm extends React.Component {
             onChange={this.inputChange}
           /><br />
           <p>Body of your <span className="type-span">{this.state.selectedType}:</span></p>
-          <textarea ref="textInput" placeholder="'Hello! This is my page!'" rows={4} cols="50" />
-          <br />
+
+          {/* Main Content Editor */}
+          <div className="WYSIWYGcontainer">
+            <textarea id="WYSIWYGeditor"
+              ref="textInput"
+              placeholder="'Hello! This is my page!'"
+              rows={4}
+              cols="50"
+              onChange={this.handlePreview}
+            />
+            <div id="WYSIWYGpreview">{this.renderPreview()}</div>
+          </div>
 
           <FormGroup controlId="templateSelect">
             <ControlLabel>Template Select</ControlLabel>
