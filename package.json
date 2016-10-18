@@ -15,6 +15,7 @@
     "draft-js": "^0.9.1",
     "eslint": "^3.4.0",
     "eslint-config-airbnb": "^11.1.0",
+    "file-system": "^2.2.1",
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.3.2",
     "react-addons-perf": "^15.3.2",
@@ -22,7 +23,8 @@
     "react-bootstrap": "^0.30.3",
     "react-dom": "^15.3.2",
     "react-dropzone": "^3.6.0",
-    "react-mounter": "^1.2.0"
+    "react-mounter": "^1.2.0",
+    "showdown": "^1.4.3"
   },
   "devDependencies": {
     "eslint": "^2.0.0-rc.1",
