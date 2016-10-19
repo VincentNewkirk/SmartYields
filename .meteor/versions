@@ -16,6 +16,7 @@ caching-compiler@1.1.7
 caching-html-compiler@1.0.7
 callback-hook@1.0.9
 check@1.2.3
+coffeescript@1.1.4
 ddp@1.2.5
 ddp-client@1.2.9
 ddp-common@1.2.6
@@ -57,6 +58,8 @@ npm-bcrypt@0.9.1
 npm-mongo@1.5.49
 observe-sequence@1.0.12
 ordered-dict@1.0.8
+ostrio:cookies@2.0.4
+ostrio:files@1.6.6
 promise@0.8.7
 random@1.0.10
 rate-limit@1.0.5
