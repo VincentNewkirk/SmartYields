@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Images from '../../../lib/images.js';
+import { createContainer } from 'meteor/react-meteor-data';
 
 class ImgUploader extends Component {
 
@@ -31,6 +32,7 @@ class ImgUploader extends Component {
     }
 
     render() {
+      console.log(this.props)
         return(
             <form method="post" encType="multipart/form-data" onSubmit={this.handleSubmit.bind(this)}>
                 <input type="file" ref="testfile" size="50" />
@@ -41,4 +43,11 @@ class ImgUploader extends Component {
 
 }
 
-export default ImgUploader;
+export default createContainer(() => {
+  Meteor.subscribe('images');
+  console.log(Images.find({}).fetch())
+
+  return {
+    images: Images.find({}).fetch(),
+  };
+}, ImgUploader);
