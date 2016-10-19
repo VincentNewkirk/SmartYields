@@ -16,7 +16,7 @@ import Footer from './layout/Footer.jsx';
 
 // Components
 // import AlloyEditorComponent from './AlloyEditor.jsx';
-import ImageUploader from './uploadImg.jsx';
+import ImgUploader from './FileUpload.jsx';
 import DropzoneDemo from './components/dropzone.jsx';
 import NewContentForm from './components/NewContentForm.jsx';
 import Post from '/imports/ui/components/post/Post.jsx';
@@ -68,8 +68,8 @@ class App extends React.Component {
                 : null
               }
               {this.props.yield}
-              <ImageUploader />
             </div>
+            <ImgUploader />
             <Footer />
         </div>
     );
