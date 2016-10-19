@@ -26,6 +26,7 @@ class ImgUploader extends Component {
                     alert('File '+fileObj.name+' successfully uploaded');
                 }
             });
+            console.log(upload, 'UPLOAD')
 
             upload.start();
         }
@@ -45,9 +46,8 @@ class ImgUploader extends Component {
 
 export default createContainer(() => {
   Meteor.subscribe('images');
-  console.log(Images.find({}).fetch())
-
+  console.log(Images.collection.findOne({fileId: "zzvQuhR68cpdQs3m4"}), 'COLLECTION')
   return {
-    images: Images.find({}).fetch(),
+    images: Images.collection.find({}).fetch(),
   };
 }, ImgUploader);
