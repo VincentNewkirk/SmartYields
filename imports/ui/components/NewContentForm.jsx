@@ -14,6 +14,7 @@ import { Pages } from '../../api/pages.js';
 import { createContainer } from 'meteor/react-meteor-data';
 import DBContents from './DBContents.jsx';
 import Down, { DownControls } from '/imports/ui/components/down';
+import ImgUploader from './FileUpload.jsx';
 
 class NewContentForm extends React.Component {
   constructor(){
@@ -298,6 +299,8 @@ class NewContentForm extends React.Component {
               <option value="Page">Page</option>
             </FormControl>
           </FormGroup>
+
+          <ImgUploader />
 
           {this.state.isPageType
            ?<div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Images from '../../lib/images.js';
+import Images from '../../../lib/images.js';
 
 class ImgUploader extends Component {
 
