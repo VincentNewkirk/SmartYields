@@ -38,12 +38,25 @@ class ImgUploader extends React.Component {
     }
   }
 
+  renderImgListing(){
+    return this.props.images.map(img => (
+      <div>
+        <p>{img.title}</p>
+      </div>
+    ));
+  }
+
   render() {
     return(
       <div>
         <input type="file" ref="testfile" size="50" />
         <span>Alt Text:<input type="text" ref="alt-text" /></span>
         <input type="submit" onClick={this.submitUpload}/>
+        {
+          this.props.images ?
+          this.renderImgListing()
+          :null
+        }
       </div>
     )
   }
