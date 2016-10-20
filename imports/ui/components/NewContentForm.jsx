@@ -300,7 +300,8 @@ class NewContentForm extends React.Component {
             </FormControl>
           </FormGroup>
 
-          <ImgUploader />
+          { <ImgUploader />
+          }
 
           {this.state.isPageType
            ?<div>

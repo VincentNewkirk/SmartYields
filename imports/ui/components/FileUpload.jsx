@@ -1,53 +1,60 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import Images from '../../../lib/images.js';
-import { createContainer } from 'meteor/react-meteor-data';
+import { Files } from '../../api/files.js';
 
-class ImgUploader extends Component {
+class ImgUploader extends React.Component {
+  constructor(){
+    super();
+    this.submitUpload = this.submitUpload.bind(this);
+  }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        if(ReactDOM.findDOMNode(this.refs.testfile).files && ReactDOM.findDOMNode(this.refs.testfile).files[0]) {
+    submitUpload(event) {
+        if(this.refs.testfile.files && this.refs.testfile.files[0]) {
 
-            let upload = Images.insert({
-                file: ReactDOM.findDOMNode(this.refs.testfile).files[0],
-                streams: 'dynamic',
-                chunkSize: 'dynamic'
-            }, false);
+          let upload = Images.insert({
+              file: this.refs.testfile.files[0],
+              streams: 'dynamic',
+              chunkSize: 'dynamic'
+          }, false);
 
-            upload.on('start', function() {
-                console.log('upload.on.start');
-            });
+          upload.on('start', function() {
+            console.log('upload.on.start');
+          });
 
-            upload.on('end', function(error, fileObj) {
-                if(error) {
-                    alert('Error during upload: ' + error);
-                } else {
-                  console.log(fileObj, 'FILE OBJ')
-                    alert('File '+fileObj.name+' successfully uploaded');
-                }
-            });
+          upload.on('end', function(error, fileObj) {
+              if(error) {
+                  alert('Error during upload: ' + error);
+              } else {
+                console.log(Images.link(fileObj), 'LINK')
+                console.log(fileObj, 'FILE OBJ')
+                alert('File '+fileObj.name+' successfully uploaded');
+              }
+          });
 
-            upload.start();
+          upload.start();
         }
     }
 
     render() {
 
         return(
-            <form method="post" encType="multipart/form-data" onSubmit={this.handleSubmit.bind(this)}>
-                <input type="file" ref="testfile" size="50" />
-                <input type="submit" />
-            </form>
+          <div>
+            <input type="file" ref="testfile" size="50" />
+            <span>Alt Text:<input type="text" ref="alt-text" /></span>
+            <input type="submit" onClick={this.submitUpload}/>
+          </div>
+
         )
     }
 
 }
 
-export default createContainer(() => {
-  Meteor.subscribe('Images');
-  console.log(Images.find(), 'cursor')
-  return {
-    images: Images.find({}).fetch(),
-  };
-}, ImgUploader);
+// export default createContainer(() => {
+//   Meteor.subscribe('Images');
+//   console.log(Images.find(), 'cursor')
+//   return {
+//     images: Images.find({}).fetch(),
+//   };
+// }, ImgUploader);
+
+export default ImgUploader
