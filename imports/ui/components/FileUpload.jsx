@@ -23,6 +23,7 @@ class ImgUploader extends Component {
                 if(error) {
                     alert('Error during upload: ' + error);
                 } else {
+                  console.log(fileObj, 'FILE OBJ')
                     alert('File '+fileObj.name+' successfully uploaded');
                 }
             });
@@ -32,6 +33,7 @@ class ImgUploader extends Component {
     }
 
     render() {
+
         return(
             <form method="post" encType="multipart/form-data" onSubmit={this.handleSubmit.bind(this)}>
                 <input type="file" ref="testfile" size="50" />
@@ -43,8 +45,9 @@ class ImgUploader extends Component {
 }
 
 export default createContainer(() => {
-  Meteor.subscribe('images');
+  Meteor.subscribe('Images');
+  console.log(Images.find(), 'cursor')
   return {
-    images: Images.collection.find({}).fetch(),
+    images: Images.find({}).fetch(),
   };
 }, ImgUploader);
