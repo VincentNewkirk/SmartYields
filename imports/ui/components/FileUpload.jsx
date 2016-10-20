@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import Images from '../../../lib/images.js';
 import { Files } from '../../api/files.js';
 
@@ -25,8 +26,7 @@ class ImgUploader extends React.Component {
               if(error) {
                   alert('Error during upload: ' + error);
               } else {
-                console.log(Images.link(fileObj), 'LINK')
-                console.log(fileObj, 'FILE OBJ')
+                Meteor.call('files.insert', fileObj.name, Images.link(fileObj))
                 alert('File '+fileObj.name+' successfully uploaded');
               }
           });
