@@ -300,9 +300,6 @@ class NewContentForm extends React.Component {
             </FormControl>
           </FormGroup>
 
-          { <ImgUploader />
-          }
-
           {this.state.isPageType
            ?<div>
               <DropdownButton title={this.state.menuLocation} onSelect={this.onSelectMenu} id="17">
@@ -327,6 +324,7 @@ class NewContentForm extends React.Component {
           <Button type="submit" bsStyle="primary">Save</Button>
         </form>
 
+        <ImgUploader images={this.props.images} imgHandler={this.props.imgHandler}/>
         {/* DB Contents */}
         <Button onClick={this.toggleContents} bsStyle="info">Show DB Contents</Button>
         {

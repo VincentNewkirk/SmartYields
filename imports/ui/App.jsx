@@ -5,6 +5,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
+import { Files } from '../api/files.js';
 import { Meteor } from 'meteor/meteor';
 import { Button, Navbar, PageHeader, DropdownButton, MenuItem, Clearfix, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import AccountsUIWrapper from './components/AccountsUIWrapper.jsx';
@@ -25,12 +26,7 @@ class App extends React.Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.submitPage = this.submitPage.bind(this);
-    this.handleTab = this.handleTab.bind(this);
-    //may or may not use this
-    this.showNewContent = this.showNewContent.bind(this);
-    this.state = {
-      activeTab: "1",
-    }
+    this.uploadImg = this.uploadImg.bind(this);
   }
 
   handleSubmit(title, path, text, template) {
@@ -41,14 +37,10 @@ class App extends React.Component {
     Meteor.call('pages.insert', title, path, text, template, location, intOrder, parent);
   }
 
-  handleTab(event) {
-    this.setState({ activeTab: event })
+  uploadImg(title, path){
+    Meteor.call('files.insert', title, path)
   }
 
-  //may or may not use this
-  showNewContent() {
-
-  }
 
   render() {
     return (
@@ -63,6 +55,8 @@ class App extends React.Component {
                   submitPage={this.submitPage}
                   pages={this.props.pages}
                   posts={this.props.posts}
+                  images={this.props.images}
+                  imgHandler={this.uploadImg}
                   />
                 : null
               }
@@ -77,10 +71,12 @@ class App extends React.Component {
 export default createContainer(() => {
   Meteor.subscribe('posts');
   Meteor.subscribe('pages');
+  Meteor.subscribe('files');
 
   return {
     pages: Pages.find({}, { sort: { createdAt: -1 } }).fetch(),
     posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
+    images: Files.find({}, { sort: { createdAt: -1 } }).fetch(),
     currentUser: Meteor.user(),
   };
 }, App);

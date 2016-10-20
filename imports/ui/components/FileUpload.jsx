@@ -9,44 +9,44 @@ class ImgUploader extends React.Component {
     this.submitUpload = this.submitUpload.bind(this);
   }
 
-    submitUpload(event) {
-        if(this.refs.testfile.files && this.refs.testfile.files[0]) {
+  submitUpload(event) {
+    if(this.refs.testfile.files && this.refs.testfile.files[0]) {
 
-          let upload = Images.insert({
-              file: this.refs.testfile.files[0],
-              streams: 'dynamic',
-              chunkSize: 'dynamic'
-          }, false);
+      let that = this;
 
-          upload.on('start', function() {
-            console.log('upload.on.start');
-          });
+      let upload = Images.insert({
+          file: this.refs.testfile.files[0],
+          streams: 'dynamic',
+          chunkSize: 'dynamic'
+      }, false);
 
-          upload.on('end', function(error, fileObj) {
-              if(error) {
-                  alert('Error during upload: ' + error);
-              } else {
-                Meteor.call('files.insert', fileObj.name, Images.link(fileObj))
-                alert('File '+fileObj.name+' successfully uploaded');
-              }
-          });
+      upload.on('start', function() {
+        console.log('upload.on.start');
+      });
 
-          upload.start();
+      upload.on('end', function(error, fileObj) {
+        if(error) {
+          alert('Error during upload: ' + error);
+        } else {
+          let path = Images.link(fileObj);
+          that.props.imgHandler(fileObj.name, path);
+          alert('File '+fileObj.name+' successfully uploaded');
         }
+      });
+
+      upload.start();
     }
+  }
 
-    render() {
-
-        return(
-          <div>
-            <input type="file" ref="testfile" size="50" />
-            <span>Alt Text:<input type="text" ref="alt-text" /></span>
-            <input type="submit" onClick={this.submitUpload}/>
-          </div>
-
-        )
-    }
-
+  render() {
+    return(
+      <div>
+        <input type="file" ref="testfile" size="50" />
+        <span>Alt Text:<input type="text" ref="alt-text" /></span>
+        <input type="submit" onClick={this.submitUpload}/>
+      </div>
+    )
+  }
 }
 
 // export default createContainer(() => {
