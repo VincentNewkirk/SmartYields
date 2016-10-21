@@ -5,6 +5,7 @@
  */
 import React, { Component } from 'react';
 import Down from './Down.jsx';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 export default class DownControls extends Component {
   constructor(props) {
@@ -80,15 +81,27 @@ export default class DownControls extends Component {
     this.replaceSelectedText(this.props.editorID, modifiedText);
   }
 
+  renderDropdown() {
+    let imageList = this.props.images.map(img => (
+      <MenuItem>{img.title}</MenuItem>
+    ));
+    return(
+      <DropdownButton title="Image">
+        {imageList}
+      </DropdownButton>
+    )
+  }
+
   render() {
     return (
-      <ul className="WYSIWYGcontrols">
-        <li><button type="button" onClick={this.makeBold}>Bold</button></li>
-        <li><button type="button" onClick={this.italicize}>Italics</button></li>
-        <li><button type="button" onClick={this.strikeThrough}>Strike-Through</button></li>
-        <li><button type="button" onClick={this.blockQuote}>Block-Quote</button></li>
-        <li><button type="button" onClick={this.codeBlock}>Code-Block</button></li>
-      </ul>
+      <div className="WYSIWYGcontrols">
+        <span><button type="button" onClick={this.makeBold}>Bold</button></span>
+        <span><button type="button" onClick={this.italicize}>Italics</button></span>
+        <span><button type="button" onClick={this.strikeThrough}>Strike-Through</button></span>
+        <span><button type="button" onClick={this.blockQuote}>Block-Quote</button></span>
+        <span><button type="button" onClick={this.codeBlock}>Code-Block</button></span>
+        {this.renderDropdown()}
+      </div>
     );
   }
 }

@@ -261,7 +261,7 @@ class NewContentForm extends React.Component {
           {/* Main Content Editor */}
           <div className="WYSIWYGcontainer">
             {/* <DownControls editorID="WYSIWYGeditor" /> */}
-            <DownControls editorID={this.WYSIWYGeditor} />
+            <DownControls editorID={this.WYSIWYGeditor} images={this.props.images}/>
             <textarea id="WYSIWYGeditor"
               // ref="WYSIWYGeditor"
               ref={(ref) => this.WYSIWYGeditor = ref}
