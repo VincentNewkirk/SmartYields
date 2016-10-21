@@ -11,6 +11,7 @@ export default class DownControls extends Component {
     super(props);
     this.makeBold = this.makeBold.bind(this);
     this.italicize = this.italicize.bind(this);
+    this.strikeThrough = this.strikeThrough.bind(this);
   }
 
   getSelectionText(editorID) {
@@ -48,10 +49,19 @@ export default class DownControls extends Component {
     // Retrieve selected text
     let selectedText = this.getSelectionText(this.props.editorID);
     // Modify text to output as markdown
-    let modifiedText = "*"+selectedText;
+    let modifiedText = "*"+selectedText+"*";
     // Replace the text
     this.replaceSelectedText(this.props.editorID, modifiedText);
-    console.log(modifiedText);
+
+  }
+
+  strikeThrough() {
+    // Retrieve selected text
+    let selectedText = this.getSelectionText(this.props.editorID);
+    // Modify text to output as markdown
+    let modifiedText = "<s>"+selectedText+"</s>";
+    // Replace the text
+    this.replaceSelectedText(this.props.editorID, modifiedText);
   }
 
   render() {
@@ -59,6 +69,7 @@ export default class DownControls extends Component {
       <ul className="WYSIWYGcontrols">
         <li><button type="button" onClick={this.makeBold}>Bold</button></li>
         <li><button type="button" onClick={this.italicize}>Italics</button></li>
+        <li><button type="button" onClick={this.strikeThrough}>Strike-Through</button></li>
       </ul>
     );
   }
