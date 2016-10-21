@@ -17,6 +17,8 @@ export default class DownControls extends Component {
     this.codeBlock = this.codeBlock.bind(this);
     this.dropdownChange = this.dropdownChange.bind(this);
     this.insertImg = this.insertImg.bind(this);
+    this.orderedList = this.orderedList.bind(this);
+    this.unorderedList = this.unorderedList.bind(this);
     this.state = {
       selectedDropdown: 'Select Image',
     }
@@ -86,6 +88,18 @@ export default class DownControls extends Component {
     this.replaceSelectedText(this.props.editorID, modifiedText);
   }
 
+  orderedList() {
+    let selectedText = this.getSelectionText(this.props.editorID);
+
+    let modifiedText = "1. " + selectedText;
+
+    this.replaceSelectedText(this.props.editorID, modifiedText);
+  }
+
+  unorderedList() {
+
+  }
+
   insertImg() {
     if(this.state === 'Select Image'){
       return false
@@ -130,6 +144,7 @@ export default class DownControls extends Component {
         <span><button type="button" onClick={this.strikeThrough}>Strike-Through</button></span>
         <span><button type="button" onClick={this.blockQuote}>Block-Quote</button></span>
         <span><button type="button" onClick={this.codeBlock}>Code-Block</button></span>
+        <span><button type="button" onClick={this.orderedList}>Ordered List</button></span>
         {this.props.images?
           this.renderDropdown()
           : null
