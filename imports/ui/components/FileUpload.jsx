@@ -40,9 +40,9 @@ class ImgUploader extends React.Component {
 
   renderImgListing(){
     return this.props.images.map(img => (
-      <div>
-        <p>{img.title}</p>
-      </div>
+      <li>
+        <ul>{img.title}</ul>
+      </li>
     ));
   }
 
@@ -52,11 +52,6 @@ class ImgUploader extends React.Component {
         <input type="file" ref="testfile" size="50" />
         <span>Alt Text:<input type="text" ref="alt-text" /></span>
         <input type="submit" onClick={this.submitUpload}/>
-        {
-          this.props.images ?
-          this.renderImgListing()
-          :null
-        }
       </div>
     )
   }
