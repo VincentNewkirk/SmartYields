@@ -12,6 +12,7 @@ export default class DownControls extends Component {
     this.makeBold = this.makeBold.bind(this);
     this.italicize = this.italicize.bind(this);
     this.strikeThrough = this.strikeThrough.bind(this);
+    this.blockQuote = this.blockQuote.bind(this);
   }
 
   getSelectionText(editorID) {
@@ -46,21 +47,27 @@ export default class DownControls extends Component {
   }
 
   italicize() {
-    // Retrieve selected text
     let selectedText = this.getSelectionText(this.props.editorID);
-    // Modify text to output as markdown
+
     let modifiedText = "*"+selectedText+"*";
-    // Replace the text
+
     this.replaceSelectedText(this.props.editorID, modifiedText);
 
   }
 
   strikeThrough() {
-    // Retrieve selected text
     let selectedText = this.getSelectionText(this.props.editorID);
-    // Modify text to output as markdown
+
     let modifiedText = "<s>"+selectedText+"</s>";
-    // Replace the text
+
+    this.replaceSelectedText(this.props.editorID, modifiedText);
+  }
+
+  blockQuote() {
+    let selectedText = this.getSelectionText(this.props.editorID);
+
+    let modifiedText = ">"+selectedText;
+
     this.replaceSelectedText(this.props.editorID, modifiedText);
   }
 
@@ -70,6 +77,7 @@ export default class DownControls extends Component {
         <li><button type="button" onClick={this.makeBold}>Bold</button></li>
         <li><button type="button" onClick={this.italicize}>Italics</button></li>
         <li><button type="button" onClick={this.strikeThrough}>Strike-Through</button></li>
+        <li><button type="button" onClick={this.blockQuote}>Block-Quote</button></li>
       </ul>
     );
   }
