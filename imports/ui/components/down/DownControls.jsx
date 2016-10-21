@@ -105,9 +105,7 @@ export default class DownControls extends Component {
   }
 
   insertImg() {
-    if(this.state === 'Select Image'){
-      return false
-    } else {
+    if(this.state.selectedDropdown !== 'Select Image'){
       let path;
 
       this.props.images.forEach(img => {
