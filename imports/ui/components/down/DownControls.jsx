@@ -97,7 +97,11 @@ export default class DownControls extends Component {
   }
 
   unorderedList() {
+    let selectedText = this.getSelectionText(this.props.editorID);
 
+    let modifiedText = "* " + selectedText;
+
+    this.replaceSelectedText(this.props.editorID, modifiedText);
   }
 
   insertImg() {
@@ -145,6 +149,7 @@ export default class DownControls extends Component {
         <span><button type="button" onClick={this.blockQuote}>Block-Quote</button></span>
         <span><button type="button" onClick={this.codeBlock}>Code-Block</button></span>
         <span><button type="button" onClick={this.orderedList}>Ordered List</button></span>
+        <span><button type="button" onClick={this.unorderedList}>Unordered List</button></span>
         {this.props.images?
           this.renderDropdown()
           : null
