@@ -13,6 +13,7 @@ export default class DownControls extends Component {
     this.italicize = this.italicize.bind(this);
     this.strikeThrough = this.strikeThrough.bind(this);
     this.blockQuote = this.blockQuote.bind(this);
+    this.codeBlock = this.codeBlock.bind(this);
   }
 
   getSelectionText(editorID) {
@@ -71,6 +72,14 @@ export default class DownControls extends Component {
     this.replaceSelectedText(this.props.editorID, modifiedText);
   }
 
+  codeBlock() {
+    let selectedText = this.getSelectionText(this.props.editorID);
+
+    let modifiedText = "```\n"+selectedText+"\n```";
+
+    this.replaceSelectedText(this.props.editorID, modifiedText);
+  }
+
   render() {
     return (
       <ul className="WYSIWYGcontrols">
@@ -78,6 +87,7 @@ export default class DownControls extends Component {
         <li><button type="button" onClick={this.italicize}>Italics</button></li>
         <li><button type="button" onClick={this.strikeThrough}>Strike-Through</button></li>
         <li><button type="button" onClick={this.blockQuote}>Block-Quote</button></li>
+        <li><button type="button" onClick={this.codeBlock}>Code-Block</button></li>
       </ul>
     );
   }
