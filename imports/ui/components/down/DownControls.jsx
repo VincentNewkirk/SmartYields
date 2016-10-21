@@ -10,6 +10,7 @@ export default class DownControls extends Component {
   constructor(props) {
     super(props);
     this.makeBold = this.makeBold.bind(this);
+    this.italicize = this.italicize.bind(this);
   }
 
   getSelectionText(editorID) {
@@ -43,10 +44,21 @@ export default class DownControls extends Component {
     // console.log(this.props.editorID);
   }
 
+  italicize() {
+    // Retrieve selected text
+    let selectedText = this.getSelectionText(this.props.editorID);
+    // Modify text to output as markdown
+    let modifiedText = "*"+selectedText;
+    // Replace the text
+    this.replaceSelectedText(this.props.editorID, modifiedText);
+    console.log(modifiedText);
+  }
+
   render() {
     return (
       <ul className="WYSIWYGcontrols">
         <li><button type="button" onClick={this.makeBold}>Bold</button></li>
+        <li><button type="button" onClick={this.italicize}>Italics</button></li>
       </ul>
     );
   }
