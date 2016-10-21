@@ -37,8 +37,8 @@ class App extends React.Component {
     Meteor.call('pages.insert', title, path, text, template, location, intOrder, parent);
   }
 
-  uploadImg(title, path){
-    Meteor.call('files.insert', title, path)
+  uploadImg(title, path, altText){
+    Meteor.call('files.insert', title, path, altText)
   }
 
 

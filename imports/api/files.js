@@ -12,9 +12,10 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'files.insert'(title, path) {
+  'files.insert'(title, path, altText) {
     check(title, String);
     check(path, String);
+    check(altText, String);
 
     // Make sure the user is logged in before inserting a task
     if (! this.userId) {

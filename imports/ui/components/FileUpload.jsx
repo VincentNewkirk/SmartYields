@@ -28,8 +28,9 @@ class ImgUploader extends React.Component {
         if(error) {
           alert('Error during upload: ' + error);
         } else {
+          let altText = that.refs.altText.value;
           let path = Images.link(fileObj);
-          that.props.imgHandler(fileObj.name, path);
+          that.props.imgHandler(fileObj.name, path, altText);
           alert('File '+fileObj.name+' successfully uploaded');
         }
       });
@@ -38,31 +39,15 @@ class ImgUploader extends React.Component {
     }
   }
 
-  renderImgListing(){
-    return this.props.images.map(img => (
-      <li>
-        <ul>{img.title}</ul>
-      </li>
-    ));
-  }
-
   render() {
     return(
       <div>
         <input type="file" ref="testfile" size="50" />
-        <span>Alt Text:<input type="text" ref="alt-text" /></span>
+        <span>Alt Text:<input type="text" ref="altText" /></span>
         <input type="submit" onClick={this.submitUpload}/>
       </div>
     )
   }
 }
-
-// export default createContainer(() => {
-//   Meteor.subscribe('Images');
-//   console.log(Images.find(), 'cursor')
-//   return {
-//     images: Images.find({}).fetch(),
-//   };
-// }, ImgUploader);
 
 export default ImgUploader
