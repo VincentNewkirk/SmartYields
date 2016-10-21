@@ -10,6 +10,9 @@ import MyEditor from '/imports/ui/TestEditor.jsx';
 
 FlowRouter.route('/', {
   name: 'landing page',
+  subscriptions: function(){
+    this.register('files', Meteor.subscribe('files'));
+  },
   action: function(params, queryParams){
     mount( App );
   }

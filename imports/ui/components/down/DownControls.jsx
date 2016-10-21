@@ -15,6 +15,11 @@ export default class DownControls extends Component {
     this.strikeThrough = this.strikeThrough.bind(this);
     this.blockQuote = this.blockQuote.bind(this);
     this.codeBlock = this.codeBlock.bind(this);
+    this.dropdownChange = this.dropdownChange.bind(this);
+    this.insertImg = this.insertImg.bind(this);
+    this.state = {
+      selectedDropdown: 'Select Image',
+    }
   }
 
   getSelectionText(editorID) {
@@ -81,14 +86,39 @@ export default class DownControls extends Component {
     this.replaceSelectedText(this.props.editorID, modifiedText);
   }
 
+  insertImg() {
+    if(this.state === 'Select Image'){
+      return false
+    } else {
+      let path;
+
+      this.props.images.forEach(img => {
+        if(img.title === this.state.selectedDropdown) {
+          path = img.path
+        }
+      });
+
+      let selectedText = this.getSelectionText(this.props.editorID);
+
+      let modifiedText = selectedText + "![alt text](" + path + ")";
+
+      this.replaceSelectedText(this.props.editorID, modifiedText);
+    }
+  }
+
+  dropdownChange(event) {
+    this.setState({ selectedDropdown: event.target.value })
+  }
+
   renderDropdown() {
-    let imageList = this.props.images.map(img => (
-      <MenuItem>{img.title}</MenuItem>
+    let imageList = this.props.images.map((img,index) => (
+      <option key={index} value={img.title}>{img.title}</option>
     ));
     return(
-      <DropdownButton title="Image">
+      <select onChange={this.dropdownChange}>
+        <option value="Select Image">Select Image</option>
         {imageList}
-      </DropdownButton>
+      </select>
     )
   }
 
@@ -100,7 +130,11 @@ export default class DownControls extends Component {
         <span><button type="button" onClick={this.strikeThrough}>Strike-Through</button></span>
         <span><button type="button" onClick={this.blockQuote}>Block-Quote</button></span>
         <span><button type="button" onClick={this.codeBlock}>Code-Block</button></span>
-        {this.renderDropdown()}
+        {this.props.images?
+          this.renderDropdown()
+          : null
+        }
+        <span><button type="button" onClick={this.insertImg}>Insert Image</button></span>
       </div>
     );
   }
