@@ -41,38 +41,10 @@ class App extends React.Component {
     Meteor.call('files.insert', title, path, altText)
   }
 
-  headerPageOrder() {
-    let orderedPages = [];
-
-    let lowest = 1;
-
-    let that = this;
-
-    let sortingAlg = function(){
-
-      that.props.pages.forEach((page) => {
-        if(lowest - 1 === that.props.pages.length){
-          return
-        }
-
-        if(lowest == page.order){
-          orderedPages.push(page);
-          lowest += 1;
-          sortingAlg();
-        }
-      })
-    }
-
-    sortingAlg();
-
-    return orderedPages;
-  }
-
-
   render() {
     return (
         <div className="wrapper">
-            <Header pages={this.headerPageOrder()}/>
+            <Header />
             <div className="post-container container">
               {
                 this.props.currentUser

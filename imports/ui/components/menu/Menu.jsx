@@ -9,8 +9,31 @@ import { Pages } from '/imports/api/pages';
 export default class Menu extends Component {
 
   renderMenuItems() {
-    let menuItems = this.props.pages;
-    return menuItems.map((menuItem) => (
+
+    let orderedPages = [];
+
+    let lowest = 1;
+
+    let that = this;
+
+    let sortingAlg = function(){
+
+      that.props.pages.forEach((page) => {
+        if(lowest - 1 === that.props.pages.length){
+          return
+        }
+
+        if(lowest == page.order){
+          orderedPages.push(page);
+          lowest += 1;
+          sortingAlg();
+        }
+      })
+    }
+
+    sortingAlg();
+
+    return orderedPages.map((menuItem) => (
       <MenuItem key={menuItem._id} title={menuItem.title} path={menuItem.path} />
     ));
   }
