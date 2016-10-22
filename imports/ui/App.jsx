@@ -2,22 +2,17 @@
 
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import ReactDOM from 'react-dom';
+import AccountsUIWrapper from './components/AccountsUIWrapper.jsx';
 import { Posts } from '../api/posts.js';
 import { Pages } from '../api/pages.js';
 import { Files } from '../api/files.js';
 import { Meteor } from 'meteor/meteor';
-import { Button, Navbar, PageHeader, DropdownButton, MenuItem, Clearfix, Nav, NavItem, NavDropdown } from 'react-bootstrap';
-import AccountsUIWrapper from './components/AccountsUIWrapper.jsx';
-import MyEditor from './TestEditor.jsx';
 
 // Templates
 import Header from './layout/Header.jsx';
 import Footer from './layout/Footer.jsx';
 
 // Components
-// import AlloyEditorComponent from './AlloyEditor.jsx';
-import DropzoneDemo from './components/dropzone.jsx';
 import NewContentForm from './components/NewContentForm.jsx';
 import Post from '/imports/ui/components/post/Post.jsx';
 
@@ -37,32 +32,32 @@ class App extends React.Component {
     Meteor.call('pages.insert', title, path, text, template, location, intOrder, parent);
   }
 
-  uploadImg(title, path, altText){
-    Meteor.call('files.insert', title, path, altText)
+  uploadImg(title, path, altText) {
+    Meteor.call('files.insert', title, path, altText);
   }
 
   render() {
     return (
-        <div className="wrapper">
-            <Header />
-            <div className="post-container container">
-              {
-                this.props.currentUser
-                ? <NewContentForm
-                  handleSubmit={this.handleSubmit}
-                  isValidInput={this.isValidInput}
-                  submitPage={this.submitPage}
-                  pages={this.props.pages}
-                  posts={this.props.posts}
-                  images={this.props.images}
-                  imgHandler={this.uploadImg}
-                  />
-                : null
-              }
-              {this.props.yield}
-            </div>
-            <Footer />
+      <div className="wrapper">
+        <Header />
+        <div className="post-container container">
+          {
+            this.props.currentUser
+            ? <NewContentForm
+              handleSubmit={this.handleSubmit}
+              isValidInput={this.isValidInput}
+              submitPage={this.submitPage}
+              pages={this.props.pages}
+              posts={this.props.posts}
+              images={this.props.images}
+              imgHandler={this.uploadImg}
+              />
+            : null
+          }
+          {this.props.yield}
         </div>
+        <Footer />
+      </div>
     );
   }
 }
