@@ -1,7 +1,4 @@
 import React from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
-import { Posts } from '/imports/api/posts.js';
-import { Pages } from '/imports/api/pages.js';
 
 class DBContents extends React.Component {
   constructor() {
@@ -40,20 +37,20 @@ class DBContents extends React.Component {
   render() {
     return (
       <div id="page-post-content">
-          <h3>Posts</h3>
-          {
+        <h3>Posts</h3>
+        {
             this.props.posts
             ? this.renderPosts()
             : 'No posts'
           }
-          <h3>Pages</h3>
-          {
+        <h3>Pages</h3>
+        {
             this.props.pages
             ? this.renderPages()
             : 'No Pages'
           }
       </div>
-    )
+    );
   }
 }
 
