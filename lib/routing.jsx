@@ -6,7 +6,6 @@ import TemplateSelector from '/imports/ui/templateSelector.jsx';
 import PostTagRenderer from '/imports/ui/components/post/PostTagRenderer.jsx';
 import MenuTemplate from '/imports/ui/components/menu.old/menuTemplate.jsx';
 import MenuComponent from '/imports/ui/components/menu.old/menuComponent.jsx';
-import MyEditor from '/imports/ui/TestEditor.jsx';
 
 FlowRouter.route('/', {
   name: 'landing page',
