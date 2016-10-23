@@ -37,7 +37,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="wrapper">
         <Header />
@@ -64,12 +63,11 @@ class App extends React.Component {
 }
 
 export default createContainer(() => {
-  const postHandle = Meteor.subscribe('posts');
+  Meteor.subscribe('posts');
   Meteor.subscribe('pages');
   Meteor.subscribe('files');
-  const postsLoading = !postHandle.ready();
+
   return {
-    postsLoading,
     pages: Pages.find({}, { sort: { createdAt: -1 } }).fetch(),
     posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
     images: Files.find({}, { sort: { createdAt: -1 } }).fetch(),
