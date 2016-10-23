@@ -83,14 +83,12 @@ class Post extends React.Component {
   render() {
     return (
       <div className="post-text">
-        {!this.props.title
-          ? <p>Loading...</p>
-          : <div className="post-container">
-            <div className="post-content">
-              <Down content={this.props.text} />
-            </div>
+        <div className="post-container">
+          <div className="post-content">
+            <Down content={this.props.text} />
           </div>
-        }
+        </div>
+
         {this.state.showEditForm
           ? <div className="edit-inputs">
             <input type="text" ref="title" defaultValue={this.props.title} /> <br />

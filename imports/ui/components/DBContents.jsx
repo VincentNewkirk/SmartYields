@@ -39,16 +39,16 @@ class DBContents extends React.Component {
       <div id="page-post-content">
         <h3>Posts</h3>
         {
-            this.props.posts
-            ? this.renderPosts()
-            : 'No posts'
-          }
+          this.props.posts
+          ? this.renderPosts()
+          : 'No posts'
+        }
         <h3>Pages</h3>
         {
-            this.props.pages
-            ? this.renderPages()
-            : 'No Pages'
-          }
+          this.props.pages
+          ? this.renderPages()
+          : 'No Pages'
+        }
       </div>
     );
   }
