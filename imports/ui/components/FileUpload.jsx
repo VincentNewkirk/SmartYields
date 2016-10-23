@@ -9,8 +9,10 @@ class ImgUploader extends React.Component {
     super();
     this.submitUpload = this.submitUpload.bind(this);
     this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
+    this.handleAlertErrorDismiss = this.handleAlertErrorDismiss.bind(this);
     this.state = {
       alertVisible: false,
+      alertError: false,
     }
   }
 
@@ -25,13 +27,9 @@ class ImgUploader extends React.Component {
           chunkSize: 'dynamic'
       }, false);
 
-      upload.on('start', function() {
-
-      });
-
       upload.on('end', function(error, fileObj) {
         if(error) {
-          alert('Error during upload: ' + error);
+          that.setState({ alertError: true });
         } else {
           let altText = that.refs.altText.value;
           let path = Images.link(fileObj);
@@ -48,6 +46,10 @@ class ImgUploader extends React.Component {
     this.setState({ alertVisible: false });
   }
 
+  handleAlertErrorDismiss() {
+    this.setState({ alertError: false });
+  }
+
   render() {
     return(
       <div>
@@ -58,6 +60,13 @@ class ImgUploader extends React.Component {
           <Alert bsStyle="success">
             <h4>Image Successfully Uploaded!</h4>
             <Button onClick={this.handleAlertDismiss}>Dismiss</Button>
+          </Alert>
+          : null
+        }
+        { this.state.alertError ?
+          <Alert bsStyle="danger">
+            <h4>Error During Upload</h4>
+            <Button onClick={this.handleAlertErrorDismiss}>Dismiss</Button>
           </Alert>
           : null
         }
