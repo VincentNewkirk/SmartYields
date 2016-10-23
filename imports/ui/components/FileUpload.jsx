@@ -26,7 +26,7 @@ class ImgUploader extends React.Component {
       }, false);
 
       upload.on('start', function() {
-        console.log('upload.on.start');
+
       });
 
       upload.on('end', function(error, fileObj) {
@@ -36,7 +36,7 @@ class ImgUploader extends React.Component {
           let altText = that.refs.altText.value;
           let path = Images.link(fileObj);
           that.props.imgHandler(fileObj.name, path, altText);
-          alert('File '+fileObj.name+' successfully uploaded');
+          that.setState({ alertVisible: true });
         }
       });
 
