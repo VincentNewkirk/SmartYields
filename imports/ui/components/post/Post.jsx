@@ -14,16 +14,23 @@ class Post extends React.Component {
     this.onPageSelect = this.onPageSelect.bind(this);
     this.renderPagesDropdown = this.renderPagesDropdown.bind(this);
     this.orderChange = this.orderChange.bind(this);
+    this.textChange = this.textChange.bind(this);
     this.state = {
       showEditForm: false,
       menuLocation: '',
       pageDropdown: '',
       order: '',
+      text: '',
     };
   }
 
   componentDidMount() {
     this.setState({ order: this.props.order });
+
+    this.setState({ menuLocation: this.props.menu });
+
+    this.setState({ text: this.props.text});
+
     if (!this.props.parent) {
       this.setState({ pageDropdown: 'None' });
     } else {
@@ -35,6 +42,8 @@ class Post extends React.Component {
     this.setState({ menuLocation: nextProps.menu });
 
     this.setState({ order: nextProps.order });
+
+    this.setState({ text: nextProps.text });
     if (!nextProps.parent) {
       this.setState({ pageDropdown: 'None' });
     } else {
@@ -56,6 +65,10 @@ class Post extends React.Component {
 
   orderChange(event) {
     this.setState({ order: event.target.value });
+  }
+
+  textChange(event) {
+    this.setState({ text: event.target.value });
   }
 
   deleteThisPost() {
@@ -103,14 +116,14 @@ class Post extends React.Component {
       <div className="post-text">
         <div className="post-container">
           <div className="post-content">
-            <Down content={this.props.text} />
+            <Down content={this.state.text} />
           </div>
         </div>
 
         {this.state.showEditForm
           ? <div className="edit-inputs">
             <input type="text" ref="title" defaultValue={this.props.title} /> <br />
-            <textarea ref="textInput" defaultValue={this.props.text} placeholder="'Hello! This is my page!'" rows={4} cols="50" />
+            <textarea ref="textInput" value={this.state.text} onChange={this.textChange} placeholder="'Hello! This is my page!'" rows={4} cols="50" />
             <br />
             <input type="text" ref="path" defaultValue={this.props.path} />
           </div>
