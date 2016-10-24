@@ -22,6 +22,7 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.submitPage = this.submitPage.bind(this);
     this.uploadImg = this.uploadImg.bind(this);
+    this.renderMain = this.renderMain.bind(this);
   }
 
   handleSubmit(title, path, text, template) {
@@ -36,7 +37,12 @@ class App extends React.Component {
     Meteor.call('files.insert', title, path, altText);
   }
 
+  renderMain() {
+
+  }
+
   render() {
+    console.log(this.props)
     return (
       <div className="wrapper">
         <Header />
@@ -63,11 +69,18 @@ class App extends React.Component {
 }
 
 export default createContainer(() => {
-  Meteor.subscribe('posts');
-  Meteor.subscribe('pages');
-  Meteor.subscribe('files');
+  const postsHandle = Meteor.subscribe('posts');
+  const pagesHandle = Meteor.subscribe('pages');
+  const filesHandle = Meteor.subscribe('files');
+
+  let postsLoading = !postsHandle.ready();
+  let pagesLoading = !pagesHandle.ready();
+  let filesLoading = !filesHandle.ready();
 
   return {
+    postsLoading,
+    pagesLoading,
+    filesLoading,
     pages: Pages.find({}, { sort: { createdAt: -1 } }).fetch(),
     posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
     images: Files.find({}, { sort: { createdAt: -1 } }).fetch(),
