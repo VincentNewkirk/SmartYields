@@ -13,12 +13,22 @@ class Post extends React.Component {
     this.updateCollection = this.updateCollection.bind(this);
     this.onPageSelect = this.onPageSelect.bind(this);
     this.renderPagesDropdown = this.renderPagesDropdown.bind(this);
+    this.orderChange = this.orderChange.bind(this);
     this.state = {
       showEditForm: false,
       menuLocation: '',
       pageDropdown: '',
       order: '',
     };
+  }
+
+  componentDidMount() {
+    this.setState({ order: this.props.order });
+    if (!this.props.parent) {
+      this.setState({ pageDropdown: 'None' });
+    } else {
+      this.setState({ pageDropdown: this.props.parent });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,6 +52,10 @@ class Post extends React.Component {
 
   handleSelect(event) {
     this.setState({ menuLocation: event });
+  }
+
+  orderChange(event) {
+    this.setState({ order: event.target.value });
   }
 
   deleteThisPost() {
@@ -84,7 +98,7 @@ class Post extends React.Component {
   }
 
   render() {
-    console.log(this.state.order)
+    console.log(this.state)
     return (
       <div className="post-text">
         <div className="post-container">
@@ -121,7 +135,8 @@ class Post extends React.Component {
             <input
               type="text"
               placeholder="Order"
-              defaultValue={this.props.order}
+              value={this.state.order}
+              onChange={this.orderChange}
               ref="order"
             />
           </div>
