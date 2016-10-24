@@ -132,7 +132,6 @@ class Post extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="post-text">
         <div className="post-container">
