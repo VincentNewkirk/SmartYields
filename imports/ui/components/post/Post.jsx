@@ -102,15 +102,15 @@ class Post extends React.Component {
   }
 
   updateCollection() {
-    const text = this.refs.textInput.value.trim();
-    const title = this.refs.title.value.trim();
-    const path = this.refs.path.value.trim();
+    const text = this.state.text;
+    const title = this.state.title;
+    const path = this.state.path;
     if (this.props.type === 'post') {
       Meteor.call('posts.update', this.props._id, title, text, path);
     } else if (this.props.type === 'page') {
 
       const location = this.state.menuLocation;
-      const order = this.refs.order.value;
+      const order = this.state.order;
       const intOrder = parseInt(order);
       let parent = null;
 
