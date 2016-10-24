@@ -17,15 +17,18 @@ class Post extends React.Component {
       showEditForm: false,
       menuLocation: '',
       pageDropdown: '',
+      order: '',
     };
   }
 
-  componentDidMount() {
-    this.setState({ menuLocation: this.props.menu });
-    if (!this.props.parent) {
+  componentWillReceiveProps(nextProps) {
+    this.setState({ menuLocation: nextProps.menu });
+
+    this.setState({ order: nextProps.order });
+    if (!nextProps.parent) {
       this.setState({ pageDropdown: 'None' });
     } else {
-      this.setState({ pageDropdown: this.props.parent });
+      this.setState({ pageDropdown: nextProps.parent });
     }
   }
 
@@ -81,6 +84,7 @@ class Post extends React.Component {
   }
 
   render() {
+    console.log(this.state.order)
     return (
       <div className="post-text">
         <div className="post-container">
