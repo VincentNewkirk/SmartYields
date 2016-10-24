@@ -15,12 +15,14 @@ class Post extends React.Component {
     this.renderPagesDropdown = this.renderPagesDropdown.bind(this);
     this.orderChange = this.orderChange.bind(this);
     this.textChange = this.textChange.bind(this);
+    this.titleChange = this.titleChange.bind(this);
     this.state = {
       showEditForm: false,
       menuLocation: '',
       pageDropdown: '',
       order: '',
       text: '',
+      title: '',
     };
   }
 
@@ -30,6 +32,8 @@ class Post extends React.Component {
     this.setState({ menuLocation: this.props.menu });
 
     this.setState({ text: this.props.text});
+
+    this.setState({ title: this.props.title });
 
     if (!this.props.parent) {
       this.setState({ pageDropdown: 'None' });
@@ -44,6 +48,9 @@ class Post extends React.Component {
     this.setState({ order: nextProps.order });
 
     this.setState({ text: nextProps.text });
+
+    this.setState({ title: nextProps.title });
+
     if (!nextProps.parent) {
       this.setState({ pageDropdown: 'None' });
     } else {
@@ -69,6 +76,10 @@ class Post extends React.Component {
 
   textChange(event) {
     this.setState({ text: event.target.value });
+  }
+
+  titleChange(event) {
+    this.setState({ title: event.target.value });
   }
 
   deleteThisPost() {
@@ -122,7 +133,7 @@ class Post extends React.Component {
 
         {this.state.showEditForm
           ? <div className="edit-inputs">
-            <input type="text" ref="title" defaultValue={this.props.title} /> <br />
+            <input type="text" ref="title" value={this.state.title} onChange={this.titleChange}/> <br />
             <textarea ref="textInput" value={this.state.text} onChange={this.textChange} placeholder="'Hello! This is my page!'" rows={4} cols="50" />
             <br />
             <input type="text" ref="path" defaultValue={this.props.path} />
