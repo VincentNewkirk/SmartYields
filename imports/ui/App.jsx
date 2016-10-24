@@ -38,31 +38,47 @@ class App extends React.Component {
   }
 
   renderMain() {
-
+    let that = this;
+    let loading = () => {
+      if (that.props.filesLoading || that.props.pagesLoading || that.props.postsLoading) {
+        return true;
+      }
+      return false;
+    }
+    if (!loading()) {
+      return (
+        <div className="wrapper">
+          <Header />
+          <div className="post-container container">
+            {
+              this.props.currentUser
+              ? <NewContentForm
+                handleSubmit={this.handleSubmit}
+                isValidInput={this.isValidInput}
+                submitPage={this.submitPage}
+                pages={this.props.pages}
+                posts={this.props.posts}
+                images={this.props.images}
+                imgHandler={this.uploadImg}
+                />
+              : null
+            }
+            {this.props.yield}
+          </div>
+          <Footer />
+        </div>
+      );
+    } else {
+      return(
+        <h1>Loading...</h1>
+      )
+    }
   }
 
   render() {
-    console.log(this.props)
     return (
-      <div className="wrapper">
-        <Header />
-        <div className="post-container container">
-          {
-            this.props.currentUser
-            ? <NewContentForm
-              handleSubmit={this.handleSubmit}
-              isValidInput={this.isValidInput}
-              submitPage={this.submitPage}
-              pages={this.props.pages}
-              posts={this.props.posts}
-              images={this.props.images}
-              imgHandler={this.uploadImg}
-              />
-            : null
-          }
-          {this.props.yield}
-        </div>
-        <Footer />
+      <div className="main-wrapper">
+        {this.renderMain()}
       </div>
     );
   }
