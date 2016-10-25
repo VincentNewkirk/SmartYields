@@ -158,6 +158,7 @@ class NewContentForm extends React.Component {
           this.setState({ alertVisible: false });
         }
         this.setState({ successfulPost: true });
+        FlowRouter.go(FlowRouter.path(path));
       } else {
         this.setState({ alertVisible: true })
       }
@@ -172,6 +173,7 @@ class NewContentForm extends React.Component {
           this.WYSIWYGeditor.value = '';
           this.refs.titleInput.value = '';
           this.refs.pathInput.value = '';
+          FlowRouter.go(FlowRouter.path(path));
         } else {
           this.setState({ alertVisible: true });
         }
