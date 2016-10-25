@@ -30,6 +30,7 @@ class NewContentForm extends React.Component {
     this.toggleContents = this.toggleContents.bind(this);
     this.initialInputValidation = this.initialInputValidation.bind(this);
     this.handlePreview = this.handlePreview.bind(this);
+    this.imgUploaded = this.imgUploaded.bind(this);
 
     this.state = {
       // General
@@ -42,6 +43,7 @@ class NewContentForm extends React.Component {
       // Validation
       validPath: true,
       alertVisible: false,
+      alertSuccess: false,
       errorMessage: '',
       // Visibility State for DB Contents container
       showContents: false,
@@ -50,6 +52,16 @@ class NewContentForm extends React.Component {
 
   handleAlertShow() {
     this.setState({ alertVisible: true });
+  }
+
+  imgUploaded(result) {
+    if (result) {
+      this.setState({ alertSuccess: true });
+    }
+  }
+
+  handleAlertDismiss() {
+    this.setState({ alertSuccess: false });
   }
 
   inputChange() {
@@ -237,7 +249,13 @@ class NewContentForm extends React.Component {
           </Alert>
           : null
         }
-
+        { this.state.alertSuccess ?
+          <Alert bsStyle="success">
+            <h4>Image Successfully Uploaded!</h4>
+            <Button onClick={this.handleAlertDismiss}>Dismiss</Button>
+          </Alert>
+          : null
+        }
         {/* Admin Form */}
         <form className="new-post" onSubmit={this.submitRequest} >
           <span>Title of your <span className="type-span">{this.state.selectedType}</span></span><input
@@ -313,7 +331,7 @@ class NewContentForm extends React.Component {
           <Button type="submit" bsStyle="primary">Save</Button>
         </form>
 
-        <ImgUploader images={this.props.images} imgHandler={this.props.imgHandler}/>
+        <ImgUploader images={this.props.images} imgHandler={this.props.imgHandler} imgUploaded={this.imgUploaded} />
         {/* DB Contents */}
         <Button onClick={this.toggleContents} bsStyle="info">Show DB Contents</Button>
         {
