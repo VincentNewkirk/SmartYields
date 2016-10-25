@@ -10,30 +10,38 @@ export default class Menu extends Component {
 
   renderMenuItems() {
 
-    let orderedPages = [];
+    let arrToPush = [];
+    let pageCopy = this.props.pages.map((page) => {
+      page.marked = false;
+      return page;
+    })
+    let testLowest = pageCopy[0];
 
-    let lowest = 1;
+    let ultimateAlg = () => {
+      if (arrToPush.length === this.props.pages.length || !pageCopy.length) {
+        return
+      }
 
-    let that = this;
+      let index;
 
-    let sortingAlg = function(){
-
-      that.props.pages.forEach((page) => {
-        if(lowest - 1 === that.props.pages.length){
-          return
+      for (let i = 0; i < pageCopy.length;  i++) {
+        if (pageCopy[i].marked) {
+          i++
+        } else if (pageCopy[i].order < testLowest.order) {
+          testLowest = pageCopy[i];
+          pageCopy[i].marked = true;
+          index = i;
         }
-
-        if(lowest == page.order){
-          orderedPages.push(page);
-          lowest += 1;
-          sortingAlg();
-        }
-      })
+      }
+      arrToPush.push(testLowest);
+      pageCopy.splice(index, 1);
+      testLowest = pageCopy[0];
+      ultimateAlg();
     }
 
-    sortingAlg();
+    ultimateAlg();
 
-    return orderedPages.map((menuItem) => (
+    return arrToPush.map((menuItem) => (
       <MenuItem key={menuItem._id} title={menuItem.title} path={menuItem.path} />
     ));
   }
