@@ -31,6 +31,7 @@ class NewContentForm extends React.Component {
     this.initialInputValidation = this.initialInputValidation.bind(this);
     this.handlePreview = this.handlePreview.bind(this);
     this.imgUploaded = this.imgUploaded.bind(this);
+    this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
 
     this.state = {
       // General

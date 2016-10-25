@@ -34,7 +34,7 @@ class ImgUploader extends React.Component {
           let altText = that.refs.altText.value;
           let path = Images.link(fileObj);
           that.props.imgHandler(fileObj.name, path, altText);
-          that.setState({ alertVisible: true });
+          that.props.imgUploaded(true);
         }
       });
 
