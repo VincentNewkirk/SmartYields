@@ -60,6 +60,8 @@ class App extends React.Component {
                 posts={this.props.posts}
                 images={this.props.images}
                 imgHandler={this.uploadImg}
+                singlePage={this.props.singlePage}
+                singleType={this.props.singleType}
                 />
               : null
             }

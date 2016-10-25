@@ -61,6 +61,35 @@ class NewContentForm extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.singleType === 'page') {
+      let foundPage;
+      this.props.pages.forEach((page) => {
+        if (page.path === '/' + nextProps.singlePage) {
+          foundPage = page;
+        }
+      });
+      this.setState({
+        title: foundPage.title,
+        path: nextProps.singlePage,
+        order: foundPage.order,
+        contentPreview: foundPage.text,
+        isPageType: true,
+        selectedTemplate: 'template_a',
+        selectedType: 'Page',
+        menuLocation: foundPage.menu,
+      })
+    } else {
+      let foundPost;
+      this.props.posts.forEach((post) => {
+        if (post.path === '/posts/' + nextProps.singlePage) {
+          foundPost = post;
+        }
+      });
+
+    }
+  }
+
   handleAlertShow() {
     this.setState({ alertVisible: true });
   }
@@ -285,6 +314,7 @@ class NewContentForm extends React.Component {
   }
 
   render() {
+    console.log(this.props, 'PROPS')
     return (
       <div className="well">
 
@@ -349,6 +379,7 @@ class NewContentForm extends React.Component {
               placeholder="Hello, world!"
               rows={4}
               cols="50"
+              value={this.state.contentPreview}
               onChange={this.handlePreview}
             />
             <div id="WYSIWYGpreview">

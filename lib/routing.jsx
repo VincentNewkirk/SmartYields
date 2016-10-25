@@ -11,7 +11,10 @@ FlowRouter.route('/', {
     this.register('files', Meteor.subscribe('files'));
   },
   action: function () {
-    mount(App);
+    mount(App, {
+      singlePage: false,
+      singleType: false,
+    });
   },
 });
 
@@ -31,7 +34,11 @@ FlowRouter.route('/posts/:id', {
     this.register('posts', Meteor.subscribe('posts'));
   },
   action(params) {
-    mount(App, { yield: <TemplateSelector pathLink={params.id} type="post"/> });
+    mount(App, {
+      yield: <TemplateSelector pathLink={params.id} type="post"/>,
+      singlePage: params.id,
+      singleType: 'post',
+    });
   },
 });
 
@@ -41,7 +48,11 @@ FlowRouter.route('/:id', {
     this.register('pages', Meteor.subscribe('pages'));
   },
   action(params) {
-    mount(App, { yield: <TemplateSelector pathLink={params.id} type="page"/> });
+    mount(App, {
+      yield: <TemplateSelector pathLink={params.id} type="page"/>,
+      singlePage: params.id,
+      singleType: 'page',
+    });
   },
 });
 
