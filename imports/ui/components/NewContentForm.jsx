@@ -32,6 +32,7 @@ class NewContentForm extends React.Component {
     this.handlePreview = this.handlePreview.bind(this);
     this.imgUploaded = this.imgUploaded.bind(this);
     this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
+    this.handleAlertErrorDismiss = this.handleAlertErrorDismiss.bind(this);
 
     this.state = {
       // General
@@ -45,6 +46,7 @@ class NewContentForm extends React.Component {
       validPath: true,
       alertVisible: false,
       alertSuccess: false,
+      alertError: false,
       errorMessage: '',
       // Visibility State for DB Contents container
       showContents: false,
@@ -58,11 +60,17 @@ class NewContentForm extends React.Component {
   imgUploaded(result) {
     if (result) {
       this.setState({ alertSuccess: true });
+    } else {
+      this.setState({ alertError: true });
     }
   }
 
   handleAlertDismiss() {
     this.setState({ alertSuccess: false });
+  }
+
+  handleAlertErrorDismiss() {
+    this.setState({ alertError: false });
   }
 
   inputChange() {
@@ -254,6 +262,13 @@ class NewContentForm extends React.Component {
           <Alert bsStyle="success">
             <h4>Image Successfully Uploaded!</h4>
             <Button onClick={this.handleAlertDismiss}>Dismiss</Button>
+          </Alert>
+          : null
+        }
+        { this.state.alertError ?
+          <Alert bsStyle="danger">
+            <h4>Error During Upload</h4>
+            <Button onClick={this.handleAlertErrorDismiss}>Dismiss</Button>
           </Alert>
           : null
         }

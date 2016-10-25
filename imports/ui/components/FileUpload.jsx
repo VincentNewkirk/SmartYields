@@ -8,12 +8,6 @@ class ImgUploader extends React.Component {
   constructor(){
     super();
     this.submitUpload = this.submitUpload.bind(this);
-    this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
-    this.handleAlertErrorDismiss = this.handleAlertErrorDismiss.bind(this);
-    this.state = {
-      alertVisible: false,
-      alertError: false,
-    }
   }
 
   submitUpload(event) {
@@ -29,7 +23,7 @@ class ImgUploader extends React.Component {
 
       upload.on('end', function(error, fileObj) {
         if(error) {
-          that.setState({ alertError: true });
+          that.props.imgUploaded(false);
         } else {
           let altText = that.refs.altText.value;
           let path = Images.link(fileObj);
@@ -42,34 +36,12 @@ class ImgUploader extends React.Component {
     }
   }
 
-  handleAlertDismiss() {
-    this.setState({ alertVisible: false });
-  }
-
-  handleAlertErrorDismiss() {
-    this.setState({ alertError: false });
-  }
-
   render() {
     return(
       <div>
         <input type="file" ref="testfile" size="50" />
         <span>Alt Text:<input type="text" ref="altText" /></span>
         <input type="submit" onClick={this.submitUpload}/>
-        { this.state.alertVisible ?
-          <Alert bsStyle="success">
-            <h4>Image Successfully Uploaded!</h4>
-            <Button onClick={this.handleAlertDismiss}>Dismiss</Button>
-          </Alert>
-          : null
-        }
-        { this.state.alertError ?
-          <Alert bsStyle="danger">
-            <h4>Error During Upload</h4>
-            <Button onClick={this.handleAlertErrorDismiss}>Dismiss</Button>
-          </Alert>
-          : null
-        }
       </div>
     )
   }
