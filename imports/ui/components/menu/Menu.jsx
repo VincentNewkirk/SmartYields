@@ -12,7 +12,6 @@ export default class Menu extends Component {
 
     let arrToPush = [];
     let pageCopy = this.props.pages.map((page) => {
-      page.marked = false;
       return page;
     })
     let testLowest = pageCopy[0];
@@ -25,11 +24,8 @@ export default class Menu extends Component {
       let index;
 
       for (let i = 0; i < pageCopy.length;  i++) {
-        if (pageCopy[i].marked) {
-          i++
-        } else if (pageCopy[i].order < testLowest.order) {
+        if (pageCopy[i].order < testLowest.order) {
           testLowest = pageCopy[i];
-          pageCopy[i].marked = true;
           index = i;
         }
       }
