@@ -56,10 +56,11 @@ class TemplateSelector extends React.Component {
   }
 
   render(){
+    console.log(this.props)
     return(
       <div className="container">
         <div className="post-container">
-        {this.props.post
+        {this.props.type === "post"
           ?
             this.renderPosts()
           : null
@@ -67,7 +68,7 @@ class TemplateSelector extends React.Component {
         </div>
         <div className="page-container">
         {
-          this.props.page
+          this.props.type === "page"
           ?
             this.renderPage()
           : null
