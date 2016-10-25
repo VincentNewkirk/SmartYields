@@ -56,7 +56,6 @@ class TemplateSelector extends React.Component {
   }
 
   render(){
-    console.log(this.props)
     return(
       <div className="container">
         <div className="post-container">

@@ -34,6 +34,7 @@ class NewContentForm extends React.Component {
     this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
     this.handleAlertErrorDismiss = this.handleAlertErrorDismiss.bind(this);
     this.contentAlertDismiss = this.contentAlertDismiss.bind(this);
+    this.handleAlertVisibleDismiss = this.handleAlertVisibleDismiss.bind(this);
 
     this.state = {
       // General
@@ -77,6 +78,10 @@ class NewContentForm extends React.Component {
 
   contentAlertDismiss() {
     this.setState({ successfulPost: false });
+  }
+
+  handleAlertVisibleDismiss() {
+    this.setState({ alertVisible: false });
   }
 
   inputChange() {
@@ -157,8 +162,8 @@ class NewContentForm extends React.Component {
           this.setState({ errorMessage: '' });
           this.setState({ alertVisible: false });
         }
+        FlowRouter.redirect(path);
         this.setState({ successfulPost: true });
-        FlowRouter.go(FlowRouter.path(path));
       } else {
         this.setState({ alertVisible: true })
       }
@@ -173,7 +178,7 @@ class NewContentForm extends React.Component {
           this.WYSIWYGeditor.value = '';
           this.refs.titleInput.value = '';
           this.refs.pathInput.value = '';
-          FlowRouter.go(FlowRouter.path(path));
+          FlowRouter.redirect(path);
         } else {
           this.setState({ alertVisible: true });
         }
@@ -273,6 +278,7 @@ class NewContentForm extends React.Component {
           ? <Alert bsStyle="danger">
             <h4>Error with form</h4>
             <p>{this.state.errorMessage}</p>
+            <Button onClick={this.handleAlertVisibleDismiss}>Dismiss</Button>
           </Alert>
           : null
         }
