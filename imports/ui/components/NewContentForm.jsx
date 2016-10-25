@@ -144,7 +144,7 @@ class NewContentForm extends React.Component {
     if (this.state.selectedType === 'Page') {
       const location = this.state.menuLocation;
       const order = this.refs.order.value;
-      if (this.locationValidation(location) && this.orderValidation(order) && this.initialInputValidation() && this.isValidPath(path)) {
+      if (this.locationValidation(location) && this.orderValidation(order) && this.initialInputValidation() && this.isValidPath(path, false)) {
         const intOrder = parseInt(order);
         path = '/' + path;
         this.props.submitPage(title, path, text, template, location, intOrder, parent);
@@ -163,7 +163,7 @@ class NewContentForm extends React.Component {
         this.setState({ alertVisible: true })
       }
     } else if(this.state.selectedType === 'Post'){
-      if (this.initialInputValidation() && this.isValidPath(path)) {
+      if (this.initialInputValidation() && this.isValidPath(path, true)) {
           this.setState({ errorMessage: '' });
           this.setState({ alertVisible: false });
           path = '/posts/' + path;
@@ -221,7 +221,7 @@ class NewContentForm extends React.Component {
     return true;
   }
 
-  isValidPath(str) {
+  isValidPath(str, isPost) {
     const iChars = "~`!#$%^&*+=[]\\\';,/{}|\":<>?";
     for (let i = 0; i < str.length; i++) {
       if (iChars.indexOf(str.charAt(i)) !== -1) {
@@ -230,20 +230,25 @@ class NewContentForm extends React.Component {
       }
     }
 
-    const postPath = this.props.posts.forEach((post) => {
-      if (post.path === '/posts/' + str) {
-        this.setState({ errorMessage: 'path already exists' });
-        return false;
-      }
-    });
-    const pagePath = this.props.pages.forEach((page) => {
-      if (page.path === '/' + str) {
-        this.setState({ errorMessage: 'path already exists' });
-        return false;
-      }
-    });
-    if (!postPath || !pagePath) {
-      return false
+    let occupiedPath = true;
+
+    if (isPost) {
+      const postPath = this.props.posts.forEach((post) => {
+        if (post.path === '/posts/' + str) {
+          this.setState({ errorMessage: 'path already exists' });
+          occupiedPath = false;
+        }
+      });
+    } else {
+      const pagePath = this.props.pages.forEach((page) => {
+        if (page.path === '/' + str) {
+          this.setState({ errorMessage: 'path already exists' });
+          occupiedPath = false;
+        }
+      });
+    }
+    if (!occupiedPath) {
+      return false;
     }
     return true;
   }
