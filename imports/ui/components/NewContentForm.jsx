@@ -35,6 +35,8 @@ class NewContentForm extends React.Component {
     this.handleAlertErrorDismiss = this.handleAlertErrorDismiss.bind(this);
     this.contentAlertDismiss = this.contentAlertDismiss.bind(this);
     this.handleAlertVisibleDismiss = this.handleAlertVisibleDismiss.bind(this);
+    this.titleInputChange = this.titleInputChange.bind(this);
+    this.orderChange = this.orderChange.bind(this);
 
     this.state = {
       // General
@@ -44,6 +46,9 @@ class NewContentForm extends React.Component {
       menuLocation: 'Menu Location',
       pageDropdown: 'None',
       contentPreview: '',
+      title: '',
+      path: '',
+      order: '',
       // Validation
       validPath: true,
       alertVisible: false,
@@ -84,8 +89,19 @@ class NewContentForm extends React.Component {
     this.setState({ alertVisible: false });
   }
 
-  inputChange() {
-    this.setState({ validPath: true });
+  inputChange(event) {
+    this.setState({
+      validPath: true,
+      path: event.target.value,
+    });
+  }
+
+  titleInputChange(event) {
+    this.setState({ title: event.target.value });
+  }
+
+  orderChange(event) {
+    this.setState({ order: event.target.value });
   }
 
   onSelectTemplate(event) {
@@ -116,7 +132,7 @@ class NewContentForm extends React.Component {
   }
 
   autoFillPath() {
-    const tempArray = this.refs.titleInput.value.split('');
+    const tempArray = this.state.title.split('');
     const replaceWhiteSpace = tempArray.map((element) => {
       if (element === ' ') {
         return '-';
@@ -125,7 +141,7 @@ class NewContentForm extends React.Component {
       }
     });
     const parsedString = replaceWhiteSpace.join('').toLowerCase();
-    this.refs.pathInput.value = parsedString;
+    this.setState({ path: parsedString });
     this.WYSIWYGeditor.focus();
   }
 
@@ -135,9 +151,9 @@ class NewContentForm extends React.Component {
 
     // Find the text field via the React ref
     const text = this.WYSIWYGeditor.value.trim();
-    const title = this.refs.titleInput.value.trim();
+    const title = this.state.title;
     const template = this.state.selectedTemplate;
-    let path = this.refs.pathInput.value.trim();
+    let path = this.state.path;
     let parent = null;
 
     this.props.pages.map((page) => {
@@ -148,16 +164,16 @@ class NewContentForm extends React.Component {
 
     if (this.state.selectedType === 'Page') {
       const location = this.state.menuLocation;
-      const order = this.refs.order.value;
+      const order = this.state.order;
       if (this.locationValidation(location) && this.orderValidation(order) && this.initialInputValidation() && this.isValidPath(path, false)) {
         const intOrder = parseInt(order);
         path = '/' + path;
         this.props.submitPage(title, path, text, template, location, intOrder, parent);
         // Clear form
-        this.refs.order.value = '';
-        this.WYSIWYGeditor.value = '';
-        this.refs.titleInput.value = '';
-        this.refs.pathInput.value = '';
+        // this.refs.order.value = '';
+        // this.WYSIWYGeditor.value = '';
+        // this.refs.titleInput.value = '';
+        // this.refs.pathInput.value = '';
         if (this.state.alertVisible) {
           this.setState({ errorMessage: '' });
           this.setState({ alertVisible: false });
@@ -175,9 +191,9 @@ class NewContentForm extends React.Component {
           this.props.handleSubmit(title, path, text, template);
           this.setState({ successfulPost: true });
           // Clear form
-          this.WYSIWYGeditor.value = '';
-          this.refs.titleInput.value = '';
-          this.refs.pathInput.value = '';
+          // this.WYSIWYGeditor.value = '';
+          // this.refs.titleInput.value = '';
+          // this.refs.pathInput.value = '';
           FlowRouter.redirect(path);
         } else {
           this.setState({ alertVisible: true });
@@ -309,12 +325,15 @@ class NewContentForm extends React.Component {
             type="text"
             ref="titleInput"
             placeholder="Awesome Page"
+            value={this.state.title}
+            onChange={this.titleInputChange}
             onBlur={this.autoFillPath}
           /><br />
           <span>smartyields.com/{this.state.selectedType === 'Post' ? 'posts/' : null}</span><input
             type="text"
             ref="pathInput"
             placeholder="desired URL path"
+            value={this.state.path}
             onChange={this.inputChange}
           /><br />
           <p>Body of your <span className="type-span">{this.state.selectedType}:</span></p>
@@ -369,6 +388,8 @@ class NewContentForm extends React.Component {
               </DropdownButton>
              <input
                 type="text"
+                value={this.state.order}
+                onChange={this.orderChange}
                 placeholder="Order"
                 ref="order"
                 />

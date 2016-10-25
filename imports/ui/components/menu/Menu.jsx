@@ -21,7 +21,7 @@ export default class Menu extends Component {
         return
       }
 
-      let index;
+      let index = 0;
 
       for (let i = 0; i < pageCopy.length;  i++) {
         if (pageCopy[i].order < testLowest.order) {
