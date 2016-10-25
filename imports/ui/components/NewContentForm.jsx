@@ -78,15 +78,22 @@ class NewContentForm extends React.Component {
         selectedTemplate: 'template_a',
         selectedType: 'Page',
         menuLocation: foundPage.menu,
-      })
-    } else {
+      });
+    } else if (nextProps.singleType === 'post') {
       let foundPost;
       this.props.posts.forEach((post) => {
         if (post.path === '/posts/' + nextProps.singlePage) {
           foundPost = post;
         }
       });
-
+      this.setState({
+        title: foundPost.title,
+        path: nextProps.singlePage,
+        contentPreview: foundPost.text,
+        isPageType: false,
+        selectedTemplate: 'template_post',
+        selectedType: 'Post',
+      });
     }
   }
 

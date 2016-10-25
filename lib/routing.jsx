@@ -24,7 +24,11 @@ FlowRouter.route('/posts/', {
     this.register('posts', Meteor.subscribe('posts'));
   },
   action() {
-    mount(App, { yield: <PostTagRenderer /> });
+    mount(App, {
+      yield: <PostTagRenderer />,
+      singlePage: false,
+      singleType: false,
+    });
   },
 });
 
@@ -62,7 +66,11 @@ FlowRouter.route('/pages-primary/', {
     this.register('pages', Meteor.subscribe('pages'));
   },
   action() {
-    mount(App, { yield: <MenuComponent location="primary" /> });
+    mount(App, {
+      yield: <MenuComponent location="primary" />,
+      singlePage: false,
+      singleType: false,
+    });
   },
 });
 
@@ -72,7 +80,11 @@ FlowRouter.route('/pages-sidebar/', {
     this.register('pages', Meteor.subscribe('pages'));
   },
   action() {
-    mount(App, { yield: <MenuComponent location="sidebar" /> });
+    mount(App, {
+      yield: <MenuComponent location="sidebar" />,
+      singlePage: false,
+      singleType: false,
+    });
   },
 });
 
@@ -82,6 +94,10 @@ FlowRouter.route('/pages-footer/', {
     this.register('pages', Meteor.subscribe('pages'));
   },
   action() {
-    mount(App, { yield: <MenuComponent location="footer" /> });
+    mount(App, {
+      yield: <MenuComponent location="footer" />,
+      singleType: false,
+      singlePage: false,
+    });
   },
 });
