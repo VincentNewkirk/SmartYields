@@ -33,6 +33,7 @@ class NewContentForm extends React.Component {
     this.imgUploaded = this.imgUploaded.bind(this);
     this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
     this.handleAlertErrorDismiss = this.handleAlertErrorDismiss.bind(this);
+    this.contentAlertDismiss = this.contentAlertDismiss.bind(this);
 
     this.state = {
       // General
@@ -47,6 +48,7 @@ class NewContentForm extends React.Component {
       alertVisible: false,
       alertSuccess: false,
       alertError: false,
+      successfulPost: false,
       errorMessage: '',
       // Visibility State for DB Contents container
       showContents: false,
@@ -71,6 +73,10 @@ class NewContentForm extends React.Component {
 
   handleAlertErrorDismiss() {
     this.setState({ alertError: false });
+  }
+
+  contentAlertDismiss() {
+    this.setState({ successfulPost: false });
   }
 
   inputChange() {
@@ -151,6 +157,7 @@ class NewContentForm extends React.Component {
           this.setState({ errorMessage: '' });
           this.setState({ alertVisible: false });
         }
+        this.setState({ successfulPost: true });
       } else {
         this.setState({ alertVisible: true })
       }
@@ -160,6 +167,7 @@ class NewContentForm extends React.Component {
           this.setState({ alertVisible: false });
           path = '/posts/' + path;
           this.props.handleSubmit(title, path, text, template);
+          this.setState({ successfulPost: true });
           // Clear form
           this.WYSIWYGeditor.value = '';
           this.refs.titleInput.value = '';
@@ -269,6 +277,13 @@ class NewContentForm extends React.Component {
           <Alert bsStyle="danger">
             <h4>Error During Upload</h4>
             <Button onClick={this.handleAlertErrorDismiss}>Dismiss</Button>
+          </Alert>
+          : null
+        }
+        { this.state.successfulPost ?
+          <Alert bsStyle="success">
+            <h4>{this.state.selectedType} Successfully Created!</h4>
+            <Button onClick={this.contentAlertDismiss}>Dismiss</Button>
           </Alert>
           : null
         }
