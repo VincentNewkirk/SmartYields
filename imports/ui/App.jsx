@@ -65,7 +65,6 @@ class App extends React.Component {
             }
             {this.props.yield}
           </div>
-          <Footer />
         </div>
       );
     } else {
