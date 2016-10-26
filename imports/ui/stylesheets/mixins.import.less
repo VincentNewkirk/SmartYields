@@ -1,0 +1,40 @@
+/**
+ * Mixins
+ */
+ 
+// # Clear floats
+.clearfix() {
+    &:before,
+    &:after {
+        content: " "; // 1
+        display: table; // 2
+    }
+    &:after {
+        clear: both;
+    }
+}
+// # Handle Bootstrap columns and the other things.
+.nopadding() {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+// # For lists that are used in structures not in copy
+.list-as-structure() {
+    padding: 0;
+    margin: 0;
+    li {
+        list-style: none;
+        display: block;
+    }
+}
+// # Position center to relative parent
+.vertical-align-center {
+    position:relative;
+    top:50%;
+    -webkit-transform:translateY(-50%);
+    -moz-transform:translateY(-50%);
+    -ms-transform:translateY(-50%);
+    -o-transform:translateY(-50%);
+    transform:translateY(-50%);
+    vertical-align:top;
+}

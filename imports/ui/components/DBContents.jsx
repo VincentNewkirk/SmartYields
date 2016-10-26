@@ -1,7 +1,4 @@
 import React from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
-import { Posts } from '../api/posts.js';
-import { Pages } from '../api/pages.js';
 
 class DBContents extends React.Component {
   constructor() {
@@ -26,7 +23,7 @@ class DBContents extends React.Component {
     return this.props.pages.map(page => (
       <ul key={page._id}>
         <li><h4>{page.title}</h4></li>
-        <li><a href={'/page-edit' + page.path} onClick={this.props.toggle}>Edit</a></li>
+        <li><a href={'/page' + page.path} onClick={this.props.toggle}>Edit</a></li>
         <li><h5>{page.text}</h5></li>
         <li>Template: {page.template}</li>
         <li>Path: {page.path}</li>
@@ -40,20 +37,20 @@ class DBContents extends React.Component {
   render() {
     return (
       <div id="page-post-content">
-          <h3>Posts</h3>
-          {
-            this.props.posts
-            ? this.renderPosts()
-            : 'No posts'
-          }
-          <h3>Pages</h3>
-          {
-            this.props.pages
-            ? this.renderPages()
-            : 'No Pages'
-          }
+        <h3>Posts</h3>
+        {
+          this.props.posts
+          ? this.renderPosts()
+          : 'No posts'
+        }
+        <h3>Pages</h3>
+        {
+          this.props.pages
+          ? this.renderPages()
+          : 'No Pages'
+        }
       </div>
-    )
+    );
   }
 }
 
