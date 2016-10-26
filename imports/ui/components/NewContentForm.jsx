@@ -37,6 +37,7 @@ class NewContentForm extends React.Component {
     this.handleAlertVisibleDismiss = this.handleAlertVisibleDismiss.bind(this);
     this.titleInputChange = this.titleInputChange.bind(this);
     this.orderChange = this.orderChange.bind(this);
+    this.deleteContent = this.deleteContent.bind(this);
 
     this.state = {
       // General
@@ -60,6 +61,56 @@ class NewContentForm extends React.Component {
       // Visibility State for DB Contents container
       showContents: false,
     };
+  }
+
+  componentDidMount() {
+    if (this.props.singleType === 'page') {
+      let foundPage;
+      this.props.pages.forEach((page) => {
+        if (page.path === '/' + this.props.singlePage) {
+          foundPage = page;
+        }
+      });
+      this.setState({
+        title: foundPage.title,
+        path: this.props.singlePage,
+        order: foundPage.order,
+        id: foundPage._id,
+        contentPreview: foundPage.text,
+        isPageType: true,
+        selectedTemplate: 'template_a',
+        selectedType: 'Page',
+        menuLocation: foundPage.menu,
+      });
+    } else if (this.props.singleType === 'post') {
+      let foundPost;
+      this.props.posts.forEach((post) => {
+        if (post.path === '/posts/' + this.props.singlePage) {
+          foundPost = post;
+        }
+      });
+      this.setState({
+        title: foundPost.title,
+        path: this.props.singlePage,
+        contentPreview: foundPost.text,
+        id: foundPost._id,
+        isPageType: false,
+        selectedTemplate: 'template_post',
+        selectedType: 'Post',
+      });
+    } else {
+      this.setState({
+        isPageType: false,
+        selectedTemplate: 'template_post',
+        selectedType: 'Post',
+        menuLocation: 'Menu Location',
+        pageDropdown: 'None',
+        contentPreview: '',
+        title: '',
+        path: '',
+        order: '',
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -249,7 +300,15 @@ class NewContentForm extends React.Component {
           this.setState({ alertVisible: true });
         }
     }
+  }
 
+  deleteContent() {
+    FlowRouter.redirect('/');
+    if (this.props.singleType === 'page') {
+      this.props.deletePage(this.state.id);
+    } else if (this.props.singleType === 'post') {
+      this.props.deletePost(this.state.id);
+    }
   }
 
   renderPagesDropdown() {
@@ -461,6 +520,12 @@ class NewContentForm extends React.Component {
         <ImgUploader images={this.props.images} imgHandler={this.props.imgHandler} imgUploaded={this.imgUploaded} />
         {/* DB Contents */}
         <Button onClick={this.toggleContents} bsStyle="info">Show DB Contents</Button>
+        {
+          this.props.singlePage
+          ?
+          <Button bsStyle="danger" onClick={this.deleteContent}>Delete</Button>
+          : null
+        }
         {
           this.state.showContents
           ?<DBContents pages={this.props.pages} posts={this.props.posts} toggle={this.toggleContents} />

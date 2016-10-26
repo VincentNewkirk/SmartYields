@@ -25,6 +25,8 @@ class App extends React.Component {
     this.renderMain = this.renderMain.bind(this);
     this.updatePage = this.updatePage.bind(this);
     this.updatePost = this.updatePost.bind(this);
+    this.deletePost = this.deletePost.bind(this);
+    this.deletePage = this.deletePage.bind(this);
   }
 
   handleSubmit(title, path, text, template) {
@@ -45,6 +47,14 @@ class App extends React.Component {
 
   updatePost(id, title, text, path) {
     Meteor.call('posts.update', id, title, text, path);
+  }
+
+  deletePost(id) {
+    Meteor.call('posts.remove', id);
+  }
+
+  deletePage(id) {
+    Meteor.call('pages.remove', id);
   }
 
   renderMain() {
@@ -74,6 +84,8 @@ class App extends React.Component {
                 singleType={this.props.singleType}
                 updatePage={this.updatePage}
                 updatePost={this.updatePost}
+                deletePost={this.deletePost}
+                deletePage={this.deletePage}
                 />
               : null
             }
