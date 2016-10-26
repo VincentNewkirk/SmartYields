@@ -49,6 +49,7 @@ class NewContentForm extends React.Component {
       title: '',
       path: '',
       order: '',
+      id: '',
       // Validation
       validPath: true,
       alertVisible: false,
@@ -73,6 +74,7 @@ class NewContentForm extends React.Component {
         title: foundPage.title,
         path: nextProps.singlePage,
         order: foundPage.order,
+        id: foundPage._id,
         contentPreview: foundPage.text,
         isPageType: true,
         selectedTemplate: 'template_a',
@@ -90,9 +92,22 @@ class NewContentForm extends React.Component {
         title: foundPost.title,
         path: nextProps.singlePage,
         contentPreview: foundPost.text,
+        id: foundPost._id,
         isPageType: false,
         selectedTemplate: 'template_post',
         selectedType: 'Post',
+      });
+    } else {
+      this.setState({
+        isPageType: false,
+        selectedTemplate: 'template_post',
+        selectedType: 'Post',
+        menuLocation: 'Menu Location',
+        pageDropdown: 'None',
+        contentPreview: '',
+        title: '',
+        path: '',
+        order: '',
       });
     }
   }
@@ -204,17 +219,16 @@ class NewContentForm extends React.Component {
       if (this.locationValidation(location) && this.orderValidation(order) && this.initialInputValidation() && this.isValidPath(path, false)) {
         const intOrder = parseInt(order);
         path = '/' + path;
-        this.props.submitPage(title, path, text, template, location, intOrder, parent);
-        // Clear form
-        // this.refs.order.value = '';
-        // this.WYSIWYGeditor.value = '';
-        // this.refs.titleInput.value = '';
-        // this.refs.pathInput.value = '';
+        if (this.props.singleType) {
+          this.props.updatePage(this.state.id, title, text, path, location, parent, intOrder)
+        } else {
+          this.props.submitPage(title, path, text, template, location, intOrder, parent);
+          FlowRouter.redirect(path);
+        }
         if (this.state.alertVisible) {
           this.setState({ errorMessage: '' });
           this.setState({ alertVisible: false });
         }
-        FlowRouter.redirect(path);
         this.setState({ successfulPost: true });
       } else {
         this.setState({ alertVisible: true })
@@ -224,13 +238,13 @@ class NewContentForm extends React.Component {
           this.setState({ errorMessage: '' });
           this.setState({ alertVisible: false });
           path = '/posts/' + path;
-          this.props.handleSubmit(title, path, text, template);
+          if (this.props.singlePage) {
+            this.props.updatePost(this.state.id, title, text, path)
+          } else {
+            this.props.handleSubmit(title, path, text, template);
+            FlowRouter.redirect(path);
+          }
           this.setState({ successfulPost: true });
-          // Clear form
-          // this.WYSIWYGeditor.value = '';
-          // this.refs.titleInput.value = '';
-          // this.refs.pathInput.value = '';
-          FlowRouter.redirect(path);
         } else {
           this.setState({ alertVisible: true });
         }
@@ -289,20 +303,22 @@ class NewContentForm extends React.Component {
 
     let occupiedPath = true;
 
-    if (isPost) {
-      const postPath = this.props.posts.forEach((post) => {
-        if (post.path === '/posts/' + str) {
-          this.setState({ errorMessage: 'path already exists' });
-          occupiedPath = false;
-        }
-      });
-    } else {
-      const pagePath = this.props.pages.forEach((page) => {
-        if (page.path === '/' + str) {
-          this.setState({ errorMessage: 'path already exists' });
-          occupiedPath = false;
-        }
-      });
+    if (!this.props.singlePage) {
+      if (isPost) {
+        const postPath = this.props.posts.forEach((post) => {
+          if (post.path === '/posts/' + str) {
+            this.setState({ errorMessage: 'path already exists' });
+            occupiedPath = false;
+          }
+        });
+      } else {
+        const pagePath = this.props.pages.forEach((page) => {
+          if (page.path === '/' + str) {
+            this.setState({ errorMessage: 'path already exists' });
+            occupiedPath = false;
+          }
+        });
+      }
     }
     if (!occupiedPath) {
       return false;
@@ -321,7 +337,6 @@ class NewContentForm extends React.Component {
   }
 
   render() {
-    console.log(this.props, 'PROPS')
     return (
       <div className="well">
 
@@ -434,7 +449,13 @@ class NewContentForm extends React.Component {
            </div>
             : null
           }
-          <Button type="submit" bsStyle="primary">Save</Button>
+          {
+            this.props.singlePage
+            ?
+            <Button type="submit" bsStyle="primary">Update</Button>
+            :
+            <Button type="submit" bsStyle="primary">Save</Button>
+          }
         </form>
 
         <ImgUploader images={this.props.images} imgHandler={this.props.imgHandler} imgUploaded={this.imgUploaded} />

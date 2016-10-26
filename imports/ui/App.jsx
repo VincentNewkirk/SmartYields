@@ -23,6 +23,8 @@ class App extends React.Component {
     this.submitPage = this.submitPage.bind(this);
     this.uploadImg = this.uploadImg.bind(this);
     this.renderMain = this.renderMain.bind(this);
+    this.updatePage = this.updatePage.bind(this);
+    this.updatePost = this.updatePost.bind(this);
   }
 
   handleSubmit(title, path, text, template) {
@@ -35,6 +37,14 @@ class App extends React.Component {
 
   uploadImg(title, path, altText) {
     Meteor.call('files.insert', title, path, altText);
+  }
+
+  updatePage(id, title, text, path, location, parent, order) {
+    Meteor.call('pages.update', id, title, text, path, location, parent, order);
+  }
+
+  updatePost(id, title, text, path) {
+    Meteor.call('posts.update', id, title, text, path);
   }
 
   renderMain() {
@@ -62,6 +72,8 @@ class App extends React.Component {
                 imgHandler={this.uploadImg}
                 singlePage={this.props.singlePage}
                 singleType={this.props.singleType}
+                updatePage={this.updatePage}
+                updatePost={this.updatePost}
                 />
               : null
             }
