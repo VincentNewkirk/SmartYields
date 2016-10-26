@@ -272,6 +272,7 @@ class NewContentForm extends React.Component {
         path = '/' + path;
         if (this.props.singleType) {
           this.props.updatePage(this.state.id, title, text, path, location, parent, intOrder)
+          FlowRouter.reload();
         } else {
           this.props.submitPage(title, path, text, template, location, intOrder, parent);
           FlowRouter.redirect(path);
@@ -291,6 +292,7 @@ class NewContentForm extends React.Component {
           path = '/posts/' + path;
           if (this.props.singlePage) {
             this.props.updatePost(this.state.id, title, text, path)
+            FlowRouter.reload();
           } else {
             this.props.handleSubmit(title, path, text, template);
             FlowRouter.redirect(path);
