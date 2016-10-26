@@ -17,7 +17,7 @@ class Post extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ title: nextProps.text });
+    this.setState({ text: nextProps.text });
   }
   render() {
     return (
