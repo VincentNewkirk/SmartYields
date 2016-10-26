@@ -303,12 +303,12 @@ class NewContentForm extends React.Component {
   }
 
   deleteContent() {
-    FlowRouter.redirect('/');
     if (this.props.singleType === 'page') {
       this.props.deletePage(this.state.id);
     } else if (this.props.singleType === 'post') {
       this.props.deletePost(this.state.id);
     }
+    FlowRouter.go(FlowRouter.path('/'));
   }
 
   renderPagesDropdown() {
