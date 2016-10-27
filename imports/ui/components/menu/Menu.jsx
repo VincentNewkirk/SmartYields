@@ -6,7 +6,7 @@ import MenuItem from './MenuItem.jsx';
 import { Pages } from '/imports/api/pages';
 
 // Class
-export default class Menu extends Component {
+class Menu extends Component {
 
   renderMenuItems() {
 

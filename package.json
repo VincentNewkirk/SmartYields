@@ -11,7 +11,7 @@
     }
   },
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "bcrypt-nodejs": "0.0.3",
     "draft-js": "^0.9.1",
     "eslint": "^3.4.0",
     "eslint-config-airbnb": "^11.1.0",
